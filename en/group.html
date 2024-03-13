@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+    <head>
+        <title>Group</title>
+        <meta charset="utf-8">
+        <link rel="icon" href="../img/icon.png">
+
+        <style>
+            .boton-navbar:hover {
+                background-color: darkslategray;
+            }
+
+            .ver-todos {
+                color: rgb(30, 30, 30);
+            }
+
+            .ver-todos:hover {
+                color: rgb(30, 30, 30);
+            }
+
+            .scrollable {
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            .scrolled {
+                display: inline-block;
+            }
+
+            .discs {
+                overflow-x: auto;
+            }
+
+            .disc {
+                display: inline-block;
+            }
+
+            .card-body {
+                white-space: wrap;
+            }
+
+            .boton-tag {
+                background-color: grey;
+                color: white;
+            }
+
+            .boton-tag:hover {
+                color: white;
+                text-decoration: none;
+            }
+        </style>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+        <link rel="stylesheet" href= "https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+        <script src= "https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+    </head>
+
+    <body class="h-100">
+        <div class="container-fluid h-100 d-flex flex-column">
+            <header>
+                <div class="row">
+                    <div class="navbar w-100 bg-dark">
+                        <div class="col-1">
+                            <a class="navbar-brand" href="home.html">
+                                <img src="../img/logo.png" width="50" height="50">
+                            </a>
+                        </div>
+                        
+                        <div class="col-lg-7 col-md-6 col-sm-1">
+                            <div class="row">
+                                <a class="boton-navbar btn d-none d-md-block pt-3 pb-3 rounded text-white text-center mr-5">Music</a>
+                                <a class="boton-navbar btn d-none d-md-block pt-3 pb-3 rounded text-white text-center mr-5">Games</a>
+                                <a class="boton-navbar btn d-none d-md-block pt-3 pb-3 rounded text-white text-center mr-5">Movies</a>
+                                <a class="boton-navbar btn d-none d-md-block pt-3 pb-3 rounded text-white text-center mr-5">TV</a>
+                                <a class="boton-navbar btn d-none d-md-block pt-3 pb-3 rounded text-white text-center mr-5">Books</a>
+                                <a class="boton-navbar btn d-none d-md-block pt-3 pb-3 rounded text-white text-center" href="community.html">Community</a>
+                            </div>
+                        </div>
+        
+                        <div class="col-lg-4 col-md-5 col-sm-10">
+                            <div class="d-flex float-right">
+                                <form action="">
+                                    <div class="row">
+                                        <input type="text" class="form-control w-75 mr-1" placeholder="Search..." name="search">
+                                        <button type="submit" class="btn rounded bg-white pt-1">
+                                            <img src="../img/search.png" width="15" height="15">
+                                        </button>
+                                    </div>
+                                </form>
+        
+                                <a class="ml-4" href="user.html">
+                                    <img src="../img/user.png">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="m-5">
+                <div class="row mt-3 mb-3 text-left text-dark">
+                    <div class="col-12">
+                        <h3>RPGers International</h3>
+                    </div>
+                </div>
+
+                <div class="row mb-5 align-items-center">
+                    <div class="col-6 text-left">
+                        <p class="mt-3 mb-3 text-dark">Group created by <a href="user.html">vic42</a> on Oct 10, 2022</p>
+                    </div>
+                    <div class="col-6 text-right">
+                        <a class="btn bg-dark text-white">Join this group</a>
+                    </div>
+                </div>
+
+                <div class="row mb-5">
+                    <div class="col-12 m-0 pl-3 pr-3">
+                        <div class="row m-0 mb-3 p-0">
+                            <div class="col-5 p-0">
+                                <div class="row align-items-center">
+                                    <div class="col-6 text-left">
+                                        <h5 class="mt-3 mb-3">Members (100)</h5>
+                                    </div>
+
+                                    <div class="col-6 text-right">
+                                        <a href="">View all</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-2"></div>
+
+                            <div class="col-5 p-0">
+                                <div class="row align-items-center">
+                                    <div class="col-6 text-left">
+                                        <h5 class="mt-3 mb-3">Items (100)</h5>
+                                    </div>
+
+                                    <div class="col-6 text-right">
+                                        <a href="">View all</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row m-0 p-0">
+                            <div class="col-5 border border-3 rounded">
+                                <div class="d-flex flex-row p-3 scrollable">
+                                    <a class="btn m-0 mr-3 p-0 scrolled" href="user.html"><img src="../img/test-user.png" width="80" height="80"></a>
+                                    <a class="btn m-0 mr-3 p-0 scrolled" href="user.html"><img src="../img/test-user.png" width="80" height="80"></a>
+                                    <a class="btn m-0 mr-3 p-0 scrolled" href="user.html"><img src="../img/test-user.png" width="80" height="80"></a>
+                                    <a class="btn m-0 mr-3 p-0 scrolled" href="user.html"><img src="../img/test-user.png" width="80" height="80"></a>
+                                    <a class="btn m-0 mr-3 p-0 scrolled" href="user.html"><img src="../img/test-user.png" width="80" height="80"></a>
+                                    <a class="btn m-0 mr-3 p-0 scrolled" href="user.html"><img src="../img/test-user.png" width="80" height="80"></a>
+                                    <a class="btn m-0 mr-3 p-0 scrolled" href="user.html"><img src="../img/test-user.png" width="80" height="80"></a>
+                                    <a class="btn m-0 mr-3 p-0 scrolled" href="user.html"><img src="../img/test-user.png" width="80" height="80"></a>
+                                    <a class="btn m-0 mr-3 p-0 scrolled" href="user.html"><img src="../img/test-user.png" width="80" height="80"></a>
+                                    <a class="btn m-0 mr-3 p-0 scrolled" href="user.html"><img src="../img/test-user.png" width="80" height="80"></a>
+                                </div>
+                            </div>
+
+                            <div class="col-2"></div> <!-- spacing -->
+
+                            <div class="col-5 border border-3 rounded">
+                                <div class="d-flex flex-row p-3 scrollable">
+                                    <a class="btn m-0 mr-3 p-0 scrolled" href="item.html"><img src="../img/test-rpg.jpg" width="80" height="80"></a>
+                                    <a class="btn m-0 mr-3 p-0 scrolled" href="item.html"><img src="../img/test-rpg.jpg" width="80" height="80"></a>
+                                    <a class="btn m-0 mr-3 p-0 scrolled" href="item.html"><img src="../img/test-rpg.jpg" width="80" height="80"></a>
+                                    <a class="btn m-0 mr-3 p-0 scrolled" href="item.html"><img src="../img/test-rpg.jpg" width="80" height="80"></a>
+                                    <a class="btn m-0 mr-3 p-0 scrolled" href="item.html"><img src="../img/test-rpg.jpg" width="80" height="80"></a>
+                                    <a class="btn m-0 mr-3 p-0 scrolled" href="item.html"><img src="../img/test-rpg.jpg" width="80" height="80"></a>
+                                    <a class="btn m-0 mr-3 p-0 scrolled" href="item.html"><img src="../img/test-rpg.jpg" width="80" height="80"></a>
+                                    <a class="btn m-0 mr-3 p-0 scrolled" href="item.html"><img src="../img/test-rpg.jpg" width="80" height="80"></a>
+                                    <a class="btn m-0 mr-3 p-0 scrolled" href="item.html"><img src="../img/test-rpg.jpg" width="80" height="80"></a>
+                                    <a class="btn m-0 mr-3 p-0 scrolled" href="item.html"><img src="../img/test-rpg.jpg" width="80" height="80"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row m-5"></div> <!-- spacing -->
+
+                <div class="row mb-4 text-left text-dark">
+                    <div class="col-12">
+                        <form action="">
+                            <div class="row align-items-center">
+                                <h5 class="m-3 mr-5">Discussions</h5>
+                                <select class="form-control w-auto p-1 border border-3 border-dark" id="selectlist">
+                                    <option value="new">Newest</option>
+                                    <option value="popular">Most popular</option>
+                                    <option value="controversial">Most controversial</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="row mb-5">
+                    <div class="col-12">
+                        <div class="scrollable-card-group discs">
+                            <div class="scrollable-card disc w-100 mb-2">
+                                <div class="card">
+                                    <div class="card-body d-flex flex-row text-left align-items-center">
+                                        <div class="col-lg-8 col-md-9">
+                                            <div class="row align-items-center">
+                                                <a class="mr-3 mb-1" href="item.html"><h5 class="card-title m-0 p-0">Why Skyrim is the best RPG ever</h5></a>
+                                                <a class="p-1 mr-1 mb-1 rounded boton-tag" href="search.html">Skyrim</a>
+                                                <a class="p-1 mr-1 mb-1 rounded boton-tag" href="search.html">Controversial</a>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-1 col-md-1">
+                                            <div class="row align-items-center">
+                                                <p class="card-text m-0 mr-1 p-0">100</p>
+                                                <img src="../img/like.png" width="15" height="15">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-3 col-md-2">
+                                            <div class="row align-items-center">
+                                                <p class="card-text m-0 ml-1 p-0">Started by vic42 on Jan 1, 2023</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="scrollable-card disc w-100 mb-2">
+                                <div class="card">
+                                    <div class="card-body d-flex flex-row text-left align-items-center">
+                                        <div class="col-lg-8 col-md-9">
+                                            <div class="row align-items-center">
+                                                <a class="mr-3 mb-1" href="item.html"><h5 class="card-title m-0 p-0">Why Skyrim is the best RPG ever</h5></a>
+                                                <a class="p-1 mr-1 mb-1 rounded boton-tag" href="search.html">Skyrim</a>
+                                                <a class="p-1 mr-1 mb-1 rounded boton-tag" href="search.html">Controversial</a>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-1 col-md-1">
+                                            <div class="row align-items-center">
+                                                <p class="card-text m-0 mr-1 p-0">100</p>
+                                                <img src="../img/like.png" width="15" height="15">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-3 col-md-2">
+                                            <div class="row align-items-center">
+                                                <p class="card-text m-0 ml-1 p-0">Started by vic42 on Jan 1, 2023</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="scrollable-card disc w-100 mb-2">
+                                <div class="card">
+                                    <div class="card-body d-flex flex-row text-left align-items-center">
+                                        <div class="col-lg-8 col-md-9">
+                                            <div class="row align-items-center">
+                                                <a class="mr-3 mb-1" href="item.html"><h5 class="card-title m-0 p-0">Why Skyrim is the best RPG ever</h5></a>
+                                                <a class="p-1 mr-1 mb-1 rounded boton-tag" href="search.html">Skyrim</a>
+                                                <a class="p-1 mr-1 mb-1 rounded boton-tag" href="search.html">Controversial</a>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-1 col-md-1">
+                                            <div class="row align-items-center">
+                                                <p class="card-text m-0 mr-1 p-0">100</p>
+                                                <img src="../img/like.png" width="15" height="15">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-3 col-md-2">
+                                            <div class="row align-items-center">
+                                                <p class="card-text m-0 ml-1 p-0">Started by vic42 on Jan 1, 2023</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="scrollable-card disc w-100 mb-2">
+                                <div class="card">
+                                    <div class="card-body d-flex flex-row text-left align-items-center">
+                                        <div class="col-lg-8 col-md-9">
+                                            <div class="row align-items-center">
+                                                <a class="mr-3 mb-1" href="item.html"><h5 class="card-title m-0 p-0">Why Skyrim is the best RPG ever</h5></a>
+                                                <a class="p-1 mr-1 mb-1 rounded boton-tag" href="search.html">Skyrim</a>
+                                                <a class="p-1 mr-1 mb-1 rounded boton-tag" href="search.html">Controversial</a>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-1 col-md-1">
+                                            <div class="row align-items-center">
+                                                <p class="card-text m-0 mr-1 p-0">100</p>
+                                                <img src="../img/like.png" width="15" height="15">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-3 col-md-2">
+                                            <div class="row align-items-center">
+                                                <p class="card-text m-0 ml-1 p-0">Started by vic42 on Jan 1, 2023</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="scrollable-card disc w-100 mb-2">
+                                <div class="card">
+                                    <div class="card-body d-flex flex-row text-left align-items-center">
+                                        <div class="col-lg-8 col-md-9">
+                                            <div class="row align-items-center">
+                                                <a class="mr-3 mb-1" href="item.html"><h5 class="card-title m-0 p-0">Why Skyrim is the best RPG ever</h5></a>
+                                                <a class="p-1 mr-1 mb-1 rounded boton-tag" href="search.html">Skyrim</a>
+                                                <a class="p-1 mr-1 mb-1 rounded boton-tag" href="search.html">Controversial</a>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-1 col-md-1">
+                                            <div class="row align-items-center">
+                                                <p class="card-text m-0 mr-1 p-0">100</p>
+                                                <img src="../img/like.png" width="15" height="15">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-3 col-md-2">
+                                            <div class="row align-items-center">
+                                                <p class="card-text m-0 ml-1 p-0">Started by vic42 on Jan 1, 2023</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="scrollable-card disc w-100 mb-2">
+                                <div class="card">
+                                    <div class="card-body d-flex flex-row text-left align-items-center">
+                                        <div class="col-lg-8 col-md-9">
+                                            <div class="row align-items-center">
+                                                <a class="mr-3 mb-1" href="item.html"><h5 class="card-title m-0 p-0">Why Skyrim is the best RPG ever</h5></a>
+                                                <a class="p-1 mr-1 mb-1 rounded boton-tag" href="search.html">Skyrim</a>
+                                                <a class="p-1 mr-1 mb-1 rounded boton-tag" href="search.html">Controversial</a>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-1 col-md-1">
+                                            <div class="row align-items-center">
+                                                <p class="card-text m-0 mr-1 p-0">100</p>
+                                                <img src="../img/like.png" width="15" height="15">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-3 col-md-2">
+                                            <div class="row align-items-center">
+                                                <p class="card-text m-0 ml-1 p-0">Started by vic42 on Jan 1, 2023</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="scrollable-card disc w-100 mb-2">
+                                <div class="card">
+                                    <div class="card-body d-flex flex-row text-left align-items-center">
+                                        <div class="col-lg-8 col-md-9">
+                                            <div class="row align-items-center">
+                                                <a class="mr-3 mb-1" href="item.html"><h5 class="card-title m-0 p-0">Why Skyrim is the best RPG ever</h5></a>
+                                                <a class="p-1 mr-1 mb-1 rounded boton-tag" href="search.html">Skyrim</a>
+                                                <a class="p-1 mr-1 mb-1 rounded boton-tag" href="search.html">Controversial</a>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-1 col-md-1">
+                                            <div class="row align-items-center">
+                                                <p class="card-text m-0 mr-1 p-0">100</p>
+                                                <img src="../img/like.png" width="15" height="15">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-3 col-md-2">
+                                            <div class="row align-items-center">
+                                                <p class="card-text m-0 ml-1 p-0">Started by vic42 on Jan 1, 2023</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="scrollable-card disc w-100 mb-2">
+                                <div class="card">
+                                    <div class="card-body d-flex flex-row text-left align-items-center">
+                                        <div class="col-lg-8 col-md-9">
+                                            <div class="row align-items-center">
+                                                <a class="mr-3 mb-1" href="item.html"><h5 class="card-title m-0 p-0">Why Skyrim is the best RPG ever</h5></a>
+                                                <a class="p-1 mr-1 mb-1 rounded boton-tag" href="search.html">Skyrim</a>
+                                                <a class="p-1 mr-1 mb-1 rounded boton-tag" href="search.html">Controversial</a>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-1 col-md-1">
+                                            <div class="row align-items-center">
+                                                <p class="card-text m-0 mr-1 p-0">100</p>
+                                                <img src="../img/like.png" width="15" height="15">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-3 col-md-2">
+                                            <div class="row align-items-center">
+                                                <p class="card-text m-0 ml-1 p-0">Started by vic42 on Jan 1, 2023</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <div class="row mt-5 text-center">
+                <div class="w-100 bg-dark text-white">
+                    <p class="m-5">(c) 2024 Víctor Saakes</p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -20,14 +20,6 @@
     white-space: wrap;
 }
 
-.disc {
-    display: inline-block;
-}
-
-.discs {
-    overflow-x: auto;
-}
-
 .group {
     display: inline-block;
     width: 200px;
@@ -38,17 +30,9 @@
     white-space: nowrap;
 }
 
-.item {
-    display: inline-block;
-}
-
 .item-in-home {
     display: inline-block;
     width: 300px;
-}
-
-.items {
-    overflow-x: auto;
 }
 
 .items-in-home {
@@ -56,11 +40,11 @@
     white-space: nowrap;
 }
 
-.list {
+.my-card {
     display: inline-block;
 }
 
-.lists {
+.my-cards {
     overflow-x: auto;
 }
 

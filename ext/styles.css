@@ -1,0 +1,82 @@
+.boton-navbar:hover {
+    background-color: darkslategray;
+}
+
+.boton-tag {
+    background-color: grey;
+    color: white;
+}
+
+.boton-tag:hover {
+    color: white;
+    text-decoration: none;
+}
+
+.boton-volver:hover {
+    background-color: rgb(238, 238, 238);
+}
+
+.card-body {
+    white-space: wrap;
+}
+
+.disc {
+    display: inline-block;
+}
+
+.discs {
+    overflow-x: auto;
+}
+
+.group {
+    display: inline-block;
+    width: 200px;
+}
+
+.groups {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.item {
+    display: inline-block;
+}
+
+.item-in-home {
+    display: inline-block;
+    width: 300px;
+}
+
+.items {
+    overflow-x: auto;
+}
+
+.items-in-home {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.list {
+    display: inline-block;
+}
+
+.lists {
+    overflow-x: auto;
+}
+
+.scrollable {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.scrolled {
+    display: inline-block;
+}
+
+.ver-todos {
+    color: rgb(30, 30, 30);
+}
+
+.ver-todos:hover {
+    color: rgb(30, 30, 30);
+}

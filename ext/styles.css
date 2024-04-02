@@ -1,3 +1,7 @@
+.background-group {
+    background-image: url('../img/test-rpg.jpg');
+}
+
 .boton-navbar:hover {
     background-color: darkslategray;
 }
@@ -50,6 +54,11 @@
 
 .scrollable {
     overflow-x: auto;
+    white-space: nowrap;
+}
+
+.scrollable-p {
+    overflow-y: auto;
     white-space: nowrap;
 }
 

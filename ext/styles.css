@@ -66,6 +66,10 @@
     display: inline-block;
 }
 
+.valoracion-positiva {
+    background-color: lightgreen;
+}
+
 .ver-todos {
     color: rgb(30, 30, 30);
 }

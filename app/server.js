@@ -9,14 +9,17 @@ app.use(cors());
 app.use(express.json());
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost/mern-stack-db', { useNewUrlParser: true, useUnifiedTopology: true });
+const url = 'mongodb://localhost:27017/tfg'
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
+.then(() => console.log('Connected to MongoDB'))
+.catch((error) => console.error('Connection error:', error));
 
 // Create DB schema and model
-const todoSchema = new mongoose.Schema({
-    task: String,
-    completed: Boolean,
+const itemsSchema = new mongoose.Schema({
+    name: String,
+    info: String,
   });
-const Todo = mongoose.model('Todo', todoSchema);
+const items = mongoose.model('Items', itemsSchema);
 
 // Server listen
 app.listen(PORT, () => {
@@ -24,8 +27,8 @@ app.listen(PORT, () => {
 });
 
 // Define routes
-app.get('/todos', async (req, res) => {
-    const todos = await Todo.find();
-    res.json(todos);
+app.get('/items', async (req, res) => {
+    const itemList = await items.find();
+    res.json(itemList);
   });
 

@@ -17,6 +17,8 @@ import Games from "./pages/games";
 import Group from "./pages/group";
 import Item from "./pages/item";
 import List from "./pages/list";
+import Login from "./pages/login";
+import Search from './pages/search';
 import UserEdit from "./pages/user-edit";
 import User from "./pages/user";
 import Footer from "./components/Footer";
@@ -44,6 +46,8 @@ const App = () => {
                     <Route path="/group" element={<Group />} />
                     <Route path="/item" element={<Item />} />
                     <Route path="/list" element={<List />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/search" element={<Search />} />
                     <Route path="/user-edit" element={<UserEdit />} />
                     <Route path="/user" element={<User />} />
                 </Routes>

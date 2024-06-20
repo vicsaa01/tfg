@@ -1,5 +1,5 @@
 .background-group {
-    background-image: url('./img/test-rpg.jpg');
+    background-image: url('../img/test-rpg.jpg');
 }
 
 .boton-navbar:hover {
@@ -12,7 +12,7 @@
 }
 
 .boton-tag:hover {
-    color: white;
+    color: grey;
     text-decoration: none;
 }
 

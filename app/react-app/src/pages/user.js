@@ -30,7 +30,7 @@ const User = () => {
                     <div class="col-1"></div>
 
                     <div class="col-10">
-                        <a class="btn rounded bg-dark text-white float-right" href="/user-edit">Editar perfil</a>
+                        <a class="btn rounded bg-dark text-white float-end" href="/user-edit">Editar perfil</a>
                     </div>
                 </div>
 

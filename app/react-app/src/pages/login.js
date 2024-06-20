@@ -22,10 +22,10 @@ const Login = () => {
                             <input type="password" class="form-control" name="contra" required/>
                             
                             <div class="row mt-5 mb-3">
-                                <div class="col-6 text-left">
-                                    <a class="btn w-100 border border-3 border-dark rounded boton-volver text-dark" href="home.html">Volver</a>
+                                <div class="col-6 text-start">
+                                    <a class="btn w-100 border border-1 border-dark rounded boton-volver text-dark" href="/">Volver</a>
                                 </div>
-                                <div class="col text-right">
+                                <div class="col text-end">
                                     <button type="submit" class="btn w-100 bg-dark text-white">Iniciar sesión</button>
                                 </div>                                
                             </div>

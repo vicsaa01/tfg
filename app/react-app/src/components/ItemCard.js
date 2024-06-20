@@ -6,7 +6,7 @@ const ItemCard = () => {
     return(
                             <div class="scrollable-card item-in-home">
                                 <div class="card">
-                                    <a class="btn m-0 p-0 text-left" href="/item">
+                                    <a class="btn m-0 p-0 text-start" href="/item">
                                         <img src={ItemIcon} class="card-img-top" alt="Item icon" height="300" width="200"/>
                                         <div class="card-body">
                                             <h5 class="card-title">The Elder Scrolls V: Skyrim</h5>

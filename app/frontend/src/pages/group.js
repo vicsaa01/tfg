@@ -1,21 +1,54 @@
 import React from "react";
 
+import { useState, useEffect } from "react";
+
 import DiscussionCard from "../components/DiscussionCard";
 import UserMini from "../components/UserMini";
 import ItemMini from "../components/ItemMini";
 
 const Group = () => {
+    const queryParameters = new URLSearchParams(window.location.search)
+    const id = queryParameters.get("id")
+
+    //EXTRAER DE LA BD
+    const [myGroup, setMyGroup] = useState([]);
+
+    useEffect(() => {
+        fetch('http://127.0.0.1:8000/group?id=' + id)
+          .then((res) => {
+            return res.json();
+          })
+          .then((data) => {
+            console.log(data);
+            setMyGroup(data);
+          });
+    }, [])
+
+    //EXTRAER DE LA BD
+    const [discussions, setDiscussions] = useState([]);
+
+    useEffect(() => {
+        fetch('http://127.0.0.1:8000/discussions?group_id=' + id)
+          .then((res) => {
+            return res.json();
+          })
+          .then((data) => {
+            console.log(data);
+            setDiscussions(data);
+          });
+    }, [])
+
     return(
         <main class="m-5">
                 <div class="row mt-3 mb-3 text-start text-dark">
                     <div class="col-12">
-                        <h3>RPGers International</h3>
+                        <h3>{myGroup.name}</h3>
                     </div>
                 </div>
 
                 <div class="row mb-5 align-items-center">
                     <div class="col-6 text-start">
-                        <p class="mt-3 mb-3 text-dark">Grupo creado por <a href="/user">vic42</a> el 10/10/2022</p>
+                        <p class="mt-3 mb-3 text-dark">Grupo creado por <a href="/user">{myGroup.creator}</a> el {myGroup.created}</p>
                     </div>
                     <div class="col-6 text-end">
                         <a class="btn bg-dark text-white">Unirse a este grupo</a>
@@ -27,7 +60,7 @@ const Group = () => {
                         <div class="row m-0 p-0">
                             <div class="col-5 m-0 p-0">
                                 <div class="row align-items-center">
-                                    <div class="col"><h5 class="mt-3 mb-3">Miembros (100)</h5></div>
+                                    <div class="col"><h5 class="mt-3 mb-3">Miembros ({myGroup.members})</h5></div>
                                     <div class="col text-end"><a class="btn rounded border border-1 border-dark boton-volver p-1 mt-3 mb-3" href="">Ver todos los miembros</a></div>
                                 </div>
                             </div>
@@ -36,25 +69,17 @@ const Group = () => {
 
                             <div class="col-5 m-0 p-0">
                                 <div class="row align-items-center">
-                                    <div class="col"><h5 class="mt-3 mb-3">Ítems (50)</h5></div>
+                                    <div class="col"><h5 class="mt-3 mb-3">Ítems ({myGroup.items})</h5></div>
                                     <div class="col text-end"><a class="btn rounded border border-1 border-dark boton-volver p-1 mt-3 mb-3" href="">Ver todos los ítems</a></div>
                                 </div>
                             </div>
                         </div>
 
+                        {/* EXTRAER DE LA BD -> NUEVOS COMPONENTES? */}
                         <div class="row m-0 p-0">
                             <div class="col-5 border border-1 rounded">
                                 <div class="d-flex flex-row p-3 scrollable">
-                                    <UserMini id="0"/>
-                                    <UserMini id="1"/>
-                                    <UserMini id="0"/>
-                                    <UserMini id="1"/>
-                                    <UserMini id="0"/>
-                                    <UserMini id="1"/>
-                                    <UserMini id="0"/>
-                                    <UserMini id="1"/>
-                                    <UserMini id="0"/>
-                                    <UserMini id="1"/>
+                                    <UserMini id={myGroup.creator}/>
                                 </div>
                             </div>
 
@@ -62,14 +87,6 @@ const Group = () => {
 
                             <div class="col-5 border border-1 rounded">
                                 <div class="d-flex flex-row p-3 scrollable">
-                                    <ItemMini id="0"/>
-                                    <ItemMini id="1"/>
-                                    <ItemMini id="0"/>
-                                    <ItemMini id="1"/>
-                                    <ItemMini id="0"/>
-                                    <ItemMini id="1"/>
-                                    <ItemMini id="0"/>
-                                    <ItemMini id="1"/>
                                     <ItemMini id="0"/>
                                     <ItemMini id="1"/>
                                 </div>
@@ -100,8 +117,9 @@ const Group = () => {
                 <div class="row mb-5">
                     <div class="col-12">
                         <div class="scrollable-card-group my-cards">
-                            <DiscussionCard id="0"/>
-                            <DiscussionCard id="1"/>
+                            {discussions.map((discussion) => (
+                                <DiscussionCard id={discussion._id}/>
+                            ))}
                         </div>
                     </div>
                 </div>

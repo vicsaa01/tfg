@@ -1,19 +1,38 @@
 import React from "react";
 
+import { useState, useEffect } from "react";
+
 import Comment from "../components/Comment"
 
 const Discussion = () => {
+    const queryParameters = new URLSearchParams(window.location.search)
+    const id = queryParameters.get("id")
+
+    //EXTRAER DE LA BD
+    const [myDiscussion, setMyDiscussion] = useState([]);
+
+    useEffect(() => {
+        fetch('http://127.0.0.1:8000/discussion?id=' + id)
+          .then((res) => {
+            return res.json();
+          })
+          .then((data) => {
+            console.log(data);
+            setMyDiscussion(data);
+          });
+    }, [])
+
     return(
         <main class="m-5">
                 <div class="row mt-3 mb-4 text-left text-dark">
                     <div class="col-12 ps-5 pe-5">
-                        <h3>Why Skyrim is the best RPG ever</h3>
+                        <h3>{myDiscussion.title}</h3>
                     </div>
                 </div>
 
                 <div class="row mb-4 text-left text-dark">
                     <div class="col-12 ps-5 pe-5">
-                        <p>Discusión de <a href="/group">RPGers International</a></p>
+                        <p>Discusión de <a href={"/group?id=" + myDiscussion.group}>{myDiscussion.group}</a></p>
                     </div>
                 </div>
 

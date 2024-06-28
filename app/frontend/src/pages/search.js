@@ -3,11 +3,14 @@ import React from "react";
 import SearchCard from "../components/SearchCard";
 
 const Search = () => {
+    const queryParameters = new URLSearchParams(window.location.search)
+    const search = queryParameters.get("search")
+
     return(
             <main class="m-5">
                 <div class="row mt-3 mb-4 text-left text-dark">
                     <div class="col-12">
-                        <h3>Resultados de búsqueda para "El gran"</h3>
+                        <h3>Resultados de búsqueda para "{search}"</h3>
                     </div>
                 </div>
                 

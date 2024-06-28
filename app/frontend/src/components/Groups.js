@@ -1,0 +1,51 @@
+import React from "react";
+
+import { useState, useEffect } from "react";
+
+import GroupCard from "../components/GroupCard";
+
+const Groups = () => {
+    //EXTRAER GRUPOS DE LA BD
+    const [groups, setGroups] = useState([])
+
+    useEffect(() => {
+        fetch('http://127.0.0.1:8000/groups')
+          .then((res) => {
+            return res.json();
+          })
+          .then((data) => {
+            console.log(data);
+            setGroups(data);
+          });
+    }, [])
+
+    return(
+        <>
+            <div class="row mt-3 mb-4 text-left">
+                <div class="col-8"><h3>Explorar grupos</h3></div>
+
+                <div class="col-2"></div>
+
+                <div class="col-2">
+                    <div class="d-flex flex-row justify-content-end">
+                        <a class="btn m-0 r-0 bg-dark text-white" href="/create-group">
+                            + Crear nuevo grupo
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mb-5">
+                    <div class="col-12">
+                        <div class="scrollable-card-group groups">
+                            {groups.map((group) => (
+                                <GroupCard id={group._id} />
+                            ))}
+                        </div>
+                    </div>
+            </div>
+        </>
+    )
+}
+
+export default Groups;

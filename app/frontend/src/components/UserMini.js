@@ -1,22 +1,26 @@
 import React from "react";
 
-import UserAvatar0 from "../img/test-user-knight.png";
-import UserAvatar1 from "../img/test-user-smiley.png";
-import NotFoundIcon from "../img/item-not-found.png";
+import { useState, useEffect } from "react";
 
 const UserMini = (props) => {
-    var icon = NotFoundIcon;
+    //EXTRAER DE LA BD
+    /*
+    const [myUser, setMyUser] = useState([]);
 
-    if (props.id=="0") {
-        icon = UserAvatar0;
-    } else if (props.id=="1") {
-        icon = UserAvatar1;
-    }
-
-    var link = "/user?id=" + props.id;
+    useEffect(() => {
+        fetch('http://127.0.0.1:8000/user?id=' + props.id)
+          .then((res) => {
+            return res.json();
+          })
+          .then((data) => {
+            console.log(data);
+            setMyUser(data);
+          });
+    }, [])
+    */
 
     return(
-        <a class="btn m-0 mr-3 p-0 scrolled" href={link}><img src={icon} width="80" height="80"/></a>
+        <a class="btn m-0 mr-3 p-0 scrolled" href={"/user?id=" + props.id}><img src={"../img/test-user-pepe.png"} width="80" height="80"/></a>
     );
 };
 

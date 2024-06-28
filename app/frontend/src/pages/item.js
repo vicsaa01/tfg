@@ -1,16 +1,33 @@
 import React from "react";
 
-import Comment from "../components/Comment";
+import { useState, useEffect } from "react";
 
-import ItemIcon from "../img/test-item-lebowski.jpg";
+import Comment from "../components/Comment";
 import Recommendation from "../components/Recommendation";
 
 const Item = () => {
+    const queryParameters = new URLSearchParams(window.location.search)
+    const id = queryParameters.get("id")
+
+    //EXTRAER DE LA BD
+    const [myItem, setMyItem] = useState([]);
+
+    useEffect(() => {
+        fetch('http://127.0.0.1:8000/item?id=' + id)
+          .then((res) => {
+            return res.json();
+          })
+          .then((data) => {
+            console.log(data);
+            setMyItem(data);
+          });
+    }, [])
+
     return(
         <main class="m-5">
                 <div class="row mt-3 mb-4 text-center text-dark">
                     <div class="col-12">
-                        <h3>El Gran Lebowski</h3>
+                        <h3>{myItem.name}</h3>
                     </div>
                 </div>
                 
@@ -18,17 +35,16 @@ const Item = () => {
                     <div class="col pt-3 pb-3 border border-dark rounded">
                         <div class="row">
                             <div class="col-lg-3 col-md-4">
-                                <img src={ItemIcon} class="rounded" width="200" height="300"/>
+                                <img src={"../img/" + myItem.icon} class="rounded" width="200" height="300"/>
                             </div>
                             <div class="col-lg-6 col-md-4">
                                 <div class="row">
                                     <div class="col">
-                                        <p>Año: 1998</p>
-                                        <p>Dirigida por: Joel Coen, Ethan Coen</p>
-                                        <p>Géneros: comedia, crimen</p>
-                                        <p>Duración: 1:57 horas</p>
-                                        <p>Descripción: Jeff "El Nota" Lebowski, confundido con un millonario del mismo nombre,
-                                            busca restitución por su dañada alfombra, y recluta a sus compañeros de bolos para ayudarlo.</p>
+                                        <p>Año: {myItem.year}</p>
+                                        <p>Dirigida por: {myItem.directors}</p>
+                                        <p>Géneros: {myItem.genres}</p>
+                                        <p>Duración: {myItem.length}</p>
+                                        <p>Descripción: {myItem.info}</p>
                                     </div>
                                 </div>
                             </div>
@@ -49,7 +65,7 @@ const Item = () => {
                         <div class="row font-weight-bold">
                             <div class="col-lg-4 col-md-5 mt-5">
                                 <h4>Valoración media:</h4>
-                                <h3 class="rounded w-25 text-center valoracion-positiva">80/100</h3>
+                                <h3 class="rounded w-25 text-center valoracion-positiva">{myItem.points*10/myItem.ratings}/100</h3>
                             </div>
 
                             <div class="border border-dark mt-5"></div>
@@ -100,6 +116,7 @@ const Item = () => {
                                 </div>
                             </div>
 
+                        {/* EXTRAER DE LA BD -> NUEVOS COMPONENTES? */}
                         <div class="scrollable-card-group my-cards">
                             <Comment id="0"/>
                             <Comment id="1"/>
@@ -118,6 +135,7 @@ const Item = () => {
                             </div>
                         </div>
 
+                            {/* EXTRAER DE LA BD -> NUEVOS COMPONENTES? */}
                             <div class="scrollable-card-group my-cards">
                                 <Recommendation id="0"/>
                                 <Recommendation id="1"/>

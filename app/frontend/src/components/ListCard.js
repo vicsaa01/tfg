@@ -1,35 +1,31 @@
 import React from "react";
 
+import { useState, useEffect } from "react";
+
 const ListCard = (props) => {
-    var name = "List not found";
-    var type;
-    var creator;
-    var views = 0;
+    //EXTRAER LISTA DE LA BD
+    const [myList, setMyList] = useState([])
 
-    //EXTRAER DE LA BD
-    if (props.id == "0") {
-        name = "Los mejores juegos RPG";
-        type = "Encuesta";
-        creator = "vic42";
-        views = 5000;
-    } else if (props.id == "1") {
-        name = "My favorite movies of all time";
-        type = "Clasificación";
-        creator = "theDude";
-        views = 1000;
-    }
-
-    var link = "/list?id=" + props.id;
+    useEffect(() => {
+        fetch('http://127.0.0.1:8000/list?id=' + props.id)
+          .then((res) => {
+            return res.json();
+          })
+          .then((data) => {
+            console.log(data);
+            setMyList(data);
+          });
+    }, [])
 
     return(
                             <div class="scrollable-card my-card w-100">
                                 <div class="card">
-                                    <a class="btn m-0 p-0" href={link}>
+                                    <a class="btn m-0 p-0" href={"/list?id=" + props.id}>
                                         <div class="card-body d-flex flex-row text-start">
-                                            <div class="col-lg-6 col-md-3"><h5 class="card-title">{name}</h5></div>
-                                            <div class="col-lg-2 col-md-3"><p class="card-text">{type}</p></div>
-                                            <div class="col-lg-2 col-md-3"><p class="card-text">{creator}</p></div>
-                                            <div class="col-lg-2 col-md-3"><p class="card-text">{views}</p></div>
+                                            <div class="col-lg-6 col-md-3"><h5 class="card-title">{myList.name}</h5></div>
+                                            <div class="col-lg-2 col-md-3"><p class="card-text">{myList.type}</p></div>
+                                            <div class="col-lg-2 col-md-3"><p class="card-text">{myList.owner}</p></div>
+                                            <div class="col-lg-2 col-md-3"><p class="card-text">{myList.views}</p></div>
                                         </div>
                                     </a>
                                 </div>

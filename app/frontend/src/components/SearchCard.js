@@ -1,38 +1,34 @@
 import React from "react";
-
-import ItemIcon from "../img/test-item-lebowski.jpg";
-import NotFoundIcon from "../img/item-not-found.png"
+import { useState, useEffect } from "react";
 
 const SearchCard = (props) => {
-    //DEPENDE DE LO QUE ESTÉ BUSCANDO
-    var title = "Ítem no encontrado :(";
-    var year = "?";
-    var directors = "?";
-    var icon = NotFoundIcon;
-
     //EXTRAER DE LA BD
-    if (props.id == "2") {
-        title = "El Gran Lebowski";
-        year = "1998";
-        directors = "Joel Coen, Ethan Coen";
-        icon = ItemIcon;
-    }
+    const [myItem, setMyItem] = useState([])
 
-    var link = "/item?id=" + props.id;
+    useEffect(() => {
+        fetch('http://127.0.0.1:8000/item?id='+props.id)
+          .then((res) => {
+            return res.json();
+          })
+          .then((data) => {
+            console.log(data);
+            setMyItem(data);
+          });
+    }, [])
     
     return(
                             <div class="scrollable-card my-card w-100">
                                 <div class="card mb-1">
                                     <div class="card-body d-flex flex-row text-left">
                                         <div class="col-lg-2 col-md-3">
-                                            <a class="btn m-0 p-0" href={link}><img src={icon} width="120" height="180"/></a>
+                                            <a class="btn m-0 p-0" href={"/item?id=" + props.id}><img src={"../img/" + myItem.icon} width="120" height="180"/></a>
                                         </div>
                                         <div class="col-lg-10 col-md-9">
-                                            <a href={link}>
-                                                <h5 class="card-title m-0 p-0">{title}</h5>
+                                            <a href={"/item?id=" + props.id}>
+                                                <h5 class="card-title m-0 p-0">{myItem.name}</h5>
                                             </a>
-                                            <p class="mt-4">Año: {year}</p>
-                                            <p>Dirigida por: {directors}</p>
+                                            <p class="mt-4">Año: {myItem.year}</p>
+                                            <p>Dirigida por: {myItem.directors}</p>
                                         </div>
                                     </div>
                                 </div>

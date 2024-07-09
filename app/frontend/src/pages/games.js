@@ -11,10 +11,11 @@ const Games = () => {
                     </div>
                 </div>
 
-                <ItemCardList title="Últimos lanzamientos" type="games" criteria="newest"/>
-                <ItemCardList title="Más populares en acción"/>
-                <ItemCardList title="Más populares en aventura"/>
-                <ItemCardList title="Más populares en deportes"/>
+                <ItemCardList title="Últimos lanzamientos" type="games" criteria="newest" genre="all"/>
+                <ItemCardList title="Más populares en acción" type="games" criteria="popular" genre="acción"/>
+                <ItemCardList title="Más populares en aventura" type="games" criteria="popular" genre="aventura"/>
+                <ItemCardList title="Más populares en estrategia" type="games" criteria="popular" genre="estrategia"/>
+                <ItemCardList title="Más populares en simuladores" type="games" criteria="popular" genre="simuladores"/>
             </main>
     );
 };

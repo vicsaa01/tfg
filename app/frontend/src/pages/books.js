@@ -11,10 +11,10 @@ const Books = () => {
                     </div>
                 </div>
 
-                <ItemCardList title="Últimos lanzamientos"/>
-                <ItemCardList title="Más populares en filosofía"/>
-                <ItemCardList title="Más populares en novelas"/>
-                <ItemCardList title="Más populares en cómics"/>
+                <ItemCardList title="Últimos lanzamientos" type="books" criteria="newest" genre="all"/>
+                <ItemCardList title="Más populares en fantasía" type="books" criteria="popular" genre="fantasía"/>
+                <ItemCardList title="Más populares en no ficción" type="books" criteria="popular" genre="no ficción"/>
+                <ItemCardList title="Más populares en terror" type="books" criteria="popular" genre="terror"/>
             </main>
     );
 };

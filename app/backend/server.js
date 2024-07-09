@@ -63,64 +63,94 @@ app.listen(PORT, () => {
 // Routes to fetch newest items
 
 app.get('/newest-items', async (req, res) => {
-  const itemList = await items.find().sort({year: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -directors -length');
+  const itemList = await items.find().sort({year: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
   res.json(itemList);
 });
 
 app.get('/newest-music', async (req, res) => {
-  const itemList = await items.find({type: 'música'}).sort({year: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -directors -length');
+  const itemList = await items.find({type: 'música'}).sort({year: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
   res.json(itemList);
 });
 
 app.get('/newest-games', async (req, res) => {
-  const itemList = await items.find({type: 'videojuego'}).sort({year: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -directors -length');
+  const itemList = await items.find({type: 'videojuego'}).sort({year: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
   res.json(itemList);
 });
 
 app.get('/newest-movies', async (req, res) => {
-  const itemList = await items.find({type: 'película'}).sort({year: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -directors -length');
+  const itemList = await items.find({type: 'película'}).sort({year: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
   res.json(itemList);
 });
 
 app.get('/newest-tv', async (req, res) => {
-  const itemList = await items.find({type: 'serie'}).sort({year: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -directors -length');
+  const itemList = await items.find({type: 'serie'}).sort({year: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
   res.json(itemList);
 });
 
 app.get('/newest-books', async (req, res) => {
-  const itemList = await items.find({type: 'libro'}).sort({year: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -directors -length');
+  const itemList = await items.find({type: 'libro'}).sort({year: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
   res.json(itemList);
 });
 
 // Routes to fetch most popular items
 
 app.get('/popular-items', async (req, res) => {
-  const itemList = await items.find().sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -directors -length');
+  const itemList = await items.find().sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
   res.json(itemList);
 });
 
 app.get('/popular-music', async (req, res) => {
-  const itemList = await items.find({type: 'música'}).sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -directors -length');
+  genre = req.query.genre;
+  var itemList = []
+  if (genre=='all'){
+    itemList = await items.find({type: 'música'}).sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+  } else {
+    itemList = await items.find({type: 'música', genres: genre}).sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+  }
   res.json(itemList);
 });
 
 app.get('/popular-games', async (req, res) => {
-  const itemList = await items.find({type: 'videojuego'}).sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -directors -length');
+  genre = req.query.genre;
+  var itemList = []
+  if (genre=='all'){
+    itemList = await items.find({type: 'videojuego'}).sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+  } else {
+    itemList = await items.find({type: 'videojuego', genres: genre}).sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+  }
   res.json(itemList);
 });
 
 app.get('/popular-movies', async (req, res) => {
-  const itemList = await items.find({type: 'película'}).sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -directors -length');
+  genre = req.query.genre;
+  var itemList = []
+  if (genre=='all'){
+    itemList = await items.find({type: 'película'}).sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+  } else {
+    itemList = await items.find({type: 'película', genres: genre}).sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+  }
   res.json(itemList);
 });
 
 app.get('/popular-tv', async (req, res) => {
-  const itemList = await items.find({type: 'serie'}).sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -directors -length');
+  genre = req.query.genre;
+  var itemList = []
+  if (genre=='all'){
+    itemList = await items.find({type: 'serie'}).sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+  } else {
+    itemList = await items.find({type: 'serie', genres: genre}).sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+  }
   res.json(itemList);
 });
 
 app.get('/popular-books', async (req, res) => {
-  const itemList = await items.find({type: 'libro'}).sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -directors -length');
+  genre = req.query.genre;
+  var itemList = []
+  if (genre=='all'){
+    itemList = await items.find({type: 'libro'}).sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+  } else {
+    itemList = await items.find({type: 'libro', genres: genre}).sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+  }
   res.json(itemList);
 });
 
@@ -148,9 +178,97 @@ app.get('/poll-elements', async (req, res) => {
   res.json(pollElementsList);
 });
 
-// Routes for the Search system
+// Route for the Search system
 
-/* implement ordering and filtering */
+app.get('/search', async (req, res) => {
+  string = req.query.string;
+  orderby = req.query.orderby;
+  filterby = req.query.filterby;
+  var searchList = [];
+
+  switch (filterby) {
+    case 'all':
+      if (orderby == 'popular') {
+        searchList = await items.find().sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+      } else if (orderby == 'newest') {
+        searchList = await items.find().sort({year: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+      } else {
+        searchList = await items.find().select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+      }
+      break;
+
+    case 'music':
+      if (orderby == 'popular') {
+        searchList = await items.find({type: 'música'}).sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+      } else if (orderby == 'newest') {
+        searchList = await items.find({type: 'música'}).sort({year: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+      } else {
+        searchList = await items.find({type: 'música'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+      }
+      break;
+
+    case 'games':
+      if (orderby == 'popular') {
+        searchList = await items.find({type: 'videojuego'}).sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+      } else if (orderby == 'newest') {
+        searchList = await items.find({type: 'videojuego'}).sort({year: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+      } else {
+        searchList = await items.find({type: 'videojuego'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+      }
+      break;
+
+    case 'movies':
+      if (orderby == 'popular') {
+        searchList = await items.find({type: 'película'}).sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+      } else if (orderby == 'newest') {
+        searchList = await items.find({type: 'película'}).sort({year: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+      } else {
+        searchList = await items.find({type: 'película'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+      }
+      break;
+
+    case 'tv':
+      if (orderby == 'popular') {
+        searchList = await items.find({type: 'serie'}).sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+      } else if (orderby == 'newest') {
+        searchList = await items.find({type: 'serie'}).sort({year: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+      } else {
+        searchList = await items.find({type: 'serie'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+      }
+      break;
+
+    case 'books':
+      if (orderby == 'popular') {
+        searchList = await items.find({type: 'libro'}).sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+      } else if (orderby == 'newest') {
+        searchList = await items.find({type: 'libro'}).sort({year: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+      } else {
+        searchList = await items.find({type: 'libro'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+      }
+      break;
+
+    case 'groups':
+      if (orderby == 'popular') {
+        searchList = await groups.find().sort({members: 'desc'}).select('_id -name -logo -type -created -creator -members -items');
+      } else if (orderby == 'newest') {
+        searchList = await groups.find().sort({created: 'desc'}).select('_id -name -logo -type -created -creator -members -items');
+      } else {
+        searchList = await groups.find().select('_id -name -logo -type -created -creator -members -items');
+      }
+      break;
+
+    default:
+      if (orderby == 'popular') {
+        searchList = await items.find().sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+      } else if (orderby == 'newest') {
+        searchList = await items.find().sort({year: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+      } else {
+        searchList = await items.find().select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+      }
+      break;
+  }
+  res.json(searchList);
+});
 
 // Routes to fetch by ID
 

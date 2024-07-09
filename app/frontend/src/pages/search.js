@@ -1,10 +1,23 @@
 import React from "react";
+import { useState, useEffect } from "react";
 
-import SearchCard from "../components/SearchCard";
+import SearchCardList from "../components/SearchCardList";
 
-const Search = () => {
+const Search = (props) => {
     const queryParameters = new URLSearchParams(window.location.search)
     const search = queryParameters.get("search")
+    const order = queryParameters.get("order")
+    const filter = queryParameters.get("filter")
+
+    const [filters, setFilters] = useState(["popular", "all"]);
+
+    const handleOrderSelect = (e) => {
+        setFilters([e.target.value, filters[1]])
+    }
+
+    const handleFilterSelect = (e) => {
+        setFilters([filters[0], e.target.value])
+    }
 
     return(
             <main class="m-5">
@@ -16,7 +29,7 @@ const Search = () => {
                 
                 <div class="row mb-5">
                     <div class="col">
-                        <form>
+                        <form id="searchForm">
                             <div class="row">
                                 <div class="col-lg-2 col-md-3 col-sm-4"><p class="mt-3 ms-1">Ordenar por:</p></div>
 
@@ -27,16 +40,17 @@ const Search = () => {
 
                             <div class="row">
                                 <div class="col-lg-2 col-md-3">
-                                            <select class="form-select p-1 border border-1 border-dark" id="selectlist">
-                                                <option value="new">Más nuevos</option>
+                                            <select class="form-select p-1 border border-1 border-dark" name="order_select" onChange={handleOrderSelect}>
                                                 <option value="popular">Más populares</option>
+                                                <option value="newest">Más nuevos</option>
                                             </select>
                                 </div>
 
                                 <div class="col-2"></div>
 
                                 <div class="col-lg-2 col-md-3 text-end">
-                                            <select class="form-select p-1 border border-1 border-dark" id="selectlist">
+                                            <select class="form-select p-1 border border-1 border-dark" name="filter_select" onChange={handleFilterSelect}>
+                                                <option value="all">Ítems (todos los tipos)</option>
                                                 <option value="music">Música</option>
                                                 <option value="games">Juegos</option>
                                                 <option value="movies">Películas</option>
@@ -47,6 +61,12 @@ const Search = () => {
                                                 <option value="discussions">Discusiones</option>
                                             </select>
                                 </div>
+
+                                <div class="col-1"></div>
+
+                                <div class="col-lg-2 col-md-3 text-end">
+                                    <a class="btn rounded bg-dark text-white mt-0 mb-3" href={'/search?search=' + search + '&order=' + filters[0] + '&filter=' + filters[1]}>Buscar</a>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -54,9 +74,7 @@ const Search = () => {
                 
                 <div class="row mb-5">
                     <div class="col-12">
-                        <div class="scrollable-card-group my-cards">
-                            <SearchCard id="2"/>
-                        </div>
+                        <SearchCardList search={search} orderby={order} filterby={filter}/>
                     </div>
                 </div>
 

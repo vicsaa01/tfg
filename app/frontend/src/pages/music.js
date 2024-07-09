@@ -11,10 +11,10 @@ const Music = () => {
                     </div>
                 </div>
 
-                <ItemCardList title="Últimos lanzamientos"/>
-                <ItemCardList title="Más populares en rock"/>
-                <ItemCardList title="Más populares en electrónica"/>
-                <ItemCardList title="Más populares en jazz"/>
+                <ItemCardList title="Últimos lanzamientos" type="music" criteria="newest" genre="all"/>
+                <ItemCardList title="Más populares en electrónica" type="music" criteria="popular" genre="electrónica"/>
+                <ItemCardList title="Más populares en rap" type="music" criteria="popular" genre="rap"/>
+                <ItemCardList title="Más populares en jazz" type="music" criteria="popular" genre="jazz"/>
             </main>
     );
 };

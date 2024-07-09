@@ -11,10 +11,10 @@ const TV = () => {
                     </div>
                 </div>
 
-                <ItemCardList title="Últimos lanzamientos"/>
-                <ItemCardList title="Más populares en acción"/>
-                <ItemCardList title="Más populares en comedia"/>
-                <ItemCardList title="Más populares en crimen"/>
+                <ItemCardList title="Últimos lanzamientos" type="tv" criteria="newest" genre="all"/>
+                <ItemCardList title="Más populares en acción" type="tv" criteria="popular" genre="acción"/>
+                <ItemCardList title="Más populares en aventura" type="tv" criteria="popular" genre="aventura"/>
+                <ItemCardList title="Más populares en comedia" type="tv" criteria="popular" genre="comedia"/>
             </main>
     );
 };

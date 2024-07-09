@@ -12,12 +12,12 @@ const Home = () => {
                     </div>
                 </div>
 
-                <ItemCardList title="Últimos lanzamientos" type="items" criteria="newest"/>
-                <ItemCardList title="Más populares en música" type="music" criteria="popular"/>
-                <ItemCardList title="Más populares en juegos" type="games" criteria="popular"/>
-                <ItemCardList title="Más populares en películas" type="movies" criteria="popular"/>
-                <ItemCardList title="Más populares en series de TV" type="tv" criteria="popular"/>
-                <ItemCardList title="Más populares en libros" type="books" criteria="popular"/>
+                <ItemCardList title="Últimos lanzamientos" type="items" criteria="newest" genre="all"/>
+                <ItemCardList title="Más populares en música" type="music" criteria="popular" genre="all"/>
+                <ItemCardList title="Más populares en juegos" type="games" criteria="popular" genre="all"/>
+                <ItemCardList title="Más populares en películas" type="movies" criteria="popular" genre="all"/>
+                <ItemCardList title="Más populares en series de TV" type="tv" criteria="popular" genre="all"/>
+                <ItemCardList title="Más populares en libros" type="books" criteria="popular" genre="all"/>
         </main>
     );
 };

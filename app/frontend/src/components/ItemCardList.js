@@ -7,7 +7,7 @@ const ItemCardList = (props) => {
     const [items, setItems] = useState([])
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/' + props.criteria + '-' + props.type)
+        fetch('http://127.0.0.1:8000/' + props.criteria + '-' + props.type + '?genre=' + props.genre)
           .then((res) => {
             return res.json();
           })

@@ -1,29 +1,35 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-import SearchCard from "../components/SearchCard";
-
 const SearchCardList = (props) => {
-
-    const [items, setItems] = useState([]);
+    //EXTRAER DE LA BD
+    const [myList, setMyList] = useState([])
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/search?string=' + props.search + '&orderby=' + props.orderby + '&filterby=' + props.filterby)
+        fetch('http://127.0.0.1:8000/list?id='+props.id)
           .then((res) => {
             return res.json();
           })
           .then((data) => {
             console.log(data);
-            setItems(data);
+            setMyList(data);
           });
     }, [])
-
+    
     return(
-                        <div class="scrollable-card-group my-cards">
-                            {items.map((item) => (
-                                <SearchCard id={item._id}/>
-                            ))}
-                        </div>
+                            <div class="scrollable-card my-card w-100">
+                                <div class="card mb-1">
+                                    <div class="card-body d-flex flex-row text-left">
+                                        <div class="col-lg-10 col-md-9">
+                                            <a href={"/list?id=" + props.id}>
+                                                <h5 class="card-title m-0 p-0">{myList.name}</h5>
+                                            </a>
+                                            <p class="mt-4">Tipo: {myList.type}</p>
+                                            <p>Ítems: {myList.items}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
     );
 };
 

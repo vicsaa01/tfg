@@ -189,81 +189,101 @@ app.get('/search', async (req, res) => {
   switch (filterby) {
     case 'all':
       if (orderby == 'popular') {
-        searchList = await items.find().sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+        searchList = await items.find({name: {$regex: string, $options: 'i'}}).sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
       } else if (orderby == 'newest') {
-        searchList = await items.find().sort({year: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+        searchList = await items.find({name: {$regex: string, $options: 'i'}}).sort({year: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
       } else {
-        searchList = await items.find().select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+        searchList = await items.find({name: {$regex: string, $options: 'i'}}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
       }
       break;
 
     case 'music':
       if (orderby == 'popular') {
-        searchList = await items.find({type: 'música'}).sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+        searchList = await items.find({name: {$regex: string, $options: 'i'}, type: 'música'}).sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
       } else if (orderby == 'newest') {
-        searchList = await items.find({type: 'música'}).sort({year: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+        searchList = await items.find({name: {$regex: string, $options: 'i'}, type: 'música'}).sort({year: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
       } else {
-        searchList = await items.find({type: 'música'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+        searchList = await items.find({name: {$regex: string, $options: 'i'}, type: 'música'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
       }
       break;
 
     case 'games':
       if (orderby == 'popular') {
-        searchList = await items.find({type: 'videojuego'}).sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+        searchList = await items.find({name: {$regex: string, $options: 'i'}, type: 'videojuego'}).sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
       } else if (orderby == 'newest') {
-        searchList = await items.find({type: 'videojuego'}).sort({year: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+        searchList = await items.find({name: {$regex: string, $options: 'i'}, type: 'videojuego'}).sort({year: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
       } else {
-        searchList = await items.find({type: 'videojuego'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+        searchList = await items.find({name: {$regex: string, $options: 'i'}, type: 'videojuego'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
       }
       break;
 
     case 'movies':
       if (orderby == 'popular') {
-        searchList = await items.find({type: 'película'}).sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+        searchList = await items.find({name: {$regex: string, $options: 'i'}, type: 'película'}).sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
       } else if (orderby == 'newest') {
-        searchList = await items.find({type: 'película'}).sort({year: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+        searchList = await items.find({name: {$regex: string, $options: 'i'}, type: 'película'}).sort({year: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
       } else {
-        searchList = await items.find({type: 'película'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+        searchList = await items.find({name: {$regex: string, $options: 'i'}, type: 'película'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
       }
       break;
 
     case 'tv':
       if (orderby == 'popular') {
-        searchList = await items.find({type: 'serie'}).sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+        searchList = await items.find({name: {$regex: string, $options: 'i'}, type: 'serie'}).sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
       } else if (orderby == 'newest') {
-        searchList = await items.find({type: 'serie'}).sort({year: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+        searchList = await items.find({name: {$regex: string, $options: 'i'}, type: 'serie'}).sort({year: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
       } else {
-        searchList = await items.find({type: 'serie'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+        searchList = await items.find({name: {$regex: string, $options: 'i'}, type: 'serie'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
       }
       break;
 
     case 'books':
       if (orderby == 'popular') {
-        searchList = await items.find({type: 'libro'}).sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+        searchList = await items.find({name: {$regex: string, $options: 'i'}, type: 'libro'}).sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
       } else if (orderby == 'newest') {
-        searchList = await items.find({type: 'libro'}).sort({year: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+        searchList = await items.find({name: {$regex: string, $options: 'i'}, type: 'libro'}).sort({year: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
       } else {
-        searchList = await items.find({type: 'libro'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+        searchList = await items.find({name: {$regex: string, $options: 'i'}, type: 'libro'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
       }
       break;
 
     case 'groups':
       if (orderby == 'popular') {
-        searchList = await groups.find().sort({members: 'desc'}).select('_id -name -logo -type -created -creator -members -items');
+        searchList = await groups.find({name: {$regex: string, $options: 'i'}}).sort({members: 'desc'}).select('_id -name -logo -type -created -creator -members -items');
       } else if (orderby == 'newest') {
-        searchList = await groups.find().sort({created: 'desc'}).select('_id -name -logo -type -created -creator -members -items');
+        searchList = await groups.find({name: {$regex: string, $options: 'i'}}).sort({created: 'desc'}).select('_id -name -logo -type -created -creator -members -items');
       } else {
-        searchList = await groups.find().select('_id -name -logo -type -created -creator -members -items');
+        searchList = await groups.find({name: {$regex: string, $options: 'i'}}).select('_id -name -logo -type -created -creator -members -items');
+      }
+      break;
+
+    case 'lists':
+      if (orderby == 'popular') {
+        searchList = await lists.find({name: {$regex: string, $options: 'i'}}).sort({views: 'desc'}).select('_id -name -type -created -owner -items -views');
+      } else if (orderby == 'newest') {
+        searchList = await lists.find({name: {$regex: string, $options: 'i'}}).sort({created: 'desc'}).select('_id -name -type -created -owner -items -views');
+      } else {
+        searchList = await lists.find({name: {$regex: string, $options: 'i'}}).select('_id -name -type -created -owner -items -views');
+      }
+      break;
+
+    case 'discussions':
+      if (orderby == 'popular') {
+        searchList = await discussions.find({title: {$regex: string, $options: 'i'}}).sort({likes: 'desc'}).select('_id -title -text -tags -created -creator -likes -group');
+      } else if (orderby == 'newest') {
+        searchList = await discussions.find({title: {$regex: string, $options: 'i'}}).sort({created: 'desc'}).select('_id -title -text -tags -created -creator -likes -group');
+      } else {
+        searchList = await discussions.find({title: {$regex: string, $options: 'i'}}).select('_id -title -text -tags -created -creator -likes -group');
       }
       break;
 
     default:
       if (orderby == 'popular') {
-        searchList = await items.find().sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+        searchList = await items.find({name: {$regex: string, $options: 'i'}}).sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
       } else if (orderby == 'newest') {
-        searchList = await items.find().sort({year: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+        searchList = await items.find({name: {$regex: string, $options: 'i'}}).sort({year: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
       } else {
-        searchList = await items.find().select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+        searchList = await items.find({name: {$regex: string, $options: 'i'}}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
       }
       break;
   }

@@ -7,6 +7,7 @@ const PORT = process.env.PORT || 8000;
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Connect to MongoDB
 mongoose.connect('mongodb://127.0.0.1:27017', {
@@ -18,26 +19,56 @@ mongoose.connect('mongodb://127.0.0.1:27017', {
 // Create DB schemas and models
 
 const itemsSchema = new mongoose.Schema({
-    name: String,
-    info: String,
+    name: {type: String, required: true},
+    info: {type: String, required: true, default: 'No hay información sobre este ítem.'},
+    icon: {type: String, required: true, default: 'default-group-logo.png'},
+    points: {type: Number, required: true, default: 0},
+    ratings: {type: Number, required: true, default: 0},
+    artist: {type: String, required: false},
+    studio: {type: String, required: false},
+    director: {type: String, required: false},
+    producer: {type: String, required: false},
+    writer: {type: String, required: false},
+    author: {type: String, required: false},
+    year: {type: String, required: false},
+    country: {type: String, required: false},
+    length: {type: String, required: false},
+    platforms: {type: String, required: false},
+    seasons: {type: String, required: false},
+    pages: {type: String, required: false}
   });
 const items = mongoose.model('Items', itemsSchema);
 
-const groupsSchema = new mongoose.Schema({
-  name: String,
-  type: String,
-});
-const groups = mongoose.model('Groups', groupsSchema);
-
 const listsSchema = new mongoose.Schema({
-  name: String,
-  type: String,
+  name: {type: String, required: true},
+  type: {type: String, required: true},
+  scope: {type: String, required: false},
+  creator_id: {type: String, required: true},
+  created_at: {type: String, required: true, default: Date.now()},
+  views: {type: Number, required: true, default: 0}
 });
 const lists = mongoose.model('Lists', listsSchema);
 
+const groupsSchema = new mongoose.Schema({
+  name: {type: String, required: true},
+  type: {type: String, required: true},
+  logo: {type: String, required: true, default: 'default-group-logo.png'},
+  creator_id: {type: String, required: true},
+  created_at: {type: String, required: true, default: Date.now()},
+  members: {type: Number, required: true, default: 0},
+  items: {type: Number, required: true, default: 0}
+});
+const groups = mongoose.model('Groups', groupsSchema);
 
 const discussionsSchema = new mongoose.Schema({
-  title: String
+  title: {type: String, required: true},
+  text: {type: String, required: true},
+  tags: {type: String, required: false},
+  group_id: {type: String, required: true},
+  creator_id: {type: String, required: true},
+  created_at: {type: String, required: true, default: Date.now()},
+  likes: {type: Number, required: true, default: 0},
+  dislikes: {type: Number, required: true, default: 0}
 });
 const discussions = mongoose.model('Discussions', discussionsSchema);
 
@@ -156,25 +187,25 @@ app.get('/popular-books', async (req, res) => {
 
 // Routes for the Community section
 
-app.get('/groups', async (req, res) => {
-  const groupList = await groups.find().sort({members: 'desc'}).select('_id -name -logo -type -created -creator -members -items');
-  res.json(groupList);
+app.get('/lists', async (req, res) => {
+  const listList = await lists.find().sort({views: 'desc'}).select('_id -name -type -scope -creator_id -created_at -views -__v');
+  res.json(listList);
 });
 
-app.get('/lists', async (req, res) => {
-  const listList = await lists.find().sort({views: 'desc'}).select('_id -name -type -created -owner -items -views');
-  res.json(listList);
+app.get('/groups', async (req, res) => {
+  const groupList = await groups.find().sort({members: 'desc'}).select('_id -name -type -logo -creator_id -created_at -members -items -__v');
+  res.json(groupList);
 });
 
 app.get('/discussions', async (req, res) => {
   group_id = req.query.group_id;
-  const discussionsList = await discussions.find({group: group_id}).sort({likes: 'desc'}).select('_id -title -text -tags -created -creator -likes -group');
+  const discussionsList = await discussions.find({group_id: group_id}).sort({likes: 'desc'}).select('_id -title -text -tags -group_id -creator_id -created_at -likes -dislikes -__v');
   res.json(discussionsList);
 });
 
 app.get('/poll-elements', async (req, res) => {
   list_id = req.query.list_id;
-  const pollElementsList = await item_in.find({list: list_id}).sort({votes: 'desc'}).select('_id -item -list -votes');
+  const pollElementsList = await item_in.find({list: list_id}).sort({votes: 'desc'}).select('_id -item -list -votes -__v');
   res.json(pollElementsList);
 });
 
@@ -249,21 +280,21 @@ app.get('/search', async (req, res) => {
 
     case 'groups':
       if (orderby == 'popular') {
-        searchList = await groups.find({name: {$regex: string, $options: 'i'}}).sort({members: 'desc'}).select('_id -name -logo -type -created -creator -members -items');
+        searchList = await groups.find({name: {$regex: string, $options: 'i'}}).sort({members: 'desc'}).select('_id -name -type -logo -creator_id -created_at -members -items -__v');
       } else if (orderby == 'newest') {
-        searchList = await groups.find({name: {$regex: string, $options: 'i'}}).sort({created: 'desc'}).select('_id -name -logo -type -created -creator -members -items');
+        searchList = await groups.find({name: {$regex: string, $options: 'i'}}).sort({created: 'desc'}).select('_id -name -type -logo -creator_id -created_at -members -items -__v');
       } else {
-        searchList = await groups.find({name: {$regex: string, $options: 'i'}}).select('_id -name -logo -type -created -creator -members -items');
+        searchList = await groups.find({name: {$regex: string, $options: 'i'}}).select('_id -name -type -logo -creator_id -created_at -members -items -__v');
       }
       break;
 
     case 'lists':
       if (orderby == 'popular') {
-        searchList = await lists.find({name: {$regex: string, $options: 'i'}}).sort({views: 'desc'}).select('_id -name -type -created -owner -items -views');
+        searchList = await lists.find({name: {$regex: string, $options: 'i'}}).sort({views: 'desc'}).select('_id -name -type -scope -creator_id -created_at -views -__v');
       } else if (orderby == 'newest') {
-        searchList = await lists.find({name: {$regex: string, $options: 'i'}}).sort({created: 'desc'}).select('_id -name -type -created -owner -items -views');
+        searchList = await lists.find({name: {$regex: string, $options: 'i'}}).sort({created: 'desc'}).select('_id -name -type -scope -creator_id -created_at -views -__v');
       } else {
-        searchList = await lists.find({name: {$regex: string, $options: 'i'}}).select('_id -name -type -created -owner -items -views');
+        searchList = await lists.find({name: {$regex: string, $options: 'i'}}).select('_id -name -type -scope -creator_id -created_at -views -__v');
       }
       break;
 
@@ -324,3 +355,24 @@ app.get('/user', async (req, res) => {
 
 
 // Routes to upload forms
+
+app.post('/create-list', (req, res) => {
+  insertData = {'name': req.body.name, 'type': req.body.type, 'scope': req.body.scope, 'creator_id': req.body.creator_id};
+  const newList = new lists(insertData);
+  const addList = newList.save();
+  res.status(201).json(addList);
+})
+
+app.post('/create-group', (req, res) => {
+  insertData = {'name': req.body.name, 'type': req.body.type, 'creator_id': req.body.creator_id};
+  const newGroup = new groups(insertData);
+  const addGroup = newGroup.save();
+  res.status(201).json(addGroup);
+})
+
+app.post('/create-discussion', (req, res) => {
+  insertData = {'title': req.body.title, 'text': req.body.text, 'tags': req.body.tags, 'group_id': req.body.group_id, 'creator_id': req.body.creator_id};
+  const newDiscussion = new discussions(insertData);
+  const addDiscussion = newDiscussion.save();
+  res.status(201).json(addDiscussion);
+})

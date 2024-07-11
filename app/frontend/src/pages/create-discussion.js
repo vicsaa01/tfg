@@ -1,8 +1,46 @@
 import React from "react";
+import { useState } from "react";
 
 const CreateDiscussion = () => {
+    const queryParameters = new URLSearchParams(window.location.search)
+    const group_id = queryParameters.get("group_id")
 
-    const handleInputChange = (e) => {}
+    const [formData, setFormData] = useState({
+        title: '',
+        text: '',
+        tags: '',
+        group_id: group_id,
+        creator_id: 420
+    });
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            [name]: value
+        }));
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        console.log(formData);
+
+        fetch('http://127.0.0.1:8000/create-discussion', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then((response) => response.json())
+        .then(() => {
+            alert('Se ha creado la discusión');
+        })
+        .catch((error) => {
+            alert(error);
+        });
+    }
 
     return(
         <main class="m-5">
@@ -12,7 +50,7 @@ const CreateDiscussion = () => {
                     <div class="col-6">
                         <h3 class="mb-5 text-dark">Iniciar una discusión</h3>
 
-                        <form action="http://127.0.0.1:8000/create-discussion" method="post">
+                        <form onSubmit={handleSubmit}>
                             <div class="row mb-5 p-0 text-start">
                                 <label for="title" class="mb-2 p-1">Título:</label>
                                 <input name="title" type="text" class="form-control" onChange={handleInputChange} required/>

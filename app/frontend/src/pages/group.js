@@ -116,7 +116,7 @@ const Group = () => {
                     </div>
 
                     <div class="col-6 text-end">
-                        <a class="btn bg-dark text-white" href="/create-discussion">+ Iniciar una discusión</a>
+                        <a class="btn bg-dark text-white" href={"/create-discussion?group_id=" + myGroup._id}>+ Iniciar una discusión</a>
                     </div>
                 </div>
 

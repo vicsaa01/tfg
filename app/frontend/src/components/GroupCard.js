@@ -25,7 +25,7 @@ const GroupCard = (props) => {
                             <div class="scrollable-card group">
                                 <div class="card">
                                     <a class="btn m-0 p-0" href={"/group?id=" + props.id}>
-                                        <img src={"../img/" + myGroup.logo} class="card-img-top" alt="Hollywood Sign on The Hill" height="200" width="200"/>
+                                        <img src={"../img/" + myGroup.logo} class="card-img-top" alt="Group logo" height="200" width="200"/>
                                         <div class="card-body">
                                             <h5 class="card-title">{myGroup.name}</h5>
                                         </div>

@@ -55,6 +55,8 @@ const Group = () => {
                     </div>
                 </div>
 
+                <br/><br/><br/>
+
                 <div class="row mb-5">
                     <div class="col-12 m-0 ps-3 pe-3">
                         <div class="row m-0 p-0">
@@ -95,10 +97,10 @@ const Group = () => {
                     </div>
                 </div>
 
-                <div class="row m-5"></div>
+                <br/><br/><br/><br/><br/>
 
                 <div class="row mb-4 text-left text-dark">
-                    <div class="col-12">
+                    <div class="col-6">
                         <form action="">
                             <div class="row align-items-center">
                                 <div class="col-lg-2 col-md-3 col-sm-4"><h5 class="m-3 me-5">Discusiones</h5></div>
@@ -111,6 +113,10 @@ const Group = () => {
                                 </div>
                             </div>
                         </form>
+                    </div>
+
+                    <div class="col-6 text-end">
+                        <a class="btn bg-dark text-white" href="/create-discussion">+ Iniciar una discusión</a>
                     </div>
                 </div>
 

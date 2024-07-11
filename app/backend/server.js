@@ -321,3 +321,6 @@ app.get('/user', async (req, res) => {
   const userList = await users.findById(id);
   res.json(userList);
 });
+
+
+// Routes to upload forms

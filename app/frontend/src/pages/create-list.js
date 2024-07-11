@@ -1,6 +1,9 @@
 import React from "react";
 
 const CreateList = () => {
+
+    const handleInputChange = (e) => {}
+
     return(
         <main class="m-5">
                 <div class="row mb-3 text-center">
@@ -9,10 +12,10 @@ const CreateList = () => {
                     <div class="col-6">
                         <h3 class="mb-5 text-dark">Crear una lista nueva</h3>
 
-                        <form action="">
+                        <form action="http://127.0.0.1:8000/create-list" method="post">
                             <div class="row mb-5 text-start">
                                 <label for="name" class="mb-2 p-1">Nombre:</label>
-                                <input name="name" type="text" class="form-control" required/>
+                                <input name="name" type="text" class="form-control" onChange={handleInputChange} required/>
                             </div>
 
                             <div class="row text-start">

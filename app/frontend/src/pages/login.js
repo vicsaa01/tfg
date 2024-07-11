@@ -14,16 +14,16 @@ const Login = () => {
 
                     <div class="col-4">
 
-                        <form action="">
-                            <label for="nombre" class="mt-3">Email</label>
-                            <input type="email" class="form-control" name="nombre" required/>
+                        <form action="http://127.0.0.1:8000/login" method="post">
+                            <label for="name" class="mt-3">Nombre de usuario</label>
+                            <input type="text" class="form-control" name="name" required/>
 
-                            <label for="descripcion" class="mt-3">Contraseña</label>
-                            <input type="password" class="form-control" name="contra" required/>
+                            <label for="pass" class="mt-3">Contraseña</label>
+                            <input type="password" class="form-control" name="pass" required/>
                             
                             <div class="row mt-5 mb-3">
                                 <div class="col-6 text-start">
-                                    <a class="btn w-100 border border-1 border-dark rounded boton-volver text-dark" href="/">Volver</a>
+                                    <a class="btn w-100 border border-1 border-dark rounded boton-volver text-dark" href="">Volver</a>
                                 </div>
                                 <div class="col text-end">
                                     <button type="submit" class="btn w-100 bg-dark text-white">Iniciar sesión</button>
@@ -32,13 +32,13 @@ const Login = () => {
 
                             <div class="row mt-5 text-center">
                                 <div class="col">
-                                    <a href="">He olvidado mi contraseña</a>
+                                    <a href="/forgot-pass">He olvidado mi contraseña</a>
                                 </div>
                             </div>
 
                             <div class="row mt-3 text-center">
                                 <div class="col">
-                                    <a href="">Todavía no tengo una cuenta</a>
+                                    <a href="/register">Todavía no tengo una cuenta</a>
                                 </div>
                             </div>
                         </form>

@@ -26,6 +26,10 @@ import Search from './pages/search';
 import UserEdit from "./pages/user-edit";
 import User from "./pages/user";
 import Footer from "./components/Footer";
+import CreateDiscussion from './pages/create-discussion';
+import AddItem from './pages/add-item';
+import Register from './pages/register';
+import ForgotPass from './pages/forgot-pass';
 
 const App = () => {
   /* const [items, setItems] = useState([]);
@@ -44,6 +48,7 @@ const App = () => {
                     <Route exact path="/" element={<Home />} />
                     <Route path="/community" element={<Community />} />
                     <Route path="/create-group" element={<CreateGroup />} />
+                    <Route path="/create-discussion" element={<CreateDiscussion />} />
                     <Route path="/create-list" element={<CreateList />} />
                     <Route path="/discussion" element={<Discussion />} />
                     <Route path="/music" element={<Music />} />
@@ -51,10 +56,13 @@ const App = () => {
                     <Route path="/movies" element={<Movies />} />
                     <Route path="/tv" element={<TV />} />
                     <Route path="/books" element={<Books />} />
+                    <Route path="/add-item" element={<AddItem />} />
                     <Route path="/group" element={<Group />} />
                     <Route path="/item" element={<Item />} />
                     <Route path="/list" element={<List />} />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/forgot-pass" element={<ForgotPass />} />
                     <Route path="/search" element={<Search />} />
                     <Route path="/user-edit" element={<UserEdit />} />
                     <Route path="/user" element={<User />} />

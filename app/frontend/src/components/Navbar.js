@@ -5,6 +5,9 @@ import search_icon from '../img/search.png'
 import user_avatar from '../img/test-user-smiley.png'
 
 const Navbar = () => {
+
+  const validateSearch = () => {}
+
     return(
         <header>
                 <div class="row">
@@ -40,7 +43,7 @@ const Navbar = () => {
                         
                         <div class="col-lg-5 col-md-6 col-sm-10">
                             <div class="d-flex justify-content-end">
-                                <form action="/search" onsubmit="return validateSearch(this, 'es')">
+                                <form action="/search" onsubmit={validateSearch}>
                                     <div class="row">
                                       <div class="col-8 p-0 m-0">
                                         <input type="text" class="form-control me-1" placeholder="Buscar..." name="search"/>

@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import DiscussionCard from "../components/DiscussionCard";
 import UserMini from "../components/UserMini";
 import ItemMini from "../components/ItemMini";
+import GroupMenu from "../components/GroupMenu";
 
 const Group = () => {
     const queryParameters = new URLSearchParams(window.location.search)
@@ -47,12 +48,7 @@ const Group = () => {
                 </div>
 
                 <div class="row mb-5 align-items-center">
-                    <div class="col-6 text-start">
-                        <p class="mt-3 mb-3 text-dark">Grupo creado por <a href="/user">{myGroup.creator}</a> el {myGroup.created}</p>
-                    </div>
-                    <div class="col-6 text-end">
-                        <a class="btn bg-dark text-white">Unirse a este grupo</a>
-                    </div>
+                    <GroupMenu id={myGroup._id} creator_id={myGroup.creator_id} created_at={myGroup.created_at}/>
                 </div>
 
                 <br/><br/><br/>
@@ -81,7 +77,7 @@ const Group = () => {
                         <div class="row m-0 p-0">
                             <div class="col-5 border border-1 rounded">
                                 <div class="d-flex flex-row p-3 scrollable">
-                                    <UserMini id={myGroup.creator}/>
+                                    <UserMini id={myGroup.creator_id}/>
                                 </div>
                             </div>
 

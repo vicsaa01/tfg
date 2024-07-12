@@ -2,10 +2,6 @@ import React from "react";
 
 import { useState, useEffect } from "react";
 
-import GroupIcon0 from "../img/test-group-white.png";
-import GroupIcon1 from "../img/test-group-black.png";
-import NotFoundIcon from "../img/item-not-found.png"
-
 const GroupCard = (props) => {
     //EXTRAER DE LA BD
     const [myGroup, setMyGroup] = useState([])

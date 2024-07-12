@@ -3,6 +3,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 
 import PollElement from "../components/PollElement";
+import ListMenu from "../components/ListMenu";
 
 const List = () => {
     const queryParameters = new URLSearchParams(window.location.search)
@@ -31,9 +32,7 @@ const List = () => {
                 </div>
 
                 <div class="row mb-4 text-left text-dark">
-                    <div class="col-12">
-                        <p>Lista creada por <a href={"/user?id=" + myList.owner}>{myList.owner}</a> el 30/07/2022</p>
-                    </div>
+                    <ListMenu id={id} creator_id={myList.creator_id} created_at={myList.created_at}/>
                 </div>
 
                 <div class="row mb-5">

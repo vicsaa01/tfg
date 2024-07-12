@@ -1,8 +1,26 @@
 import React from "react";
 
-import UserAvatar from "../img/test-user-smiley.png";
+import { useState, useEffect } from "react";
+import UserMenu from "../components/UserMenu";
 
 const User = () => {
+    const queryParameters = new URLSearchParams(window.location.search)
+    const id = queryParameters.get("id")
+
+    //EXTRAER DE LA BD
+    const [myUser, setMyUser] = useState([]);
+
+    useEffect(() => {
+        fetch('http://127.0.0.1:8000/user?id=' + id)
+        .then((res) => {
+            return res.json();
+        })
+        .then((data) => {
+            console.log(data);
+            setMyUser(data);
+        });
+    }, [])
+    
     return(
         <main class="m-5">
                 <div class="row mt-3 mb-4 text-center text-dark">
@@ -15,23 +33,21 @@ const User = () => {
                     <div class="col-1"></div>
 
                     <div class="col-lg-3 col-md-4">
-                        <img src={UserAvatar} class="rounded" width="200" height="200"/>
+                        <img src={'/img/' + myUser.avatar} class="rounded border border-dark" width="200" height="200"/>
                     </div>
 
-                    <div class="col-lg-7 col-md-6">
-                        <h5 class="mt-3">vic42</h5>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <div class="col-lg-5 col-md-4">
+                        <h5 class="mt-3">{myUser.name}</h5>
+                        <p>{myUser.info}</p>
+                    </div>
+
+                    <div class="col-2">
+                        <div class="row text-end float-end">
+                            <UserMenu id={id}/>
+                        </div>
                     </div>
 
                     <div class="col-1"></div>
-                </div>
-
-                <div class="row mb-5">
-                    <div class="col-1"></div>
-
-                    <div class="col-10">
-                        <a class="btn rounded bg-dark text-white float-end" href="/user-edit">Editar perfil</a>
-                    </div>
                 </div>
 
                 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>

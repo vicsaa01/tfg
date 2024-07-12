@@ -53,17 +53,17 @@ const CreateDiscussion = () => {
                         <form onSubmit={handleSubmit}>
                             <div class="row mb-5 p-0 text-start">
                                 <label for="title" class="mb-2 p-1">Título:</label>
-                                <input name="title" type="text" class="form-control" onChange={handleInputChange} required/>
+                                <input name="title" type="text" class="form-control" value={formData.title} onChange={handleInputChange} required/>
                             </div>
 
                             <div class="row mb-5 p-0 text-start">
                                 <label for="text" class="mb-2 p-1">Texto:</label>
-                                <textarea name="text" class="form-control" onChange={handleInputChange} required/>
+                                <textarea name="text" class="form-control" value={formData.text} onChange={handleInputChange} required/>
                             </div>
 
                             <div class="row mb-5 p-0 text-start">
                                 <label for="tags" class="mb-2 p-1">Etiquetas (separadas por comas):</label>
-                                <input name="tags" type="text" class="form-control" onChange={handleInputChange} required/>
+                                <input name="tags" type="text" class="form-control" value={formData.tags} onChange={handleInputChange} required/>
                             </div>
 
                             <div class="row m-5"></div>

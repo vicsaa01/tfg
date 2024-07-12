@@ -1,6 +1,42 @@
 import React from "react";
+import { useState } from "react";
 
 const ForgotPass = () => {
+
+    const [formData, setFormData] = useState({
+        name: '',
+        email: ''
+    });
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            [name]: value
+        }));
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        console.log(formData);
+
+        fetch('http://127.0.0.1:8000/reset-pass', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+        })
+        .then((response) => response.json())
+        .then((data) => {
+                alert(data.message);
+        })
+        .catch((error) => {
+                alert(error);
+        });
+    }
+
     return(
         <main class="m-5">
                 <div class="row mt-3 mb-4 text-center text-dark">
@@ -14,9 +50,12 @@ const ForgotPass = () => {
 
                     <div class="col-4">
 
-                        <form action="http://127.0.0.1:8000/forgot-pass" method="post">
+                        <form onSubmit={handleSubmit}>
+                            <label for="name" class="mt-3">Nombre de usuario</label>
+                            <input type="text" class="form-control" name="name" value={formData.name} onChange={handleInputChange} required/>
+                            
                             <label for="email" class="mt-3">Correo electrónico</label>
-                            <input type="email" class="form-control" name="email" required/>
+                            <input type="email" class="form-control" name="email" value={formData.email} onChange={handleInputChange} required/>
                             
                             <div class="row mt-5 mb-3">
                                 <div class="col-6 text-start">

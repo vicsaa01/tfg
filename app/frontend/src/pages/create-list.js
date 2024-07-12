@@ -50,7 +50,7 @@ const CreateList = () => {
                         <form onSubmit={handleSubmit}>
                             <div class="row mb-5 text-start">
                                 <label for="name" class="mb-2 p-1">Nombre:</label>
-                                <input name="name" type="text" class="form-control" onChange={handleInputChange} required/>
+                                <input name="name" type="text" class="form-control" value={formData.name} onChange={handleInputChange} required/>
                             </div>
 
                             <div class="row text-start">

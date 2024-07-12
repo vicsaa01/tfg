@@ -9,19 +9,38 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Connect to MongoDB
+
+// Define some supporting functions
+
+// generates random ID
+function makeid(length) {
+  let result = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  let counter = 0;
+  while (counter < length) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+  }
+  return result;
+}
+
+
+// Connection to MongoDB
+
 mongoose.connect('mongodb://127.0.0.1:27017', {
   dbName: 'tfg',
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => console.log('Connected to MongoDB')).catch((error) => console.error('Connection error:', error));
 
-// Create DB schemas and models
+
+// DB schemas and models
 
 const itemsSchema = new mongoose.Schema({
     name: {type: String, required: true},
     info: {type: String, required: true, default: 'No hay información sobre este ítem.'},
-    icon: {type: String, required: true, default: 'default-group-logo.png'},
+    icon: {type: String, required: true, default: 'default-item-icon.png'},
     points: {type: Number, required: true, default: 0},
     ratings: {type: Number, required: true, default: 0},
     artist: {type: String, required: false},
@@ -78,9 +97,14 @@ const itemInSchema = new mongoose.Schema({
 });
 const item_in = mongoose.model('ItemIn', itemInSchema);
 
-
 const usersSchema = new mongoose.Schema({
-  name: String
+  name: {type: String, required: true},
+  email: {type: String, required: true},
+  password: {type: String, required: true},
+  avatar: {type: String, required: true, default: 'default-user-avatar.png'},
+  info: {type: String, required: false},
+  created_at: {type: String, required: true, default: Date.now()},
+  is_admin: {type: Boolean, required: true, default: false}
 });
 const users = mongoose.model('Users', usersSchema);
 
@@ -331,8 +355,8 @@ app.get('/item', async (req, res) => {
 
 app.get('/group', async (req, res) => {
   id = req.query.id;
-  const groupList = await groups.findById(id);
-  res.json(groupList);
+  const group = await groups.findById(id);
+  res.json(group);
 });
 
 app.get('/list', async (req, res) => {
@@ -375,4 +399,42 @@ app.post('/create-discussion', (req, res) => {
   const newDiscussion = new discussions(insertData);
   const addDiscussion = newDiscussion.save();
   res.status(201).json(addDiscussion);
+})
+
+
+// Routes to register and login users
+
+app.post('/register', (req, res) => {
+  insertData = {'name': req.body.name, 'email': req.body.email, 'password': req.body.pass, 'info': req.body.info};
+  /* check if username or email exists */
+  const newUser = new users(insertData);
+  const addUser = newUser.save();
+  res.status(201).json(addUser);
+})
+
+app.post('/auth', async (req, res) => {
+  const user = await users.find({name: req.body.name});
+  if (user.length == 1) {
+    if (user[0].password == req.body.pass) {
+      res.status(200).json({message: 'Se ha iniciado sesión', user_id: user[0]._id, access_token: makeid(16)});
+    } else {
+      res.status(401).json({message: 'Contraseña incorrecta'});
+    }
+  } else {
+    res.status(401).json({message: 'El usuario no existe'});
+  }
+})
+
+app.post('/reset-pass', async (req, res) => {
+  const user = await users.find({name: req.body.name});
+  if (user.length == 1) {
+    if (user[0].email == req.body.email) {
+      res.status(200).json({message: 'Se enviará un correo para restablecer la contraseña'});
+      // send email
+    } else {
+      res.status(401).json({message: 'El correo electrónico no coincide con el del usuario'});
+    }
+  } else {
+    res.status(401).json({message: 'El usuario no existe'});
+  }
 })

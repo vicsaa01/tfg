@@ -1,8 +1,6 @@
 import React from "react";
 
-import logo from '../img/logo.png'
-import search_icon from '../img/search.png'
-import user_avatar from '../img/test-user-smiley.png'
+import NavbarUserMenu from "./NavbarUserMenu";
 
 const Navbar = () => {
 
@@ -14,7 +12,7 @@ const Navbar = () => {
                     <div class="navbar w-100 bg-dark">
                         <div class="col-1">
                             <a class="navbar-brand ms-3 me-3" href="/">
-                                <img src={logo} width="50" height="50"/>
+                                <img src='/img/logo.png' width="50" height="50"/>
                             </a>
                         </div>
                         
@@ -49,16 +47,14 @@ const Navbar = () => {
                                         <input type="text" class="form-control me-1" placeholder="Buscar..." name="search"/>
                                       </div>
                                       <div class="col-4 p-0 m-0">
-                                        <button type="submit" class="btn rounded bg-white pt-1">
-                                            <img src={search_icon} width="15" height="15"/>
+                                        <button type="submit" class="btn rounded bg-white">
+                                            <img class="pb-1" src='/img/search.png' width="15" height="20"/>
                                         </button>
                                       </div>
                                     </div>
                                 </form>
-                                
-                                <a class="me-4" href="/user">
-                                    <img src={user_avatar} class="rounded-circle" width="40" height="40"/>
-                                </a>
+
+                                <NavbarUserMenu/>
                             </div>
                         </div>
                     </div>

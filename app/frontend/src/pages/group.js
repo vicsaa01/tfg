@@ -47,81 +47,77 @@ const Group = () => {
                     </div>
                 </div>
 
-                <div class="row mb-5 align-items-center">
+                <div class="row mb-3 align-items-center">
                     <GroupMenu id={myGroup._id} creator_id={myGroup.creator_id} created_at={myGroup.created_at}/>
                 </div>
 
                 <br/><br/><br/>
 
                 <div class="row mb-5">
-                    <div class="col-12 m-0 ps-3 pe-3">
-                        <div class="row m-0 p-0">
-                            <div class="col-5 m-0 p-0">
-                                <div class="row align-items-center">
-                                    <div class="col"><h5 class="mt-3 mb-3">Miembros ({myGroup.members})</h5></div>
-                                    <div class="col text-end"><a class="btn rounded border border-1 border-dark boton-volver p-1 mt-3 mb-3" href="">Ver todos los miembros</a></div>
-                                </div>
+
+                    <div class="col-7 m-0 border border-dark border-1 rounded pt-3 pb-3">
+                        <div class="row mb-4 text-left text-dark">
+                            <div class="col-6">
+                                <form action="">
+                                    <div class="row align-items-center">
+                                        <div class="col-lg-4 col-md-5 col-sm-6"><h5 class="me-5">Discusiones</h5></div>
+                                        <div class="col-lg-8 col-md-7 col-sm-6">
+                                            <select class="form-select w-auto p-1 border border-1 border-dark" name="orderby" id="selectlist">
+                                                <option value="new">Más recientes</option>
+                                                <option value="popular">Más populares</option>
+                                                <option value="controversial">Más controvertidas</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
 
-                            <div class="col-2"></div>
-
-                            <div class="col-5 m-0 p-0">
-                                <div class="row align-items-center">
-                                    <div class="col"><h5 class="mt-3 mb-3">Ítems ({myGroup.items})</h5></div>
-                                    <div class="col text-end"><a class="btn rounded border border-1 border-dark boton-volver p-1 mt-3 mb-3" href="">Ver todos los ítems</a></div>
-                                </div>
+                            <div class="col-6 text-end">
+                                <a class="btn bg-dark text-white" href={"/create-discussion?group_id=" + myGroup._id}>+ Iniciar una discusión</a>
                             </div>
                         </div>
 
-                        {/* EXTRAER DE LA BD -> NUEVOS COMPONENTES? */}
-                        <div class="row m-0 p-0">
-                            <div class="col-5 border border-1 rounded">
-                                <div class="d-flex flex-row p-3 scrollable">
-                                    <UserMini id={myGroup.creator_id}/>
+                        <div class="row mb-5">
+                            <div class="col-12">
+                                <div class="scrollable-card-group my-cards">
+                                    {discussions.map((discussion) => (
+                                        <DiscussionCard id={discussion._id}/>
+                                    ))}
                                 </div>
                             </div>
+                        </div>
+                    </div>
 
-                            <div class="col-2"></div>
+                    <div class="col-1"></div>
 
-                            <div class="col-5 border border-1 rounded">
-                                <div class="d-flex flex-row p-3 scrollable">
+                    <div class="col-4 m-0 pe-3 border border-dark border-1 rounded pt-3 pb-3">
+                        <div class="row m-0 p-0">
+                            <div class="col m-0 p-0">
+                                <div class="row align-items-center">
+                                    <div class="col-3"><h5 class="mb-1">Miembros ({myGroup.members})</h5></div>
+                                    <div class="col-3"><a class="btn border border-dark border-1 boton-volver p-1" href="">Ver todos</a></div>
+                                </div>
+
+                                <br/>
+
+                                <div class="d-flex flex-row border border-1 rounded p-1 scrollable">
+                                    <UserMini id={myGroup.creator_id}/>
+                                </div>
+
+                                <br/><br/><br/>
+
+                                <div class="row align-items-center">
+                                    <div class="col-3"><h5 class="mb-1">Ítems ({myGroup.items})</h5></div>
+                                    <div class="col-3"><a class="btn border border-dark border-1 boton-volver p-1" href="">Ver todos</a></div>
+                                </div>
+
+                                <br/>
+
+                                <div class="d-flex flex-row border border-1 rounded p-1 scrollable">
                                     <ItemMini id="0"/>
                                     <ItemMini id="1"/>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <br/><br/><br/><br/><br/>
-
-                <div class="row mb-4 text-left text-dark">
-                    <div class="col-6">
-                        <form action="">
-                            <div class="row align-items-center">
-                                <div class="col-lg-2 col-md-3 col-sm-4"><h5 class="m-3 me-5">Discusiones</h5></div>
-                                <div class="col-lg-10 col-md-9 col-sm-8">
-                                    <select class="form-select w-auto p-1 border border-1 border-dark" name="orderby" id="selectlist">
-                                        <option value="new">Más recientes</option>
-                                        <option value="popular">Más populares</option>
-                                        <option value="controversial">Más controvertidas</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-
-                    <div class="col-6 text-end">
-                        <a class="btn bg-dark text-white" href={"/create-discussion?group_id=" + myGroup._id}>+ Iniciar una discusión</a>
-                    </div>
-                </div>
-
-                <div class="row mb-5">
-                    <div class="col-12">
-                        <div class="scrollable-card-group my-cards">
-                            {discussions.map((discussion) => (
-                                <DiscussionCard id={discussion._id}/>
-                            ))}
                         </div>
                     </div>
                 </div>

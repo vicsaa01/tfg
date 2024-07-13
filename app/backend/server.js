@@ -40,6 +40,8 @@ mongoose.connect('mongodb://127.0.0.1:27017', {
 const itemsSchema = new mongoose.Schema({
     name: {type: String, required: true},
     info: {type: String, required: true, default: 'No hay información sobre este ítem.'},
+    type: {type: String, required: true},
+    genres: {type: String, required: true},
     icon: {type: String, required: true, default: 'default-item-icon.png'},
     points: {type: Number, required: true, default: 0},
     ratings: {type: Number, required: true, default: 0},
@@ -49,7 +51,7 @@ const itemsSchema = new mongoose.Schema({
     producer: {type: String, required: false},
     writer: {type: String, required: false},
     author: {type: String, required: false},
-    year: {type: String, required: false},
+    year: {type: Number, required: false},
     country: {type: String, required: false},
     length: {type: String, required: false},
     platforms: {type: String, required: false},
@@ -399,6 +401,13 @@ app.post('/create-discussion', (req, res) => {
   const newDiscussion = new discussions(insertData);
   const addDiscussion = newDiscussion.save();
   res.status(201).json(addDiscussion);
+})
+
+app.post('/add-item', (req, res) => {
+  insertData = {'name': req.body.name, 'info': req.body.info, 'type': req.body.type, 'genres': req.body.genres, 'year': req.body.year};
+  const newItem = new items(insertData);
+  const addItem = newItem.save();
+  res.status(201).json(addItem);
 })
 
 

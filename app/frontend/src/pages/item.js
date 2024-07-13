@@ -35,7 +35,7 @@ const Item = () => {
                     <div class="col pt-3 pb-3 border border-dark rounded">
                         <div class="row">
                             <div class="col-lg-3 col-md-4">
-                                <img src={"../img/" + myItem.icon} class="rounded" width="200" height="300"/>
+                                <img src={"../img/" + myItem.icon} class="rounded" width="200" height="200"/>
                             </div>
                             <div class="col-lg-6 col-md-4">
                                 <div class="row">

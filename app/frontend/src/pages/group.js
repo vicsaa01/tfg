@@ -115,7 +115,6 @@ const Group = () => {
 
                                 <div class="d-flex flex-row border border-1 rounded p-1 scrollable">
                                     <ItemMini id="0"/>
-                                    <ItemMini id="1"/>
                                 </div>
                             </div>
                         </div>

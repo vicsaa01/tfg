@@ -30,8 +30,9 @@ const CreateGroup = () => {
             body: JSON.stringify(formData)
         })
         .then((response) => response.json())
-        .then(() => {
+        .then((data) => {
             alert('Se ha creado el grupo');
+            window.location.href = '/group?id=' + data._id;
         })
         .catch((error) => {
             alert(error);
@@ -73,7 +74,7 @@ const CreateGroup = () => {
 
                             <div class="row p-0 mb-5">
                                 <div class="col-6 p-0 text-start">
-                                    <a class="btn w-50 border border-1 border-dark rounded boton-volver text-dark" href="">Volver</a>
+                                    <a class="btn w-50 border border-1 border-dark rounded boton-volver text-dark" href="/community">Volver</a>
                                 </div>
                                 <div class="col-6 p-0 text-end">
                                     <button type="submit" class="btn w-50 bg-dark text-white">Crear grupo</button>

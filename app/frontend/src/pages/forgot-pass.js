@@ -1,7 +1,14 @@
 import React from "react";
-import { useState } from "react";
 
-const ForgotPass = () => {
+import { useState } from "react";
+import { Navigate } from "react-router-dom";
+
+const ForgotPass = (props) => {
+
+    props.setNav(false);
+
+
+    //FORMULARIO
 
     const [formData, setFormData] = useState({
         name: '',
@@ -31,11 +38,29 @@ const ForgotPass = () => {
         .then((response) => response.json())
         .then((data) => {
                 alert(data.message);
+                if (data.email) {window.location.href = '/login';}
         })
         .catch((error) => {
                 alert(error);
         });
     }
+
+
+    //IR AL LOGIN
+
+    const [toLogin, setToLogin] = useState(false);
+
+    const handleLogin = () => {
+        setToLogin(true);
+    }
+
+    const ToLogin = () => {
+        if (toLogin == true) {
+            setToLogin(false);
+            return <Navigate to="/login" state={{prevUrl: '/forgot-pass', has_id: false, id: ''}} />;
+        }
+    }
+
 
     return(
         <main class="m-5">
@@ -59,7 +84,8 @@ const ForgotPass = () => {
                             
                             <div class="row mt-5 mb-3">
                                 <div class="col-6 text-start">
-                                    <a class="btn w-100 border border-1 border-dark rounded boton-volver text-dark" href="">Volver</a>
+                                    <a class="btn w-100 border border-1 border-dark rounded boton-volver text-dark" href="/login" onClick={handleLogin}>Volver</a>
+                                    <ToLogin/>
                                 </div>
                                 <div class="col text-end">
                                     <button type="submit" class="btn w-100 bg-dark text-white">Enviar correo</button>
@@ -68,7 +94,8 @@ const ForgotPass = () => {
 
                             <div class="row mt-5 text-center">
                                 <div class="col">
-                                    <a href="/login">Iniciar sesión</a>
+                                    <a href="/login" onClick={handleLogin}>Iniciar sesión</a>
+                                    <ToLogin/>
                                 </div>
                             </div>
                         </form>

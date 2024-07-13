@@ -2,10 +2,16 @@ import React from "react";
 
 import { useState } from "react";
 import { useCookies } from 'react-cookie';
+import { useLocation, Navigate } from "react-router-dom";
 
-const Login = () => {
+const Login = (props) => {
+
+    props.setNav(false);
 
     const [cookies, setCookie] = useCookies(['session']);
+
+
+    // FORMULARIO
 
     const [formData, setFormData] = useState({
         name: '',
@@ -41,6 +47,8 @@ const Login = () => {
                     };
                     setCookie('session', session, {path: '/'});
                     // setCookie('session', session, {path: '/', expires});
+                    props.setNav(false);
+                    window.location.href = '/';
                 } else {
                     alert(data.message);
                 }
@@ -49,6 +57,42 @@ const Login = () => {
                 alert(error);
         });
     }
+
+
+    // VOLVER ATRÁS
+
+    const location = useLocation();
+    console.log(location);
+
+    const prevUrl = location.state.prevUrl;
+
+    const has_id = location.state.has_id;
+    var id = '';
+    if (has_id) id = location.state.id;
+
+    const has_search = location.state.has_search;
+    var search = '';
+    if (has_search) search = location.state.search;
+
+    const [goBack, setGoBack] = useState(false);
+
+    const handleGoBack = () => {
+        setGoBack(true);
+    }
+
+    const GoBack = () => {
+        if (goBack == true) {
+            setGoBack(false);
+            if (has_id)
+                return <Navigate to={prevUrl + '?id=' + id} />;
+            else
+                if (has_search)
+                    return <Navigate to={prevUrl + '?search=' + search} />;
+                else
+                    return <Navigate to={prevUrl} />;
+        }
+    }
+
 
     return(
         <main class="m-5">
@@ -72,7 +116,8 @@ const Login = () => {
                             
                             <div class="row mt-5 mb-3">
                                 <div class="col-6 text-start">
-                                    <a class="btn w-100 border border-1 border-dark rounded boton-volver text-dark" href="">Volver</a>
+                                    <a class="btn w-100 border border-1 border-dark rounded boton-volver text-dark" href="" onClick={handleGoBack}>Volver</a>
+                                    <GoBack/>
                                 </div>
                                 <div class="col text-end">
                                     <button type="submit" class="btn w-100 bg-dark text-white">Iniciar sesión</button>
@@ -88,6 +133,12 @@ const Login = () => {
                             <div class="row mt-3 text-center">
                                 <div class="col">
                                     <a href="/register">Todavía no tengo una cuenta</a>
+                                </div>
+                            </div>
+
+                            <div class="row mt-3 text-center">
+                                <div class="col">
+                                    <a href="/">Volver a la página principal</a>
                                 </div>
                             </div>
                         </form>

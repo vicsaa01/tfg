@@ -7,7 +7,7 @@ const CreateList = () => {
         name: '',
         type: '',
         scope: '',
-        creator_id: 420
+        creator_id: 0
     });
 
     const handleInputChange = (e) => {
@@ -31,8 +31,15 @@ const CreateList = () => {
             body: JSON.stringify(formData)
         })
         .then((response) => response.json())
-        .then(() => {
+        .then((data) => {
             alert('Se ha creado la lista');
+            setFormData({
+                name: '',
+                type: '',
+                scope: '',
+                creator_id: 0
+            });
+            window.location.href = '/list?id=' + data._id;
         })
         .catch((error) => {
             alert(error);
@@ -47,7 +54,7 @@ const CreateList = () => {
                     <div class="col-6">
                         <h3 class="mb-5 text-dark">Crear una lista nueva</h3>
 
-                        <form onSubmit={handleSubmit}>
+                        <form id="form" onSubmit={handleSubmit}>
                             <div class="row mb-5 text-start">
                                 <label for="name" class="mb-2 p-1">Nombre:</label>
                                 <input name="name" type="text" class="form-control" value={formData.name} onChange={handleInputChange} required/>
@@ -60,11 +67,11 @@ const CreateList = () => {
                             <div class="row mb-5 text-start">
                                 <div class="col w-100 p-3 border rounded">
                                     <div class="form-check mb-3">
-                                        <input name="scope" type="radio" class="form-check-input" id="scope1" value="public" onChange={handleInputChange} required/>
+                                        <input name="scope" type="radio" class="form-check-input" id="scope1" value="pública" onChange={handleInputChange} required/>
                                         <label for="scope1" class="form-check-label">Pública</label>
                                     </div>
                                     <div class="form-check">
-                                        <input name="scope" type="radio" class="form-check-input" id="scope2" value="private" onChange={handleInputChange} required/>
+                                        <input name="scope" type="radio" class="form-check-input" id="scope2" value="privada" onChange={handleInputChange} required/>
                                         <label for="scope2" class="form-check-label">Privada</label>
                                     </div>
                                 </div>
@@ -77,15 +84,15 @@ const CreateList = () => {
                             <div class="row mb-5 text-start">
                                 <div class="col w-100 p-3 border rounded">
                                     <div class="form-check mb-3">
-                                        <input name="type" type="radio" class="form-check-input" id="type1" value="unordered" onChange={handleInputChange} required/>
+                                        <input name="type" type="radio" class="form-check-input" id="type1" value="lista sin orden" onChange={handleInputChange} required/>
                                         <label for="type1" class="form-check-label">Lista sin orden</label>
                                     </div>
                                     <div class="form-check mb-3">
-                                        <input name="type" type="radio" class="form-check-input" id="type2" value="ordered" onChange={handleInputChange} required/>
+                                        <input name="type" type="radio" class="form-check-input" id="type2" value="clasificación" onChange={handleInputChange} required/>
                                         <label for="type2" class="form-check-label">Clasificación</label>
                                     </div>
                                     <div class="form-check">
-                                        <input name="type" type="radio" class="form-check-input" id="type3" value="poll" onChange={handleInputChange} required/>
+                                        <input name="type" type="radio" class="form-check-input" id="type3" value="encuesta" onChange={handleInputChange} required/>
                                         <label for="type3" class="form-check-label">Encuesta</label>
                                     </div>
                                 </div>

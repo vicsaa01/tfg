@@ -34,8 +34,9 @@ const CreateDiscussion = () => {
             body: JSON.stringify(formData)
         })
         .then((response) => response.json())
-        .then(() => {
+        .then((data) => {
             alert('Se ha creado la discusión');
+            window.location.href = '/discussion?id=' + data._id;
         })
         .catch((error) => {
             alert(error);
@@ -70,7 +71,7 @@ const CreateDiscussion = () => {
 
                             <div class="row p-0 mb-5">
                                 <div class="col-6 p-0 text-start">
-                                    <a class="btn w-50 border border-1 border-dark rounded boton-volver text-dark" href="/community">Volver</a>
+                                    <a class="btn w-50 border border-1 border-dark rounded boton-volver text-dark" href={"/group?id=" + group_id}>Volver</a>
                                 </div>
                                 <div class="col-6 p-0 text-end">
                                     <button type="submit" class="btn w-50 bg-dark text-white">Iniciar discusión</button>

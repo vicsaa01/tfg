@@ -10,7 +10,7 @@ const AddItem = () => {
         type: '',
         genres: '',
         creator: '',
-        year: 2000,
+        year: 0,
         country: ''
     });
 
@@ -35,8 +35,9 @@ const AddItem = () => {
             body: JSON.stringify(formData)
         })
         .then((response) => response.json())
-        .then(() => {
+        .then((data) => {
             alert('Se ha añadido el ítem');
+            window.location.href = '/item?id=' + data._id;
         })
         .catch((error) => {
             alert(error);
@@ -115,7 +116,7 @@ const AddItem = () => {
 
                             <div class="row p-0 mb-5">
                                 <div class="col-6 p-0 text-start">
-                                    <a class="btn w-50 border border-1 border-dark rounded boton-volver text-dark" href="/community">Volver</a>
+                                    <a class="btn w-50 border border-1 border-dark rounded boton-volver text-dark" href="/">Volver</a>
                                 </div>
                                 <div class="col-6 p-0 text-end">
                                     <button type="submit" class="btn w-50 bg-dark text-white">Añadir ítem</button>

@@ -32,18 +32,14 @@ import Register from './pages/register';
 import ForgotPass from './pages/forgot-pass';
 
 const App = () => {
-  /* const [items, setItems] = useState([]);
-  useEffect(() => {
-    // Fetch data from the Express server
-    axios.get('http://localhost:8000/items')
-      .then(response => setItems(response.data))
-      .catch(error => console.error(error));
-  }, []); */
+  
+  const [showNav, setShowNav] = useState(true);
+
   return (
     <Router>
         <body class="h-100">
             <div class="container-fluid h-100 d-flex flex-column">
-                <Navbar />
+                {showNav && <Navbar isNavShown={showNav} />}
                 <Routes>
                     <Route exact path="/" element={<Home />} />
                     <Route path="/community" element={<Community />} />
@@ -60,14 +56,14 @@ const App = () => {
                     <Route path="/group" element={<Group />} />
                     <Route path="/item" element={<Item />} />
                     <Route path="/list" element={<List />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
-                    <Route path="/forgot-pass" element={<ForgotPass />} />
+                    <Route path="/login" element={<Login setNav={setShowNav} />}/>
+                    <Route path="/register" element={<Register setNav={setShowNav} />} />
+                    <Route path="/forgot-pass" element={<ForgotPass setNav={setShowNav} />} />
                     <Route path="/search" element={<Search />} />
                     <Route path="/user-edit" element={<UserEdit />} />
                     <Route path="/user" element={<User />} />
                 </Routes>
-                <Footer />
+                {showNav && <Footer />}
             </div>
         </body>
     </Router>

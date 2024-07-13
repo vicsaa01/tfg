@@ -2,13 +2,15 @@ import React from "react";
 
 import { useState, useEffect } from "react";
 import { useCookies } from 'react-cookie';
+import { Navigate, useLocation } from "react-router-dom";
 
-const NavbarUserMenu = () => {
+const NavbarUserMenu = (props) => {
 
     const [cookies, setCookie] = useCookies(['session']);
     const session = cookies['session'];
 
     //EXTRAER DE LA BD
+
     const [myUser, setMyUser] = useState([]);
 
     useEffect(() => {
@@ -23,6 +25,36 @@ const NavbarUserMenu = () => {
             });
         }
     }, [])
+
+    //IR AL LOGIN
+
+    const location = useLocation();
+    const url = location.pathname;
+
+    const queryParameters = new URLSearchParams(window.location.search)
+    const id = queryParameters.get("id")
+    const search = queryParameters.get("search")
+
+    const [toLogin, setToLogin] = useState(false);
+
+    const handleLogin = () => {
+        setToLogin(true);
+    }
+
+    const ToLogin = () => {
+        if (toLogin == true) {
+            setToLogin(false);
+            if (id == null)
+                if (search == null)
+                    return <Navigate to="/login" state={{prevUrl: url, has_id: false, id: id, has_search: false, search: search}} />;
+                else
+                    return <Navigate to="/login" state={{prevUrl: url, has_id: false, id: id, has_search: true, search: search}} />;
+            else
+                return <Navigate to="/login" state={{prevUrl: url, has_id: true, id: id, has_search: false, search: search}} />;
+        }
+    }
+
+    // CONSTRUIR MENÚ
     
     if (session != undefined) {
         return(
@@ -35,9 +67,10 @@ const NavbarUserMenu = () => {
     } else {
         return(
             <>
-                <a class="btn bg-white text-dark me-4" href="/login">
+                <a class="btn bg-white text-dark me-4" href="/login" onClick={handleLogin}>
                     Iniciar sesión
                 </a>
+                <ToLogin/>
             </>
         )
     }

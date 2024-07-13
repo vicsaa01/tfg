@@ -2,7 +2,7 @@ import React from "react";
 
 import NavbarUserMenu from "./NavbarUserMenu";
 
-const Navbar = () => {
+const Navbar = (props) => {
 
   const validateSearch = () => {}
 
@@ -41,7 +41,7 @@ const Navbar = () => {
                         
                         <div class="col-lg-5 col-md-6 col-sm-10">
                             <div class="d-flex justify-content-end">
-                                <form action="/search" onsubmit={validateSearch}>
+                                <form action="/search" onSubmit={validateSearch}>
                                     <div class="row">
                                       <div class="col-8 p-0 m-0">
                                         <input type="text" class="form-control me-1" placeholder="Buscar..." name="search"/>
@@ -54,7 +54,7 @@ const Navbar = () => {
                                     </div>
                                 </form>
 
-                                <NavbarUserMenu/>
+                                <NavbarUserMenu isNavShown={props.isNavShown}/>
                             </div>
                         </div>
                     </div>

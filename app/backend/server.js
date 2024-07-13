@@ -385,29 +385,29 @@ app.get('/user', async (req, res) => {
 app.post('/create-list', (req, res) => {
   insertData = {'name': req.body.name, 'type': req.body.type, 'scope': req.body.scope, 'creator_id': req.body.creator_id};
   const newList = new lists(insertData);
-  const addList = newList.save();
-  res.status(201).json(addList);
+  newList.save();
+  res.status(201).json(newList);
 })
 
 app.post('/create-group', (req, res) => {
   insertData = {'name': req.body.name, 'type': req.body.type, 'creator_id': req.body.creator_id};
   const newGroup = new groups(insertData);
-  const addGroup = newGroup.save();
-  res.status(201).json(addGroup);
+  newGroup.save();
+  res.status(201).json(newGroup);
 })
 
 app.post('/create-discussion', (req, res) => {
   insertData = {'title': req.body.title, 'text': req.body.text, 'tags': req.body.tags, 'group_id': req.body.group_id, 'creator_id': req.body.creator_id};
   const newDiscussion = new discussions(insertData);
-  const addDiscussion = newDiscussion.save();
-  res.status(201).json(addDiscussion);
+  newDiscussion.save();
+  res.status(201).json(newDiscussion);
 })
 
 app.post('/add-item', (req, res) => {
   insertData = {'name': req.body.name, 'info': req.body.info, 'type': req.body.type, 'genres': req.body.genres, 'year': req.body.year};
   const newItem = new items(insertData);
-  const addItem = newItem.save();
-  res.status(201).json(addItem);
+  newItem.save();
+  res.status(201).json(newItem);
 })
 
 
@@ -415,10 +415,12 @@ app.post('/add-item', (req, res) => {
 
 app.post('/register', (req, res) => {
   insertData = {'name': req.body.name, 'email': req.body.email, 'password': req.body.pass, 'info': req.body.info};
-  /* check if username or email exists */
+
+  // check if username or email exists
+
   const newUser = new users(insertData);
-  const addUser = newUser.save();
-  res.status(201).json(addUser);
+  newUser.save();
+  res.status(201).json(newUser);
 })
 
 app.post('/auth', async (req, res) => {
@@ -438,12 +440,14 @@ app.post('/reset-pass', async (req, res) => {
   const user = await users.find({name: req.body.name});
   if (user.length == 1) {
     if (user[0].email == req.body.email) {
-      res.status(200).json({message: 'Se enviará un correo para restablecer la contraseña'});
+      res.status(200).json({message: 'Se enviará un correo para restablecer la contraseña', email: true});
+
       // send email
+
     } else {
-      res.status(401).json({message: 'El correo electrónico no coincide con el del usuario'});
+      res.status(401).json({message: 'El correo electrónico no coincide con el del usuario', email: false});
     }
   } else {
-    res.status(401).json({message: 'El usuario no existe'});
+    res.status(401).json({message: 'El usuario no existe', email: false});
   }
 })

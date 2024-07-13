@@ -1,7 +1,14 @@
 import React from "react";
-import { useState } from "react";
 
-const Register = () => {
+import { useState } from "react";
+import { Navigate } from "react-router-dom";
+
+const Register = (props) => {
+
+    props.setNav(false);
+
+
+    // FORMULARIO
 
     const [formData, setFormData] = useState({
         name: '',
@@ -35,6 +42,7 @@ const Register = () => {
             .then((response) => response.json())
             .then(() => {
                 alert('Se ha registrado el usuario');
+                window.location.href = '/login';
             })
             .catch((error) => {
                 alert(error);
@@ -43,6 +51,23 @@ const Register = () => {
             alert('Se debe repetir la misma contraseña');
         }
     }
+
+
+    //IR AL LOGIN
+
+    const [toLogin, setToLogin] = useState(false);
+
+    const handleLogin = () => {
+        setToLogin(true);
+    }
+
+    const ToLogin = () => {
+        if (toLogin == true) {
+            setToLogin(false);
+            return <Navigate to="/login" state={{prevUrl: '/register', has_id: false, id: ''}} />;
+        }
+    }
+
 
     return(
         <main class="m-5">
@@ -75,7 +100,8 @@ const Register = () => {
                             
                             <div class="row mt-5 mb-3">
                                 <div class="col-6 text-start">
-                                    <a class="btn w-100 border border-1 border-dark rounded boton-volver text-dark" href="">Volver</a>
+                                    <a class="btn w-100 border border-1 border-dark rounded boton-volver text-dark" href="/login" onClick={handleLogin}>Volver</a>
+                                    <ToLogin/>
                                 </div>
                                 <div class="col text-end">
                                     <button type="submit" class="btn w-100 bg-dark text-white">Registrarse</button>
@@ -84,7 +110,8 @@ const Register = () => {
 
                             <div class="row mt-5 text-center">
                                 <div class="col">
-                                    <a href="/login">Ya tengo una cuenta</a>
+                                    <a href="/login" onClick={handleLogin}>Ya tengo una cuenta</a>
+                                    <ToLogin/>
                                 </div>
                             </div>
                         </form>

@@ -45,18 +45,12 @@ const itemsSchema = new mongoose.Schema({
     icon: {type: String, required: true, default: 'default-item-icon.png'},
     points: {type: Number, required: true, default: 0},
     ratings: {type: Number, required: true, default: 0},
-    artist: {type: String, required: false},
-    studio: {type: String, required: false},
-    director: {type: String, required: false},
-    producer: {type: String, required: false},
-    writer: {type: String, required: false},
-    author: {type: String, required: false},
-    year: {type: Number, required: false},
-    country: {type: String, required: false},
+    creators: {type: String, required: true},
+    producers: {type: String, required: false},
+    year: {type: Number, required: true},
+    country: {type: String, required: true},
     length: {type: String, required: false},
-    platforms: {type: String, required: false},
-    seasons: {type: String, required: false},
-    pages: {type: String, required: false}
+    platforms: {type: String, required: false}
   });
 const items = mongoose.model('Items', itemsSchema);
 
@@ -65,7 +59,7 @@ const listsSchema = new mongoose.Schema({
   type: {type: String, required: true},
   scope: {type: String, required: false},
   creator_id: {type: String, required: true},
-  created_at: {type: String, required: true, default: Date.now()},
+  created_at: {type: Date, required: true, default: Date.now()},
   views: {type: Number, required: true, default: 0}
 });
 const lists = mongoose.model('Lists', listsSchema);
@@ -75,7 +69,7 @@ const groupsSchema = new mongoose.Schema({
   type: {type: String, required: true},
   logo: {type: String, required: true, default: 'default-group-logo.png'},
   creator_id: {type: String, required: true},
-  created_at: {type: String, required: true, default: Date.now()},
+  created_at: {type: Date, required: true, default: Date.now()},
   members: {type: Number, required: true, default: 0},
   items: {type: Number, required: true, default: 0}
 });
@@ -87,17 +81,11 @@ const discussionsSchema = new mongoose.Schema({
   tags: {type: String, required: false},
   group_id: {type: String, required: true},
   creator_id: {type: String, required: true},
-  created_at: {type: String, required: true, default: Date.now()},
+  created_at: {type: Date, required: true, default: Date.now()},
   likes: {type: Number, required: true, default: 0},
   dislikes: {type: Number, required: true, default: 0}
 });
 const discussions = mongoose.model('Discussions', discussionsSchema);
-
-const itemInSchema = new mongoose.Schema({
-  item: String,
-  list: String,
-});
-const item_in = mongoose.model('ItemIn', itemInSchema);
 
 const usersSchema = new mongoose.Schema({
   name: {type: String, required: true},
@@ -105,10 +93,16 @@ const usersSchema = new mongoose.Schema({
   password: {type: String, required: true},
   avatar: {type: String, required: true, default: 'default-user-avatar.png'},
   info: {type: String, required: false},
-  created_at: {type: String, required: true, default: Date.now()},
+  created_at: {type: Date, required: true, default: Date.now()},
   is_admin: {type: Boolean, required: true, default: false}
 });
 const users = mongoose.model('Users', usersSchema);
+
+const itemInSchema = new mongoose.Schema({
+  item: String,
+  list: String,
+});
+const item_in = mongoose.model('ItemIn', itemInSchema);
 
 
 // Server listen
@@ -404,10 +398,37 @@ app.post('/create-discussion', (req, res) => {
 })
 
 app.post('/add-item', (req, res) => {
-  insertData = {'name': req.body.name, 'info': req.body.info, 'type': req.body.type, 'genres': req.body.genres, 'year': req.body.year};
+  insertData = {'name': req.body.name, 'info': req.body.info, 'type': req.body.type, 'genres': req.body.genres, 'year': req.body.year, 'country': req.body.country, 'creators': req.body.creators, 'producers': req.body.creators, 'length': req.body.length, 'platforms': req.body.platforms};
   const newItem = new items(insertData);
   newItem.save();
   res.status(201).json(newItem);
+})
+
+
+// Routes for editing objects
+
+app.post('/edit-list', async (req, res) => {
+  id = req.query.id;
+  insertData = {name: req.body.name, scope: req.body.scope};
+  const result = await lists.updateOne({_id: id}, insertData);
+  console.log('Modified lists: ' + result.modifiedCount);
+  res.status(200).json({modified: result.modifiedCount});
+})
+
+app.post('/edit-group', async (req, res) => {
+  id = req.query.id;
+  insertData = {name: req.body.name, type: req.body.type};
+  const result = await groups.updateOne({_id: id}, insertData);
+  console.log('Modified groups: ' + result.modifiedCount);
+  res.status(200).json({modified: result.modifiedCount});
+})
+
+app.post('/edit-user', async (req, res) => {
+  id = req.query.id;
+  insertData = {name: req.body.name, info: req.body.info};
+  const result = await users.updateOne({_id: id}, insertData);
+  console.log('Modified users: ' + result.modifiedCount);
+  res.status(200).json({modified: result.modifiedCount});
 })
 
 

@@ -9,9 +9,12 @@ const AddItem = () => {
         info: '',
         type: '',
         genres: '',
-        creator: '',
+        creators: '',
+        producers: '',
+        country: '',
         year: 0,
-        country: ''
+        length: '',
+        platforms: ''
     });
 
     const handleInputChange = (e) => {
@@ -93,13 +96,18 @@ const AddItem = () => {
                             </div>
 
                             <div class="row mb-5 p-0 text-start">
-                                <label for="genres" class="mb-2 p-1">Género:</label>
-                                <input name="genres" type="text" class="form-control" value={formData.genre} onChange={handleInputChange} required/>
+                                <label for="genres" class="mb-2 p-1">Géneros:</label>
+                                <input name="genres" type="text" class="form-control" value={formData.genres} onChange={handleInputChange} required/>
                             </div>
 
                             <div class="row mb-5 p-0 text-start">
-                                <label for="creator" class="mb-2 p-1">Creador (artista/estudio/director/escritor/autor):</label>
-                                <input name="creator" type="text" class="form-control" value={formData.creator} onChange={handleInputChange} required/>
+                                <label for="creators" class="mb-2 p-1">Creadores (artistas musicales/directores de cine/directores de TV/autores):</label>
+                                <input name="creators" type="text" class="form-control" value={formData.creators} onChange={handleInputChange}/>
+                            </div>
+
+                            <div class="row mb-5 p-0 text-start">
+                                <label for="producers" class="mb-2 p-1">Productores (desarrolladoras de videojuegos/productores de cine/productores de TV):</label>
+                                <input name="producers" type="text" class="form-control" value={formData.producers} onChange={handleInputChange}/>
                             </div>
 
                             <div class="row mb-5 p-0 text-start">
@@ -110,6 +118,16 @@ const AddItem = () => {
                             <div class="row mb-5 p-0 text-start">
                                 <label for="country" class="mb-2 p-1">País de origen:</label>
                                 <input name="country" type="text" class="form-control" value={formData.country} onChange={handleInputChange} required/>
+                            </div>
+
+                            <div class="row mb-5 p-0 text-start">
+                                <label for="length" class="mb-2 p-1">Duración (en horas/en minutos/nº de temporadas/nº de páginas):</label>
+                                <input name="length" type="text" class="form-control" value={formData.length} onChange={handleInputChange}/>
+                            </div>
+
+                            <div class="row mb-5 p-0 text-start">
+                                <label for="platforms" class="mb-2 p-1">Plataformas (si es videojuego, ej. PC):</label>
+                                <input name="platforms" type="text" class="form-control" value={formData.platforms} onChange={handleInputChange}/>
                             </div>
 
                             <div class="row m-5"></div>

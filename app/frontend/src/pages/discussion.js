@@ -8,8 +8,18 @@ const Discussion = () => {
     const queryParameters = new URLSearchParams(window.location.search)
     const id = queryParameters.get("id")
 
-    //EXTRAER DE LA BD
+    //EXTRAER DISCUSIÓN DE LA BD
+
     const [myDiscussion, setMyDiscussion] = useState([]);
+    const [myGroup, setMyGroup] = useState([]);
+    const [myUser, setMyUser] = useState([]);
+
+    const [dateTime, setDateTime] = useState({
+        year: '',
+        month: '',
+        day: '',
+        time: ''
+    });
 
     useEffect(() => {
         fetch('http://127.0.0.1:8000/discussion?id=' + id)
@@ -19,8 +29,54 @@ const Discussion = () => {
           .then((data) => {
             console.log(data);
             setMyDiscussion(data);
+
+            let yyyy = data.created_at.substring(0,4);
+            let mm = data.created_at.substring(5,7);
+            let dd = data.created_at.substring(8,10);
+            let t = data.created_at.substring(11,16);
+            setDateTime({
+                year: yyyy,
+                month: mm,
+                day: dd,
+                time: t
+            });
+
+            fetch('http://127.0.0.1:8000/group?id=' + data.group_id)
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                console.log(data);
+                setMyGroup(data);
+            });
+
+            fetch('http://127.0.0.1:8000/user?id=' + data.creator_id)
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                console.log(data);
+                setMyUser(data);
+            });
           });
     }, [])
+
+    //EXTRAER DISCUSIÓN DE LA BD
+
+    /*
+    const [comments, setComments] = useState([]);
+
+    useEffect(() => {
+        fetch('http://127.0.0.1:8000/comments?discussion_id=' + id)
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                console.log(data);
+                setComments(data);
+            });
+    })
+    */
 
     return(
         <main class="m-5">
@@ -32,13 +88,55 @@ const Discussion = () => {
 
                 <div class="row mb-4 text-left text-dark">
                     <div class="col-12 ps-5 pe-5">
-                        <p>Discusión de <a href={"/group?id=" + myDiscussion.group}>{myDiscussion.group}</a></p>
+                        <p>Discusión de <a href={"/group?id=" + myGroup._id}>{myGroup.name}</a></p>
                     </div>
                 </div>
 
                 <div class="row mb-5">
                     <div class="col-11 ps-5 pe-5">
-                        <Comment id="0"/>
+                    <div class="scrollable-card-group my-cards">
+                            <div class="scrollable-card my-card w-100 mb-3">
+                                <div class="card">
+                                    <div class="card-body d-flex flex-row text-start">
+                                        <div class="col-lg-1 col-md-2 col-sm-3">
+                                            <div class="row align-items-center">
+                                                <a class="btn m-0 p-0" href={"/user?id=" + myDiscussion.creator_id}><img class="rounded-circle" src={'/img/' + myUser.avatar} width="80" height="80"/></a>
+                                            </div>
+                                            
+                                        </div>
+
+                                        <div class="col-lg-10 col-md-9 col-sm-8">
+                                            <div class="row ms-3">
+                                                <a href={"/user?id=" + myDiscussion.creator_id}><h5 class="mr-3">{myUser.name}</h5></a>
+                                                <p>{dateTime.day}/{dateTime.month}/{dateTime.year} {dateTime.time}</p>
+                                            </div>
+
+                                            <div class="row ms-3 text-justify">
+                                                <p>{myDiscussion.text}</p>
+                                            </div>
+
+                                            <div class="row ms-3">
+                                                <div class="col-lg-2 col-md-4 col-sm-6">
+                                                    <div class="row">
+                                                        <p class="pt-1 mr-1">{myDiscussion.likes}</p>
+                                                        <a href=""><img src='/img/like.png' width="15" height="15"/></a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-2 col-md-4 col-sm-6">
+                                                    <div class="row">
+                                                        <p class="pt-1 me-1">{myDiscussion.dislikes}</p>
+                                                        <a class="pt-1" href=""><img src='/img/dislike.png' width="15" height="15"/></a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-8 col-md-4 col-sm-0"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="col-1"></div>
@@ -87,9 +185,7 @@ const Discussion = () => {
                     <div class="col-1"></div>
 
                     <div class="col-11 ps-5 pe-5">
-                        <Comment id="1"/>
-                        <Comment id="2"/>
-                        <Comment id="3"/>
+                        <Comment/>
                     </div>
                 </div>
             </main>

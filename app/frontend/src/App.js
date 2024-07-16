@@ -23,7 +23,9 @@ import Item from "./pages/item";
 import List from "./pages/list";
 import Login from "./pages/login";
 import Search from './pages/search';
-import UserEdit from "./pages/user-edit";
+import EditUser from "./pages/edit-user";
+import EditGroup from "./pages/edit-group";
+import EditList from "./pages/edit-list";
 import User from "./pages/user";
 import Footer from "./components/Footer";
 import CreateDiscussion from './pages/create-discussion';
@@ -42,26 +44,30 @@ const App = () => {
                 {showNav && <Navbar isNavShown={showNav} />}
                 <Routes>
                     <Route exact path="/" element={<Home />} />
-                    <Route path="/community" element={<Community />} />
-                    <Route path="/create-group" element={<CreateGroup />} />
-                    <Route path="/create-discussion" element={<CreateDiscussion />} />
-                    <Route path="/create-list" element={<CreateList />} />
-                    <Route path="/discussion" element={<Discussion />} />
                     <Route path="/music" element={<Music />} />
                     <Route path="/games" element={<Games />} />
                     <Route path="/movies" element={<Movies />} />
                     <Route path="/tv" element={<TV />} />
                     <Route path="/books" element={<Books />} />
-                    <Route path="/add-item" element={<AddItem />} />
-                    <Route path="/group" element={<Group />} />
+                    <Route path="/search" element={<Search />} />
                     <Route path="/item" element={<Item />} />
+                    <Route path="/add-item" element={<AddItem />} />
+
+                    <Route path="/community" element={<Community />} />
+                    <Route path="/group" element={<Group />} />
+                    <Route path="/discussion" element={<Discussion />} />
                     <Route path="/list" element={<List />} />
+                    <Route path="/create-group" element={<CreateGroup />} />
+                    <Route path="/create-discussion" element={<CreateDiscussion />} />
+                    <Route path="/create-list" element={<CreateList />} />
+                    <Route path="/edit-group" element={<EditGroup />} />
+                    <Route path="/edit-list" element={<EditList />} />
+
                     <Route path="/login" element={<Login setNav={setShowNav} />}/>
                     <Route path="/register" element={<Register setNav={setShowNav} />} />
                     <Route path="/forgot-pass" element={<ForgotPass setNav={setShowNav} />} />
-                    <Route path="/search" element={<Search />} />
-                    <Route path="/user-edit" element={<UserEdit />} />
                     <Route path="/user" element={<User />} />
+                    <Route path="/edit-user" element={<EditUser />} />
                 </Routes>
                 {showNav && <Footer />}
             </div>

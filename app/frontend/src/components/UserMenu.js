@@ -18,7 +18,7 @@ const UserMenu = (props) => {
         return(
             <>
                 <div class="col">
-                    <div class="row"><a class="btn bg-dark text-white rounded" href={"/user-edit?id=" + props.id}>Editar perfil</a></div>
+                    <div class="row"><a class="btn bg-dark text-white rounded" href={"/edit-user?id=" + props.id}>Editar perfil</a></div>
                     <div class="row"><a class="btn bg-white text-dark boton-volver border border-dark rounded mt-3" href="/" onClick={handleLogout}>Cerrar sesión</a></div>
                 </div>
             </>

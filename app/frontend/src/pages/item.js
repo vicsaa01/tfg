@@ -2,6 +2,8 @@ import React from "react";
 
 import { useState, useEffect } from "react";
 
+import ItemDescription from "../components/ItemDescription";
+import ItemRating from "../components/ItemRating"
 import Comment from "../components/Comment";
 import Recommendation from "../components/Recommendation";
 
@@ -39,13 +41,17 @@ const Item = () => {
                             </div>
                             <div class="col-lg-6 col-md-4">
                                 <div class="row">
-                                    <div class="col">
-                                        <p>Año: {myItem.year}</p>
-                                        <p>Dirigida por: {myItem.directors}</p>
-                                        <p>Géneros: {myItem.genres}</p>
-                                        <p>Duración: {myItem.length}</p>
-                                        <p>Descripción: {myItem.info}</p>
-                                    </div>
+                                    <ItemDescription
+                                        type={myItem.type}
+                                        creators={myItem.creators}
+                                        producers={myItem.producers}
+                                        country={myItem.country}
+                                        year={myItem.year}
+                                        length={myItem.length}
+                                        platforms={myItem.platforms}
+                                        genres={myItem.genres}
+                                        info={myItem.info}
+                                    />
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-4">
@@ -65,13 +71,13 @@ const Item = () => {
                         <div class="row font-weight-bold">
                             <div class="col-lg-4 col-md-5 mt-5">
                                 <h4>Valoración media:</h4>
-                                <h3 class="rounded w-25 text-center valoracion-positiva">{myItem.points*10/myItem.ratings}/100</h3>
+                                <ItemRating points={myItem.points} ratings={myItem.ratings}/>
                             </div>
 
                             <div class="border border-dark mt-5"></div>
 
                             <div class="col-lg-7 col-md-6 mt-5">
-                                <h4>Puntúa esta película: </h4>
+                                <h4>Puntúa este ítem: </h4>
                                     <div class="rate m-0 p-0">
                                         <input type="radio" id="star5" name="rate" value="5" />
                                         <label for="star5" title="text">5 stars</label>
@@ -118,9 +124,7 @@ const Item = () => {
 
                         {/* EXTRAER DE LA BD -> NUEVOS COMPONENTES? */}
                         <div class="scrollable-card-group my-cards">
-                            <Comment id="0"/>
-                            <Comment id="1"/>
-                            <Comment id="3"/>
+                            <Comment/>
                         </div>
                     </div>
 

@@ -11,8 +11,16 @@ const Group = () => {
     const queryParameters = new URLSearchParams(window.location.search)
     const id = queryParameters.get("id")
 
-    //EXTRAER DE LA BD
+    //EXTRAER GRUPO DE LA BD
     const [myGroup, setMyGroup] = useState([]);
+
+    const [myUser, setMyUser] = useState([]);
+
+    const [date, setDate] = useState({
+        year: '',
+        month: '',
+        day: ''
+    })
 
     useEffect(() => {
         fetch('http://127.0.0.1:8000/group?id=' + id)
@@ -22,10 +30,70 @@ const Group = () => {
           .then((data) => {
             console.log(data);
             setMyGroup(data);
+
+            fetch('http://127.0.0.1:8000/user?id=' + data.creator_id)
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                console.log(data);
+                setMyUser(data);
+            });
+
+            let yyyy = data.created_at.substring(0,4);
+            let mm = data.created_at.substring(5,7);
+            switch(mm) {
+                case '01':
+                    mm = 'enero';
+                    break;
+                case '02':
+                    mm = 'febrero';
+                    break;
+                case '03':
+                    mm = 'marzo';
+                    break;
+                case '04':
+                    mm = 'abril';
+                    break;
+                case '05':
+                    mm = 'mayo';
+                    break;
+                case '06':
+                    mm = 'junio';
+                    break;
+                case '07':
+                    mm = 'julio';
+                    break;
+                case '08':
+                    mm = 'agosto';
+                    break;
+                case '09':
+                    mm = 'septiembre';
+                    break;
+                case '10':
+                    mm = 'octubre';
+                    break;
+                case '11':
+                    mm = 'noviembre';
+                    break;
+                case '12':
+                    mm = 'diciembre';
+                    break;
+                default:
+                    mm = 'mes indefinido';
+                    break;
+            }
+            let dd = data.created_at.substring(8,10);
+            if (dd.substring(0,1) == '0') dd = dd.substring(1,2);
+            setDate({
+                year: yyyy,
+                month: mm,
+                day: dd
+            });
           });
     }, [])
 
-    //EXTRAER DE LA BD
+    //EXTRAER DISCUSIONES DE LA BD
     const [discussions, setDiscussions] = useState([]);
 
     useEffect(() => {
@@ -48,7 +116,7 @@ const Group = () => {
                 </div>
 
                 <div class="row mb-3 align-items-center">
-                    <GroupMenu id={myGroup._id} creator_id={myGroup.creator_id} created_at={myGroup.created_at}/>
+                    <GroupMenu id={myGroup._id} creator_id={myGroup.creator_id} username={myUser.name} created_at={myGroup.created_at} date={date}/>
                 </div>
 
                 <br/><br/><br/>

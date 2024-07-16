@@ -12,6 +12,8 @@ const List = () => {
     //EXTRAER DE LA BD
     const [myList, setMyList] = useState([]);
 
+    const [myUser, setMyUser] = useState([]);
+
     useEffect(() => {
         fetch('http://127.0.0.1:8000/list?id=' + id)
           .then((res) => {
@@ -20,6 +22,15 @@ const List = () => {
           .then((data) => {
             console.log(data);
             setMyList(data);
+
+            fetch('http://127.0.0.1:8000/user?id=' + data.creator_id)
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                console.log(data);
+                setMyUser(data);
+            });
           });
     }, [])
 
@@ -32,7 +43,7 @@ const List = () => {
                 </div>
 
                 <div class="row mb-4 text-left text-dark">
-                    <ListMenu id={id} creator_id={myList.creator_id} created_at={myList.created_at}/>
+                    <ListMenu id={id} creator_id={myList.creator_id} username={myUser.name} created_at={myList.created_at}/>
                 </div>
 
                 <div class="row mb-5">

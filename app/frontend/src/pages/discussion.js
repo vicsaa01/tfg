@@ -1,12 +1,66 @@
 import React from "react";
 
 import { useState, useEffect } from "react";
+import { useCookies } from 'react-cookie';
 
-import Comment from "../components/Comment"
+import DiscussionComments from "../components/DiscussionComments";
 
 const Discussion = () => {
     const queryParameters = new URLSearchParams(window.location.search)
     const id = queryParameters.get("id")
+
+    const [cookies, setCookie, removeCookie] = useCookies(['session']);
+    const session = cookies['session'];
+
+    const [formData, setFormData] = useState({
+        text: '',
+        discussion: '',
+        user: ''
+    });
+
+    const handleWriteComment = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            [name]: value
+        }));
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        formData.discussion = id;
+        formData.user = session.user_id;
+
+        console.log(formData);
+
+        fetch('http://127.0.0.1:8000/add-discussion-comment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            setFormData({
+                text: '',
+                discussion: '',
+                user: ''
+            });
+            window.location.href = '/discussion?id=' + id;
+        })
+        .catch((error) => {
+            alert(error);
+        });
+    }
+
+    const [sort, setSort] = useState('popular')
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setSort(value);
+    }
 
     //EXTRAER DISCUSIÓN DE LA BD
 
@@ -59,24 +113,7 @@ const Discussion = () => {
                 setMyUser(data);
             });
           });
-    }, [])
-
-    //EXTRAER DISCUSIÓN DE LA BD
-
-    /*
-    const [comments, setComments] = useState([]);
-
-    useEffect(() => {
-        fetch('http://127.0.0.1:8000/comments?discussion_id=' + id)
-            .then((res) => {
-                return res.json();
-            })
-            .then((data) => {
-                console.log(data);
-                setComments(data);
-            });
-    })
-    */
+    }, ['http://127.0.0.1:8000/discussion?id=' + id])
 
     return(
         <main class="m-5">
@@ -150,30 +187,36 @@ const Discussion = () => {
                     </div>
                 </div>
 
-                <div class="row mt-3">
-                    <div class="col-1"></div>
+                <form onSubmit={handleSubmit}>
+                    <div class="row mt-3">
+                        <div class="col-1"></div>
 
-                    <div class="col-11 ps-5 pe-5">
-                        <textarea name="nuevoComentario" class="form-control w-100" placeholder="Añade un comentario..."></textarea>
+                        <div class="col-11 ps-5 pe-5">
+                            <textarea name="text" value={formData.text} onChange={handleWriteComment} class="form-control w-100" placeholder="Añade un comentario..."></textarea>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row mt-1 mb-3">
-                    <div class="col ps-5 pe-5">
-                        <button type="submit" class="rounded p-1 bg-dark text-white float-end">Publicar</button>
+                    <div class="row mt-1 mb-3">
+                        <div class="col-1"></div>
+
+                        <div class="col ps-5 pe-5">
+                            <button type="submit" class="rounded p-1 bg-dark text-white float-start">Publicar</button>
+                        </div>
                     </div>
-                </div>
+                </form>
 
                 <div class="row mb-4 text-left text-dark">
                     <div class="col-1"></div>
 
                     <div class="col-11 ps-5 pe-5">
+                        <br/>
                         <div class="row align-items-center">
                             <div class="col-2"><p class="m-3">Ordenar por</p></div>
                             <div class="col-10">
-                                <select class="form-select w-auto p-1 border border-1 border-dark" id="selectlist">
-                                    <option value="new">Más recientes</option>
+                                <select class="form-select w-auto p-1 border border-1 border-dark" name="sortby" value={sort} onChange={handleInputChange}>
                                     <option value="popular">Más populares</option>
+                                    <option value="old">Más antiguas</option>
+                                    <option value="new">Más recientes</option>
                                     <option value="controversial">Más controvertidas</option>
                                 </select>
                             </div>
@@ -184,9 +227,7 @@ const Discussion = () => {
                 <div class="row mb-5">
                     <div class="col-1"></div>
 
-                    <div class="col-11 ps-5 pe-5">
-                        <Comment/>
-                    </div>
+                    <DiscussionComments id={myDiscussion._id} sortby={sort}/>
                 </div>
             </main>
     );

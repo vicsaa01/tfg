@@ -32,6 +32,7 @@ import CreateDiscussion from './pages/create-discussion';
 import AddItem from './pages/add-item';
 import Register from './pages/register';
 import ForgotPass from './pages/forgot-pass';
+import AddRecommendation from './pages/add-recommendation';
 
 const App = () => {
   
@@ -52,6 +53,7 @@ const App = () => {
                     <Route path="/search" element={<Search />} />
                     <Route path="/item" element={<Item />} />
                     <Route path="/add-item" element={<AddItem />} />
+                    <Route path="/add-recommendation" element={<AddRecommendation />} />
 
                     <Route path="/community" element={<Community />} />
                     <Route path="/group" element={<Group />} />

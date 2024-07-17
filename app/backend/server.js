@@ -10,6 +10,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
+
 // Define some supporting functions
 
 // generates random ID
@@ -26,6 +27,7 @@ function makeid(length) {
 }
 
 
+
 // Connection to MongoDB
 
 mongoose.connect('mongodb://127.0.0.1:27017', {
@@ -33,6 +35,7 @@ mongoose.connect('mongodb://127.0.0.1:27017', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => console.log('Connected to MongoDB')).catch((error) => console.error('Connection error:', error));
+
 
 
 // DB schemas and models
@@ -87,6 +90,25 @@ const discussionsSchema = new mongoose.Schema({
 });
 const discussions = mongoose.model('Discussions', discussionsSchema);
 
+const commentsSchema = new mongoose.Schema({
+  discussion: {type: String, required: false},
+  item: {type: String, required: false},
+  user: {type: String, required: true},
+  text: {type: String, required: true},
+  created_at: {type: Date, required: true, default: Date.now()},
+  likes: {type: Number, required: true, default: 0},
+  dislikes: {type: Number, required: true, default: 0}
+});
+const comments = mongoose.model('Comments', commentsSchema);
+
+const recommendationsSchema = new mongoose.Schema({
+  item: {type: String, required: true},
+  recommended_item: {type: String, required: true},
+  likes: {type: Number, required: true, default: 0},
+  dislikes: {type: Number, required: true, default: 0}
+});
+const recommendations = mongoose.model('Recommendations', recommendationsSchema);
+
 const usersSchema = new mongoose.Schema({
   name: {type: String, required: true},
   email: {type: String, required: true},
@@ -105,10 +127,16 @@ const itemInSchema = new mongoose.Schema({
 const item_in = mongoose.model('ItemIn', itemInSchema);
 
 
+
 // Server listen
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+
+
+
+
 
 
 // Routes to fetch newest items
@@ -142,6 +170,10 @@ app.get('/newest-books', async (req, res) => {
   const itemList = await items.find({type: 'libro'}).sort({year: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
   res.json(itemList);
 });
+
+
+
+
 
 // Routes to fetch most popular items
 
@@ -205,11 +237,21 @@ app.get('/popular-books', async (req, res) => {
   res.json(itemList);
 });
 
+
+
+
+
 // Routes for the Community section
 
 app.get('/lists', async (req, res) => {
   const listList = await lists.find().sort({views: 'desc'}).select('_id -name -type -scope -creator_id -created_at -views -__v');
   res.json(listList);
+});
+
+app.get('/poll-elements', async (req, res) => {
+  list_id = req.query.list_id;
+  const pollElementsList = await item_in.find({list: list_id}).sort({votes: 'desc'}).select('_id -item -list -votes -__v');
+  res.json(pollElementsList);
 });
 
 app.get('/groups', async (req, res) => {
@@ -223,11 +265,110 @@ app.get('/discussions', async (req, res) => {
   res.json(discussionsList);
 });
 
-app.get('/poll-elements', async (req, res) => {
-  list_id = req.query.list_id;
-  const pollElementsList = await item_in.find({list: list_id}).sort({votes: 'desc'}).select('_id -item -list -votes -__v');
-  res.json(pollElementsList);
+
+
+
+
+// Comments
+
+app.get('/popular-discussion-comments', async (req, res) => {
+  discussion = req.query.discussion_id;
+  const commentsList = await comments.find({discussion: discussion}).sort({likes: 'desc'}).select('_id -discussion -item -user -text -created_at -likes -dislikes -__v');
+  res.json(commentsList);
 });
+
+app.get('/old-discussion-comments', async (req, res) => {
+  discussion = req.query.discussion_id;
+  const commentsList = await comments.find({discussion: discussion}).sort({created_at: 'asc'}).select('_id -discussion -item -user -text -created_at -likes -dislikes -__v');
+  res.json(commentsList);
+});
+
+app.get('/new-discussion-comments', async (req, res) => {
+  discussion = req.query.discussion_id;
+  const commentsList = await comments.find({discussion: discussion}).sort({created_at: 'desc'}).select('_id -discussion -item -user -text -created_at -likes -dislikes -__v');
+  res.json(commentsList);
+});
+
+app.get('/controversial-discussion-comments', async (req, res) => {
+  discussion = req.query.discussion_id;
+  const commentsList = await comments.find({discussion: discussion}).sort({dislikes: 'desc'}).select('_id -discussion -item -user -text -created_at -likes -dislikes -__v');
+  res.json(commentsList);
+});
+
+
+
+app.get('/popular-item-comments', async (req, res) => {
+  item = req.query.item_id;
+  const commentsList = await comments.find({item: item}).sort({likes: 'desc'}).select('_id -discussion -item -user -text -created_at -likes -dislikes -__v');
+  res.json(commentsList);
+});
+
+app.get('/old-item-comments', async (req, res) => {
+  item = req.query.item_id;
+  const commentsList = await comments.find({item: item}).sort({created_at: 'asc'}).select('_id -discussion -item -user -text -created_at -likes -dislikes -__v');
+  res.json(commentsList);
+});
+
+app.get('/new-item-comments', async (req, res) => {
+  item = req.query.item_id;
+  const commentsList = await comments.find({item: item}).sort({created_at: 'desc'}).select('_id -discussion -item -user -text -created_at -likes -dislikes -__v');
+  res.json(commentsList);
+});
+
+app.get('/controversial-item-comments', async (req, res) => {
+  item = req.query.item_id;
+  const commentsList = await comments.find({item: item}).sort({dislikes: 'desc'}).select('_id -discussion -item -user -text -created_at -likes -dislikes -__v');
+  res.json(commentsList);
+});
+
+
+
+app.post('/add-discussion-comment', (req, res) => {
+  insertData = {'text': req.body.text, 'discussion': req.body.discussion, 'user': req.body.user, 'created_at': Date.now()};
+  const newComment = new comments(insertData);
+  newComment.save();
+  res.status(201).json(newComment);
+})
+
+app.post('/add-item-comment', (req, res) => {
+  insertData = {'text': req.body.text, 'item': req.body.item, 'user': req.body.user, 'created_at': Date.now()};
+  const newComment = new comments(insertData);
+  newComment.save();
+  res.status(201).json(newComment);
+})
+
+
+
+
+
+// Recommendations
+
+app.get('/recommendations', async (req, res) => {
+  item_id = req.query.item_id;
+  const recommendationsList = await recommendations.find({item: item_id}).sort({likes: 'desc'}).select('_id -item -recommended_item -likes -dislikes -__v');
+  res.json(recommendationsList);
+});
+
+app.post('/add-recommendation', async (req, res) => {
+  const searchList = await items.find({name: req.body.name, type: req.body.type}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
+  if (searchList.length > 0) {  
+    const recommended_item = searchList[0]._id;
+    if (recommended_item != req.body.item) {
+      insertData = {'item': req.body.item, 'recommended_item': recommended_item};
+      const newRecommendation = new recommendations(insertData);
+      newRecommendation.save();
+      res.status(201).json({message: 'Se ha añadido la recomendación', item: req.body.item});
+    } else {
+      res.status(401).json({message: 'El ítem recomendado no puede ser el mismo que ítem donde aparece la recomendación'});
+    }
+  } else {
+    res.status(404).json({message: 'No se ha encontrado ningún ítem llamado ' + req.body.name + ' y de tipo ' + req.body.type});
+  }
+})
+
+
+
+
 
 // Route for the Search system
 
@@ -341,6 +482,10 @@ app.get('/search', async (req, res) => {
   res.json(searchList);
 });
 
+
+
+
+
 // Routes to fetch by ID
 
 app.get('/item', async (req, res) => {
@@ -367,6 +512,18 @@ app.get('/discussion', async (req, res) => {
   res.json(discussionsList);
 });
 
+app.get('/comment', async (req, res) => {
+  id = req.query.id;
+  const commentsList = await comments.findById(id);
+  res.json(commentsList);
+});
+
+app.get('/recommendation', async (req, res) => {
+  id = req.query.id;
+  const recommendationsList = await recommendations.findById(id);
+  res.json(recommendationsList);
+});
+
 app.get('/user', async (req, res) => {
   id = req.query.id;
   const userList = await users.findById(id);
@@ -374,24 +531,27 @@ app.get('/user', async (req, res) => {
 });
 
 
+
+
+
 // Routes to upload forms
 
 app.post('/create-list', (req, res) => {
-  insertData = {'name': req.body.name, 'type': req.body.type, 'scope': req.body.scope, 'creator_id': req.body.creator_id};
+  insertData = {'name': req.body.name, 'type': req.body.type, 'scope': req.body.scope, 'creator_id': req.body.creator_id, 'created_at': Date.now()};
   const newList = new lists(insertData);
   newList.save();
   res.status(201).json(newList);
 })
 
 app.post('/create-group', (req, res) => {
-  insertData = {'name': req.body.name, 'type': req.body.type, 'creator_id': req.body.creator_id};
+  insertData = {'name': req.body.name, 'type': req.body.type, 'creator_id': req.body.creator_id, 'created_at': Date.now()};
   const newGroup = new groups(insertData);
   newGroup.save();
   res.status(201).json(newGroup);
 })
 
 app.post('/create-discussion', (req, res) => {
-  insertData = {'title': req.body.title, 'text': req.body.text, 'tags': req.body.tags, 'group_id': req.body.group_id, 'creator_id': req.body.creator_id};
+  insertData = {'title': req.body.title, 'text': req.body.text, 'tags': req.body.tags, 'group_id': req.body.group_id, 'creator_id': req.body.creator_id, 'created_at': Date.now()};
   const newDiscussion = new discussions(insertData);
   newDiscussion.save();
   res.status(201).json(newDiscussion);
@@ -403,6 +563,9 @@ app.post('/add-item', (req, res) => {
   newItem.save();
   res.status(201).json(newItem);
 })
+
+
+
 
 
 // Routes for editing objects
@@ -432,10 +595,13 @@ app.post('/edit-user', async (req, res) => {
 })
 
 
+
+
+
 // Routes to register and login users
 
 app.post('/register', (req, res) => {
-  insertData = {'name': req.body.name, 'email': req.body.email, 'password': req.body.pass, 'info': req.body.info};
+  insertData = {'name': req.body.name, 'email': req.body.email, 'password': req.body.pass, 'info': req.body.info, 'created_at': Date.now()};
 
   // check if username or email exists
 

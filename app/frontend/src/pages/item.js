@@ -1,15 +1,76 @@
 import React from "react";
 
 import { useState, useEffect } from "react";
+import { useCookies } from 'react-cookie';
 
 import ItemDescription from "../components/ItemDescription";
-import ItemRating from "../components/ItemRating"
-import Comment from "../components/Comment";
-import Recommendation from "../components/Recommendation";
+import ItemRating from "../components/ItemRating";
+import ItemComments from "../components/ItemComments";
+import Recommendations from "../components/Recommendations";
 
 const Item = () => {
+
+    // get parameters and session
+
     const queryParameters = new URLSearchParams(window.location.search)
     const id = queryParameters.get("id")
+
+    const [cookies, setCookie, removeCookie] = useCookies(['session']);
+    const session = cookies['session'];
+
+    // write comment
+
+    const [formData, setFormData] = useState({
+        text: '',
+        item: '',
+        user: ''
+    });
+
+    const handleWriteComment = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            [name]: value
+        }));
+    }
+
+    const handleSubmitComment = (e) => {
+        e.preventDefault();
+
+        formData.item = id;
+        formData.user = session.user_id;
+
+        console.log(formData);
+
+        fetch('http://127.0.0.1:8000/add-item-comment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            setFormData({
+                text: '',
+                item: '',
+                user: ''
+            });
+            window.location.href = '/item?id=' + id;
+        })
+        .catch((error) => {
+            alert(error);
+        });
+    }
+
+    // sort comments
+
+    const [sort, setSort] = useState('popular')
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setSort(value);
+    }
 
     //EXTRAER DE LA BD
     const [myItem, setMyItem] = useState([]);
@@ -78,6 +139,7 @@ const Item = () => {
 
                             <div class="col-lg-7 col-md-6 mt-5">
                                 <h4>Puntúa este ítem: </h4>
+
                                     <div class="rate m-0 p-0">
                                         <input type="radio" id="star5" name="rate" value="5" />
                                         <label for="star5" title="text">5 stars</label>
@@ -99,33 +161,37 @@ const Item = () => {
                     <div class="col mb-5 text-center">
                         <h4>Comentarios</h4>
 
-                        <div class="row mt-3">
-                            <div class="col">
-                                <textarea name="nuevoComentario" class="form-control" placeholder="Añade un comentario..."></textarea>
+                        <form onSubmit={handleSubmitComment}>
+                            <div class="row mt-3">
+                                <div class="col">
+                                    <textarea name="text" value={formData.text} onChange={handleWriteComment} class="form-control" placeholder="Añade un comentario..."></textarea>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="row mt-1 mb-3">
-                            <div class="col">
-                                <button type="submit" class="rounded p-1 bg-dark text-white float-end">Publicar</button>
+                            <div class="row mt-1 mb-3">
+                                <div class="col">
+                                    <button type="submit" class="rounded p-1 bg-dark text-white float-end">Publicar</button>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                         
                             <div class="row align-items-center mt-3 mb-3">
-                                <div class="col-lg-2 col-md-4 col-sm-6 text-start"><p class="mt-3">Ordenar por:</p></div>
+                                <div class="col-lg-2 col-md-4 col-sm-6 text-start">
+                                    <br/>
+                                    <p class="mt-3">Ordenar por:</p>
+                                </div>
+
                                 <div class="col-lg-10 col-md-8 col-sm-6">
-                                    <select class="form-select w-auto p-1 ml-3 border border-1 border-dark" id="selectlist">
-                                        <option value="new">Más recientes</option>
+                                    <select class="form-select w-auto p-1 ml-3 border border-1 border-dark" name="sortby" onChange={handleInputChange}>
                                         <option value="popular">Más populares</option>
+                                        <option value="old">Más antiguos</option>
+                                        <option value="new">Más recientes</option>
                                         <option value="controversial">Más controvertidos</option>
                                     </select>
                                 </div>
                             </div>
 
-                        {/* EXTRAER DE LA BD -> NUEVOS COMPONENTES? */}
-                        <div class="scrollable-card-group my-cards">
-                            <Comment/>
-                        </div>
+                        <ItemComments id={myItem._id} sortby={sort}/>
                     </div>
 
                     <div class="col-1"></div>
@@ -134,16 +200,12 @@ const Item = () => {
                         <h4>Recomendaciones</h4>
 
                         <div class="row mt-3 mb-3">
-                            <div class="col">
-                                <a class="btn w-100 border border-1 border-dark rounded boton-volver text-dark">+ Añade una recomendación</a>
-                            </div>
+                                <div class="col">
+                                    <a class="btn w-100 border border-1 border-dark rounded boton-volver text-dark" href={"/add-recommendation?item_id=" + myItem._id}>+ Añade una recomendación</a>
+                                </div>
                         </div>
 
-                            {/* EXTRAER DE LA BD -> NUEVOS COMPONENTES? */}
-                            <div class="scrollable-card-group my-cards">
-                                <Recommendation id="0"/>
-                                <Recommendation id="1"/>
-                            </div>
+                        <Recommendations id={myItem._id}/>
                     </div>
                 </div>
             </main>

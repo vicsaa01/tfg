@@ -2,9 +2,8 @@ import React from "react";
 
 import { useState, useEffect } from "react";
 
-import LikeButton from "../img/like.png";
-
 const DiscussionCard = (props) => {
+    
     //EXTRAER DE LA BD
     const [myDiscussion, setMyDiscussion] = useState([]);
 
@@ -33,7 +32,7 @@ const DiscussionCard = (props) => {
                                         <div class="col-1">
                                             <div class="row align-items-center">
                                                 <p class="card-text m-0 mr-1 p-0">{myDiscussion.likes}</p>
-                                                <div class="col"><img src={LikeButton} width="15" height="15"/></div>
+                                                <div class="col"><img src='/img/like.png' width="15" height="15"/></div>
                                             </div>
                                         </div>
 

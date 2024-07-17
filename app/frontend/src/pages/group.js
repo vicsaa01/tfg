@@ -6,12 +6,14 @@ import DiscussionCard from "../components/DiscussionCard";
 import UserMini from "../components/UserMini";
 import ItemMini from "../components/ItemMini";
 import GroupMenu from "../components/GroupMenu";
+import DiscussionCards from "../components/DiscussionCards";
 
 const Group = () => {
     const queryParameters = new URLSearchParams(window.location.search)
     const id = queryParameters.get("id")
 
     //EXTRAER GRUPO DE LA BD
+
     const [myGroup, setMyGroup] = useState([]);
 
     const [myUser, setMyUser] = useState([]);
@@ -93,19 +95,14 @@ const Group = () => {
           });
     }, [])
 
-    //EXTRAER DISCUSIONES DE LA BD
-    const [discussions, setDiscussions] = useState([]);
+    // sort discussions
 
-    useEffect(() => {
-        fetch('http://127.0.0.1:8000/discussions?group_id=' + id)
-          .then((res) => {
-            return res.json();
-          })
-          .then((data) => {
-            console.log(data);
-            setDiscussions(data);
-          });
-    }, [])
+    const [sort, setSort] = useState('popular');
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setSort(value);
+    }
 
     return(
         <main class="m-5">
@@ -126,11 +123,11 @@ const Group = () => {
                     <div class="col-7 m-0 border border-dark border-1 rounded pt-3 pb-3">
                         <div class="row mb-4 text-left text-dark">
                             <div class="col-6">
-                                <form action="">
+                                <form>
                                     <div class="row align-items-center">
                                         <div class="col-lg-4 col-md-5 col-sm-6"><h5 class="me-5">Discusiones</h5></div>
                                         <div class="col-lg-8 col-md-7 col-sm-6">
-                                            <select class="form-select w-auto p-1 border border-1 border-dark" name="orderby" id="selectlist">
+                                            <select class="form-select w-auto p-1 border border-1 border-dark" name="sort" value={sort} onChange={handleInputChange} id="selectlist">
                                                 <option value="new">Más recientes</option>
                                                 <option value="popular">Más populares</option>
                                                 <option value="controversial">Más controvertidas</option>
@@ -147,11 +144,7 @@ const Group = () => {
 
                         <div class="row mb-5">
                             <div class="col-12">
-                                <div class="scrollable-card-group my-cards">
-                                    {discussions.map((discussion) => (
-                                        <DiscussionCard id={discussion._id}/>
-                                    ))}
-                                </div>
+                                <DiscussionCards id={myGroup._id}/>
                             </div>
                         </div>
                     </div>

@@ -38,7 +38,8 @@ const Item = () => {
         e.preventDefault();
 
         formData.item = id;
-        formData.user = session.user_id;
+        if (session != undefined) {formData.user = session.user_id;}
+        else {formData.user = 'anonymous'}
 
         console.log(formData);
 

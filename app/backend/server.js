@@ -498,6 +498,113 @@ app.post('/add-recommendation', async (req, res) => {
 
 
 
+// Likes and dislikes
+
+app.get('/like-discussion', async (req, res) => {
+  id = req.query.id;
+  const result = await discussions.updateOne({_id: id}, { $inc: {likes: 1}});
+  const discussion = await discussions.findById(id);
+  res.json(discussion);
+})
+
+app.get('/not-like-discussion', async (req, res) => {
+  id = req.query.id;
+  const result = await discussions.updateOne({_id: id}, { $inc: {likes: -1}});
+  const discussion = await discussions.findById(id);
+  res.json(discussion);
+})
+
+app.get('/dislike-discussion', async (req, res) => {
+  id = req.query.id;
+  const result = await discussions.updateOne({_id: id}, { $inc: {dislikes: 1}});
+  const discussion = await discussions.findById(id);
+  res.json(discussion);
+})
+
+app.get('/not-dislike-discussion', async (req, res) => {
+  id = req.query.id;
+  const result = await discussions.updateOne({_id: id}, { $inc: {dislikes: -1}});
+  const discussion = await discussions.findById(id);
+  res.json(discussion);
+})
+
+
+
+app.get('/like-comment', async (req, res) => {
+  id = req.query.id;
+  const result = await comments.updateOne({_id: id}, { $inc: {likes: 1}});
+  const comment = await comments.findById(id);
+  res.json(comment);
+})
+
+app.get('/not-like-comment', async (req, res) => {
+  id = req.query.id;
+  const result = await comments.updateOne({_id: id}, { $inc: {likes: -1}});
+  const comment = await comments.findById(id);
+  res.json(comment);
+})
+
+app.get('/dislike-comment', async (req, res) => {
+  id = req.query.id;
+  const result = await comments.updateOne({_id: id}, { $inc: {dislikes: 1}});
+  const comment = await comments.findById(id);
+  res.json(comment);
+})
+
+app.get('/not-dislike-comment', async (req, res) => {
+  id = req.query.id;
+  const result = await comments.updateOne({_id: id}, { $inc: {dislikes: -1}});
+  const comment = await comments.findById(id);
+  res.json(comment);
+})
+
+
+
+app.get('/like-recommendation', async (req, res) => {
+  id = req.query.id;
+  const result = await recommendations.updateOne({_id: id}, { $inc: {likes: 1}});
+  const recommendation = await recommendations.findById(id);
+  res.json(recommendation);
+})
+
+app.get('/not-like-recommendation', async (req, res) => {
+  id = req.query.id;
+  const result = await recommendations.updateOne({_id: id}, { $inc: {likes: -1}});
+  const recommendation = await recommendations.findById(id);
+  res.json(recommendation);
+})
+
+app.get('/dislike-recommendation', async (req, res) => {
+  id = req.query.id;
+  const result = await recommendations.updateOne({_id: id}, { $inc: {dislikes: 1}});
+  const recommendation = await recommendations.findById(id);
+  res.json(recommendation);
+})
+
+app.get('/not-dislike-recommendation', async (req, res) => {
+  id = req.query.id;
+  const result = await recommendations.updateOne({_id: id}, { $inc: {dislikes: -1}});
+  const recommendation = await recommendations.findById(id);
+  res.json(recommendation);
+})
+
+
+
+
+
+// Ratings
+
+app.post('/rate-item', async (req, res) => {
+  id = req.query.id;
+  const result = await items.updateOne({_id: id}, { $inc: {points: req.body.points, ratings: 1}});
+  const item = await items.findById(id);
+  res.status(200).json(item);
+})
+
+
+
+
+
 // Route for the Search system
 
 app.get('/search', async (req, res) => {

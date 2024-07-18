@@ -5,7 +5,7 @@ const ItemRating = (props) => {
         return(<h3 class="rounded w-50 text-center valoracion-inexistente">Sin puntuación</h3>);
     }
 
-    var rating = props.points*10/props.ratings;
+    var rating = Math.round(props.points*10/props.ratings);
     console.log(rating);
     
     if (rating < 50) {
@@ -17,7 +17,7 @@ const ItemRating = (props) => {
     } else if (rating <= 100) {
         return(<h3 class="rounded w-25 text-center valoracion-muy-positiva">{rating}/100</h3>);
     } else {
-        return(<h3 class="rounded w-50 text-center valoracion-inexistente">(!) Error</h3>);
+        return(<h3 class="rounded w-25 text-center valoracion-inexistente">(!) Error</h3>);
     }
 }
 

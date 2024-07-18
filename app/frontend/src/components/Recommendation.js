@@ -1,8 +1,11 @@
 import React from "react";
 
 import { useState, useEffect } from "react";
+import { useCookies } from 'react-cookie';
 
 const Recommendation = (props) => {
+    const [cookies] = useCookies(['session']);
+    const session = cookies['session'];
     
     // EXTRAER RECOMENDACIÓN DE LA BD
 
@@ -29,6 +32,101 @@ const Recommendation = (props) => {
             });
     }, ['http://127.0.0.1:8000/recommendation?id=' + props.id])
 
+    // likes y dislikes
+
+    const [interaction, setInteraction] = useState({
+        liked: false,
+        like_icon: 'like.png',
+        disliked: false,
+        dislike_icon: 'dislike.png'
+    });
+
+    const handleLike = () => {
+        if (!interaction.disliked && session!=undefined) {
+            if (interaction.liked) {
+                fetch('http://127.0.0.1:8000/not-like-recommendation?id=' + props.id)
+                .then((res) => {
+                    return res.json();
+                })
+                .then((data) => {
+                    console.log(data);
+                    setRecommendation(data);
+
+                    setInteraction((prev) => ({
+                        ...prev,
+                        liked: false,
+                        like_icon: 'like.png'
+                    }));
+                })
+                .catch((error) => {
+                    alert(error);
+                });
+            } else {
+                fetch('http://127.0.0.1:8000/like-recommendation?id=' + props.id)
+                .then((res) => {
+                    return res.json();
+                })
+                .then((data) => {
+                    console.log(data);
+                    setRecommendation(data);
+
+                    setInteraction((prev) => ({
+                        ...prev,
+                        liked: true,
+                        like_icon: 'liked.png'
+                    }));
+                })
+                .catch((error) => {
+                    alert(error);
+                });
+            }
+            console.log(interaction);
+        }
+    }
+
+    const handleDislike = () => {
+        if (!interaction.liked && session!=undefined) {
+            if (interaction.disliked) {
+                fetch('http://127.0.0.1:8000/not-dislike-recommendation?id=' + props.id)
+                .then((res) => {
+                    return res.json();
+                })
+                .then((data) => {
+                    console.log(data);
+                    setRecommendation(data);
+
+                    setInteraction((prev) => ({
+                        ...prev,
+                        disliked: false,
+                        dislike_icon: 'dislike.png'
+                    }));
+                })
+                .catch((error) => {
+                    alert(error);
+                });
+            } else {
+                fetch('http://127.0.0.1:8000/dislike-recommendation?id=' + props.id)
+                .then((res) => {
+                    return res.json();
+                })
+                .then((data) => {
+                    console.log(data);
+                    setRecommendation(data);
+
+                    setInteraction((prev) => ({
+                        ...prev,
+                        disliked: true,
+                        dislike_icon: 'disliked.png'
+                    }));
+                })
+                .catch((error) => {
+                    alert(error);
+                });
+            }
+            console.log(interaction);
+        }
+    }
+
     return(
                                 <div class="scrollable-card my-card w-100">
                                     <div class="card mb-1">
@@ -41,13 +139,11 @@ const Recommendation = (props) => {
 
                                                 <div class="row mt-3">
                                                     <div class="col-lg-2 col-md-4 col-sm-6">
-                                                        <p class="pt-1 ml-3 mr-1">{recommendation.likes}</p>
-                                                        <a class="mr-2" href=""><img src='/img/like.png' width="15" height="15"/></a>
+                                                        <p class="pt-1">{recommendation.likes} <button class="btn btn-outline-primary bg-white border-0 p-0 pb-1 ms-1" onClick={handleLike}><img src={'/img/' + interaction.like_icon} width="15" height="15"/></button></p>
                                                     </div>
 
                                                     <div class="col-lg-2 col-md-4 col-sm-6">
-                                                        <p class="pt-1 mr-1">{recommendation.dislikes}</p>
-                                                        <a class="pt-1" href=""><img src='/img/dislike.png' width="15" height="15"/></a>
+                                                        <p class="pt-1">{recommendation.dislikes} <button class="btn btn-outline-primary bg-white border-0 p-0 pb-1 ms-1" onClick={handleDislike}><img src={'/img/' + interaction.dislike_icon} width="15" height="15"/></button></p>
                                                     </div>
 
                                                     <div class="col-lg-8 col-md-4 col-sm-0"></div>

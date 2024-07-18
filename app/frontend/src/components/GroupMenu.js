@@ -15,8 +15,13 @@ const GroupMenu = (props) => {
                     <div class="col-6 text-start">
                         <p class="mt-3 mb-3 text-dark">Grupo creado por <a href={"/user?id=" + props.creator_id}>tí</a> el {props.date.day} de {props.date.month} de {props.date.year}</p>
                     </div>
-                    <div class="col-6 text-end">
-                        <a class="btn bg-dark text-white" href={"/edit-group?id=" + props.id}>Editar grupo</a>
+
+                    <div class="col-4 text-end">
+                            <a class="btn w-25 bg-white text-dark boton-volver border border-dark rounded" href={"/requests?group_id=" + props.id}>Ver solicitudes</a>
+                    </div>
+
+                    <div class="col-2 text-end">
+                            <a class="btn w-50 bg-dark text-white" href={"/edit-group?id=" + props.id}>Editar grupo</a>
                     </div>
             </>
         );

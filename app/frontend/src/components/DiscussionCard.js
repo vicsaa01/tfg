@@ -55,15 +55,13 @@ const DiscussionCard = (props) => {
 
                                         <div class="col-1">
                                             <div class="row align-items-center">
-                                                <p class="card-text m-0 mr-1 p-0">{myDiscussion.likes}</p>
-                                                <div class="col"><img src='/img/like.png' width="15" height="15"/></div>
+                                                <p class="card-text m-0 mr-1 p-0">{myDiscussion.likes} <img src='/img/like.png' width="15" height="15"/></p>
                                             </div>
                                         </div>
 
                                         <div class="col-1">
                                             <div class="row align-items-center">
-                                                <p class="card-text m-0 mr-1 p-0">{myDiscussion.dislikes}</p>
-                                                <div class="col"><img src='/img/dislike.png' width="15" height="15"/></div>
+                                                <p class="card-text m-0 mr-1 p-0">{myDiscussion.dislikes} <img src='/img/dislike.png' width="15" height="15"/></p>
                                             </div>
                                         </div>
 

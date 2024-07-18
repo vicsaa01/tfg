@@ -1,8 +1,11 @@
 import React from "react";
 
 import { useState, useEffect } from "react";
+import { useCookies } from 'react-cookie';
 
 const Comment = (props) => {
+    const [cookies] = useCookies(['session']);
+    const session = cookies['session'];
 
     //EXTRAER COMENTARIO DE LA BD
 
@@ -53,6 +56,101 @@ const Comment = (props) => {
             });
     }, ['http://127.0.0.1:8000/comment?id=' + props.id])
 
+    // likes y dislikes
+
+    const [interaction, setInteraction] = useState({
+        liked: false,
+        like_icon: 'like.png',
+        disliked: false,
+        dislike_icon: 'dislike.png'
+    });
+
+    const handleLike = () => {
+        if (!interaction.disliked && session!=undefined) {
+            if (interaction.liked) {
+                fetch('http://127.0.0.1:8000/not-like-comment?id=' + props.id)
+                .then((res) => {
+                    return res.json();
+                })
+                .then((data) => {
+                    console.log(data);
+                    setComment(data);
+
+                    setInteraction((prev) => ({
+                        ...prev,
+                        liked: false,
+                        like_icon: 'like.png'
+                    }));
+                })
+                .catch((error) => {
+                    alert(error);
+                });
+            } else {
+                fetch('http://127.0.0.1:8000/like-comment?id=' + props.id)
+                .then((res) => {
+                    return res.json();
+                })
+                .then((data) => {
+                    console.log(data);
+                    setComment(data);
+
+                    setInteraction((prev) => ({
+                        ...prev,
+                        liked: true,
+                        like_icon: 'liked.png'
+                    }));
+                })
+                .catch((error) => {
+                    alert(error);
+                });
+            }
+            console.log(interaction);
+        }
+    }
+
+    const handleDislike = () => {
+        if (!interaction.liked && session!=undefined) {
+            if (interaction.disliked) {
+                fetch('http://127.0.0.1:8000/not-dislike-comment?id=' + props.id)
+                .then((res) => {
+                    return res.json();
+                })
+                .then((data) => {
+                    console.log(data);
+                    setComment(data);
+
+                    setInteraction((prev) => ({
+                        ...prev,
+                        disliked: false,
+                        dislike_icon: 'dislike.png'
+                    }));
+                })
+                .catch((error) => {
+                    alert(error);
+                });
+            } else {
+                fetch('http://127.0.0.1:8000/dislike-comment?id=' + props.id)
+                .then((res) => {
+                    return res.json();
+                })
+                .then((data) => {
+                    console.log(data);
+                    setComment(data);
+
+                    setInteraction((prev) => ({
+                        ...prev,
+                        disliked: true,
+                        dislike_icon: 'disliked.png'
+                    }));
+                })
+                .catch((error) => {
+                    alert(error);
+                });
+            }
+            console.log(interaction);
+        }
+    }
+
     if (!anon) {
         return(
                             <div class="scrollable-card-group my-cards">
@@ -79,15 +177,13 @@ const Comment = (props) => {
                                                 <div class="row ms-3">
                                                     <div class="col-lg-2 col-md-4 col-sm-6">
                                                         <div class="row">
-                                                            <p class="pt-1 mr-1">{comment.likes}</p>
-                                                            <a href=""><img src='/img/like.png' width="15" height="15"/></a>
+                                                            <p class="pt-1">{comment.likes} <button class="btn btn-outline-primary bg-white border-0 p-0 pb-1 ms-1" onClick={handleLike}><img src={'/img/' + interaction.like_icon} width="15" height="15"/></button></p>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-lg-2 col-md-4 col-sm-6">
                                                         <div class="row">
-                                                            <p class="pt-1 me-1">{comment.dislikes}</p>
-                                                            <a class="pt-1" href=""><img src='/img/dislike.png' width="15" height="15"/></a>
+                                                            <p class="pt-1">{comment.dislikes} <button class="btn btn-outline-primary bg-white border-0 p-0 pb-1 ms-1" onClick={handleDislike}><img src={'/img/' + interaction.dislike_icon} width="15" height="15"/></button></p>
                                                         </div>
                                                     </div>
 
@@ -123,21 +219,19 @@ const Comment = (props) => {
                                 </div>
 
                                 <div class="row ms-3">
-                                    <div class="col-lg-2 col-md-4 col-sm-6">
-                                        <div class="row">
-                                            <p class="pt-1 mr-1">{comment.likes}</p>
-                                            <a href=""><img src='/img/like.png' width="15" height="15"/></a>
-                                        </div>
-                                    </div>
+                                                    <div class="col-lg-2 col-md-4 col-sm-6">
+                                                        <div class="row">
+                                                            <p class="pt-1">{comment.likes} <button class="btn btn-outline-primary bg-white border-0 p-0 pb-1 ms-1" onClick={handleLike}><img src={'/img/' + interaction.like_icon} width="15" height="15"/></button></p>
+                                                        </div>
+                                                    </div>
 
-                                    <div class="col-lg-2 col-md-4 col-sm-6">
-                                        <div class="row">
-                                            <p class="pt-1 me-1">{comment.dislikes}</p>
-                                            <a class="pt-1" href=""><img src='/img/dislike.png' width="15" height="15"/></a>
-                                        </div>
-                                    </div>
+                                                    <div class="col-lg-2 col-md-4 col-sm-6">
+                                                        <div class="row">
+                                                            <p class="pt-1">{comment.dislikes} <button class="btn btn-outline-primary bg-white border-0 p-0 pb-1 ms-1" onClick={handleDislike}><img src={'/img/' + interaction.dislike_icon} width="15" height="15"/></button></p>
+                                                        </div>
+                                                    </div>
 
-                                    <div class="col-lg-8 col-md-4 col-sm-0"></div>
+                                                    <div class="col-lg-8 col-md-4 col-sm-0"></div>
                                 </div>
                             </div>
                         </div>

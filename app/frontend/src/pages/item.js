@@ -18,6 +18,41 @@ const Item = () => {
     const [cookies, setCookie, removeCookie] = useCookies(['session']);
     const session = cookies['session'];
 
+    // ratings
+
+    const [rating, setRating] = useState({
+        points: 0
+    });
+
+    const handleSetRating = (e) => {
+        const { name, value } = e.target;
+        setRating({
+            points: value*2
+        });
+    }
+
+    const handleSubmitRating = (e) => {
+        e.preventDefault();
+
+        console.log(rating.points);
+
+        fetch('http://127.0.0.1:8000/rate-item?id=' + id, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(rating)
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            setMyItem(data);
+            window.location.href = '/item?id=' + id;
+        })
+        .catch((error) => {
+            alert(error);
+        });
+    }
+
     // write comment
 
     const [formData, setFormData] = useState({
@@ -139,20 +174,28 @@ const Item = () => {
                             <div class="border border-dark mt-5"></div>
 
                             <div class="col-lg-7 col-md-6 mt-5">
-                                <h4>Puntúa este ítem: </h4>
+                                <h4>Valora este ítem: </h4>
 
-                                    <div class="rate m-0 p-0">
-                                        <input type="radio" id="star5" name="rate" value="5" />
-                                        <label for="star5" title="text">5 stars</label>
-                                        <input type="radio" id="star4" name="rate" value="4" />
-                                        <label for="star4" title="text">4 stars</label>
-                                        <input type="radio" id="star3" name="rate" value="3" />
-                                        <label for="star3" title="text">3 stars</label>
-                                        <input type="radio" id="star2" name="rate" value="2" />
-                                        <label for="star2" title="text">2 stars</label>
-                                        <input type="radio" id="star1" name="rate" value="1" />
-                                        <label for="star1" title="text">1 star</label>
-                                    </div>
+                                <div class="row">
+                                    <form onSubmit={handleSubmitRating}>
+                                        <div class="col rate me-5">
+                                            <input type="radio" id="star5" name="rate" value="5" onClick={handleSetRating}/>
+                                            <label for="star5" title="text">5 stars</label>
+                                            <input type="radio" id="star4" name="rate" value="4" onClick={handleSetRating}/>
+                                            <label for="star4" title="text">4 stars</label>
+                                            <input type="radio" id="star3" name="rate" value="3" onClick={handleSetRating}/>
+                                            <label for="star3" title="text">3 stars</label>
+                                            <input type="radio" id="star2" name="rate" value="2" onClick={handleSetRating}/>
+                                            <label for="star2" title="text">2 stars</label>
+                                            <input type="radio" id="star1" name="rate" value="1" onClick={handleSetRating}/>
+                                            <label for="star1" title="text">1 star</label>
+                                        </div>
+
+                                        <div class="col">
+                                            <button type="submit" class="btn border border-1 border-dark rounded boton-volver text-dark mt-1">Valorar</button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>

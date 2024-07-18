@@ -116,6 +116,101 @@ const Discussion = () => {
           });
     }, ['http://127.0.0.1:8000/discussion?id=' + id])
 
+    // likes y dislikes
+
+    const [interaction, setInteraction] = useState({
+        liked: false,
+        like_icon: 'like.png',
+        disliked: false,
+        dislike_icon: 'dislike.png'
+    });
+
+    const handleLike = () => {
+        if (!interaction.disliked && session!=undefined) {
+            if (interaction.liked) {
+                fetch('http://127.0.0.1:8000/not-like-discussion?id=' + id)
+                .then((res) => {
+                    return res.json();
+                })
+                .then((data) => {
+                    console.log(data);
+                    setMyDiscussion(data);
+
+                    setInteraction((prev) => ({
+                        ...prev,
+                        liked: false,
+                        like_icon: 'like.png'
+                    }));
+                })
+                .catch((error) => {
+                    alert(error);
+                });
+            } else {
+                fetch('http://127.0.0.1:8000/like-discussion?id=' + id)
+                .then((res) => {
+                    return res.json();
+                })
+                .then((data) => {
+                    console.log(data);
+                    setMyDiscussion(data);
+
+                    setInteraction((prev) => ({
+                        ...prev,
+                        liked: true,
+                        like_icon: 'liked.png'
+                    }));
+                })
+                .catch((error) => {
+                    alert(error);
+                });
+            }
+            console.log(interaction);
+        }
+    }
+
+    const handleDislike = () => {
+        if (!interaction.liked && session!=undefined) {
+            if (interaction.disliked) {
+                fetch('http://127.0.0.1:8000/not-dislike-discussion?id=' + id)
+                .then((res) => {
+                    return res.json();
+                })
+                .then((data) => {
+                    console.log(data);
+                    setMyDiscussion(data);
+
+                    setInteraction((prev) => ({
+                        ...prev,
+                        disliked: false,
+                        dislike_icon: 'dislike.png'
+                    }));
+                })
+                .catch((error) => {
+                    alert(error);
+                });
+            } else {
+                fetch('http://127.0.0.1:8000/dislike-discussion?id=' + id)
+                .then((res) => {
+                    return res.json();
+                })
+                .then((data) => {
+                    console.log(data);
+                    setMyDiscussion(data);
+
+                    setInteraction((prev) => ({
+                        ...prev,
+                        disliked: true,
+                        dislike_icon: 'disliked.png'
+                    }));
+                })
+                .catch((error) => {
+                    alert(error);
+                });
+            }
+            console.log(interaction);
+        }
+    }
+
     return(
         <main class="m-5">
                 <div class="row mt-3 mb-4 text-left text-dark">
@@ -156,15 +251,13 @@ const Discussion = () => {
                                             <div class="row ms-3">
                                                 <div class="col-lg-2 col-md-4 col-sm-6">
                                                     <div class="row">
-                                                        <p class="pt-1 mr-1">{myDiscussion.likes}</p>
-                                                        <a href=""><img src='/img/like.png' width="15" height="15"/></a>
+                                                        <p class="pt-1">{myDiscussion.likes} <button class="btn btn-outline-primary bg-white border-0 p-0 pb-1 ms-1" onClick={handleLike}><img src={'/img/' + interaction.like_icon} width="15" height="15"/></button></p>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-lg-2 col-md-4 col-sm-6">
                                                     <div class="row">
-                                                        <p class="pt-1 me-1">{myDiscussion.dislikes}</p>
-                                                        <a class="pt-1" href=""><img src='/img/dislike.png' width="15" height="15"/></a>
+                                                        <p class="pt-1 me-1">{myDiscussion.dislikes} <button class="btn btn-outline-primary bg-white border-0 p-0 pb-1 ms-1" onClick={handleDislike}><img src={'/img/' + interaction.dislike_icon} width="15" height="15"/></button></p>
                                                     </div>
                                                 </div>
 

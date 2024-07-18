@@ -2,11 +2,13 @@ import React from "react";
 import { useState, useEffect } from "react";
 
 const ItemCard = (props) => {
-    //EXTRAER DE LA BD
+
+    //EXTRAER ÍTEM DE LA BD
+
     const [myItem, setMyItem] = useState([])
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/item?id='+props.id)
+        fetch('http://127.0.0.1:8000/item?id=' + props.id)
           .then((res) => {
             return res.json();
           })
@@ -16,19 +18,19 @@ const ItemCard = (props) => {
           });
     }, [])
 
-    //FIJAR EL COLOR DEPENDIENDO DE LA VALORACIÓN
-    /*
-    var score_text = <span class="rounded p-1">{score}/100</span>;
-    if (score<50) {
-        score_text = <span class="valoracion-negativa rounded p-1">{score}/100</span>;
-    } else if (score<70) {
-        score_text = <span class="valoracion-mixta rounded p-1">{score}/100</span>;
-    } else if (score<90) {
-        score_text = <span class="valoracion-positiva rounded p-1">{score}/100</span>;
-    } else {
-        score_text = <span class="valoracion-muy-positiva rounded p-1">{score}/100</span>;
-    }
-        */
+    // set rating color
+
+    var color = ""
+    if (myItem.ratings < 1) { color = " valoracion-inexistente" }
+
+    var rating = Math.round(myItem.points*10/myItem.ratings);
+    console.log(rating);
+    
+    if (rating < 50) { color = " valoracion-negativa" }
+    else if (rating < 70) { color = " valoracion-mixta" }
+    else if (rating < 90) { color = " valoracion-positiva" }
+    else if (rating <= 100) { color = "valoracion-muy-positiva" }
+    else { color = " valoracion-inexistente" }
 
     return(
                             <div class="scrollable-card item-in-home">
@@ -43,7 +45,7 @@ const ItemCard = (props) => {
                                                 </p>
                                             </div>
                                             <div class="card-footer">
-                                                <h5>Puntuación: {myItem.points*10/myItem.ratings + "/100"}</h5>
+                                                <h5>Puntuación: <span class={"p-1 rounded " + color}>{Math.round(myItem.points*10/myItem.ratings) + "/100"}</span></h5>
                                             </div>
                                         </a>
                                 </div>

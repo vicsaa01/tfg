@@ -40,6 +40,17 @@ mongoose.connect('mongodb://127.0.0.1:27017', {
 
 // DB schemas and models
 
+const usersSchema = new mongoose.Schema({
+  name: {type: String, required: true},
+  email: {type: String, required: true},
+  password: {type: String, required: true},
+  avatar: {type: String, required: true, default: 'default-user-avatar.png'},
+  info: {type: String, required: false},
+  created_at: {type: Date, required: true, default: Date.now()},
+  is_admin: {type: Boolean, required: true, default: false}
+});
+const users = mongoose.model('Users', usersSchema);
+
 const itemsSchema = new mongoose.Schema({
     name: {type: String, required: true},
     info: {type: String, required: true, default: 'No hay información sobre este ítem.'},
@@ -90,6 +101,8 @@ const discussionsSchema = new mongoose.Schema({
 });
 const discussions = mongoose.model('Discussions', discussionsSchema);
 
+
+
 const commentsSchema = new mongoose.Schema({
   discussion: {type: String, required: false},
   item: {type: String, required: false},
@@ -109,22 +122,27 @@ const recommendationsSchema = new mongoose.Schema({
 });
 const recommendations = mongoose.model('Recommendations', recommendationsSchema);
 
-const usersSchema = new mongoose.Schema({
-  name: {type: String, required: true},
-  email: {type: String, required: true},
-  password: {type: String, required: true},
-  avatar: {type: String, required: true, default: 'default-user-avatar.png'},
-  info: {type: String, required: false},
-  created_at: {type: Date, required: true, default: Date.now()},
-  is_admin: {type: Boolean, required: true, default: false}
+const listelementsSchema = new mongoose.Schema({
+  item: {type: String, required: true},
+  list: {type: String, required: true},
+  votes: {type: Number, required: false, default: 0},
+  next_item: {type: String, required: false},
+  first: {type: Boolean, required: false}
 });
-const users = mongoose.model('Users', usersSchema);
+const listelements = mongoose.model('Listelements', listelementsSchema);
 
-const itemInSchema = new mongoose.Schema({
-  item: String,
-  list: String,
+const membersSchema = new mongoose.Schema({
+  user_id: {type: String, required: true},
+  group_id: {type: String, required: true},
+  is_mod: {type: Boolean, required: true, default: false}
 });
-const item_in = mongoose.model('ItemIn', itemInSchema);
+const members = mongoose.model('Members', membersSchema);
+
+const favoriteitemsSchema = new mongoose.Schema({
+  item_id: {type: String, required: true},
+  group_id: {type: String, required: true}
+});
+const favoriteitems = mongoose.model('Favoriteitems', favoriteitemsSchema);
 
 
 
@@ -134,6 +152,74 @@ app.listen(PORT, () => {
 });
 
 
+
+
+
+
+
+// Routes to fetch by ID
+
+app.get('/user', async (req, res) => {
+  id = req.query.id;
+  const userList = await users.findById(id);
+  res.json(userList);
+});
+
+app.get('/item', async (req, res) => {
+  id = req.query.id;
+  const itemList = await items.findById(id);
+  res.json(itemList);
+});
+
+app.get('/list', async (req, res) => {
+  id = req.query.id;
+  const listList = await lists.findById(id);
+  res.json(listList);
+});
+
+app.get('/group', async (req, res) => {
+  id = req.query.id;
+  const group = await groups.findById(id);
+  res.json(group);
+});
+
+app.get('/discussion', async (req, res) => {
+  id = req.query.id;
+  const discussionsList = await discussions.findById(id);
+  res.json(discussionsList);
+});
+
+
+
+app.get('/comment', async (req, res) => {
+  id = req.query.id;
+  const commentsList = await comments.findById(id);
+  res.json(commentsList);
+});
+
+app.get('/recommendation', async (req, res) => {
+  id = req.query.id;
+  const recommendationsList = await recommendations.findById(id);
+  res.json(recommendationsList);
+});
+
+app.get('/list-element', async (req, res) => {
+  id = req.query.id;
+  const list_element = await listelements.findById(id);
+  res.json(list_element);
+});
+
+app.get('/member', async (req, res) => {
+  id = req.query.id;
+  const member = await members.findById(id);
+  res.json(member);
+});
+
+app.get('/favorite-item', async (req, res) => {
+  id = req.query.id;
+  const favorite_item = await favoriteitems.findById(id);
+  res.json(favorite_item);
+});
 
 
 
@@ -248,20 +334,62 @@ app.get('/lists', async (req, res) => {
   res.json(listList);
 });
 
+app.get('/groups', async (req, res) => {
+  const groupList = await groups.find().sort({members: 'desc'}).select('_id -name -type -logo -creator_id -created_at -members -items -__v');
+  res.json(groupList);
+});
+
+
+
+
+
+// List
+
 app.get('/poll-elements', async (req, res) => {
   list_id = req.query.list_id;
   const pollElementsList = await item_in.find({list: list_id}).sort({votes: 'desc'}).select('_id -item -list -votes -__v');
   res.json(pollElementsList);
 });
 
-app.get('/groups', async (req, res) => {
-  const groupList = await groups.find().sort({members: 'desc'}).select('_id -name -type -logo -creator_id -created_at -members -items -__v');
-  res.json(groupList);
+
+
+
+
+// Group
+
+app.get('/members', async (req, res) => {
+  group_id = req.query.group_id;
+  const membersList = await members.find({group_id: group_id}).select('_id -user_id -group_id -is_mod -__v');
+  res.json(membersList);
 });
 
-app.get('/discussions', async (req, res) => {
+app.get('/favorite-items', async (req, res) => {
+  group_id = req.query.group_id;
+  const itemsList = await favoriteitems.find({group_id: group_id}).select('_id -item_id -group_id -__v');
+  res.json(itemsList);
+});
+
+app.get('/popular-discussions', async (req, res) => {
   group_id = req.query.group_id;
   const discussionsList = await discussions.find({group_id: group_id}).sort({likes: 'desc'}).select('_id -title -text -tags -group_id -creator_id -created_at -likes -dislikes -__v');
+  res.json(discussionsList);
+});
+
+app.get('/new-discussions', async (req, res) => {
+  group_id = req.query.group_id;
+  const discussionsList = await discussions.find({group_id: group_id}).sort({created_at: 'desc'}).select('_id -title -text -tags -group_id -creator_id -created_at -likes -dislikes -__v');
+  res.json(discussionsList);
+});
+
+app.get('/old-discussions', async (req, res) => {
+  group_id = req.query.group_id;
+  const discussionsList = await discussions.find({group_id: group_id}).sort({created_at: 'asc'}).select('_id -title -text -tags -group_id -creator_id -created_at -likes -dislikes -__v');
+  res.json(discussionsList);
+});
+
+app.get('/controversial-discussions', async (req, res) => {
+  group_id = req.query.group_id;
+  const discussionsList = await discussions.find({group_id: group_id}).sort({dislikes: 'desc'}).select('_id -title -text -tags -group_id -creator_id -created_at -likes -dislikes -__v');
   res.json(discussionsList);
 });
 
@@ -480,54 +608,6 @@ app.get('/search', async (req, res) => {
       break;
   }
   res.json(searchList);
-});
-
-
-
-
-
-// Routes to fetch by ID
-
-app.get('/item', async (req, res) => {
-  id = req.query.id;
-  const itemList = await items.findById(id);
-  res.json(itemList);
-});
-
-app.get('/group', async (req, res) => {
-  id = req.query.id;
-  const group = await groups.findById(id);
-  res.json(group);
-});
-
-app.get('/list', async (req, res) => {
-  id = req.query.id;
-  const listList = await lists.findById(id);
-  res.json(listList);
-});
-
-app.get('/discussion', async (req, res) => {
-  id = req.query.id;
-  const discussionsList = await discussions.findById(id);
-  res.json(discussionsList);
-});
-
-app.get('/comment', async (req, res) => {
-  id = req.query.id;
-  const commentsList = await comments.findById(id);
-  res.json(commentsList);
-});
-
-app.get('/recommendation', async (req, res) => {
-  id = req.query.id;
-  const recommendationsList = await recommendations.findById(id);
-  res.json(recommendationsList);
-});
-
-app.get('/user', async (req, res) => {
-  id = req.query.id;
-  const userList = await users.findById(id);
-  res.json(userList);
 });
 
 

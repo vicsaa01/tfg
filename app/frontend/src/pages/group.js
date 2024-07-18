@@ -2,11 +2,10 @@ import React from "react";
 
 import { useState, useEffect } from "react";
 
-import DiscussionCard from "../components/DiscussionCard";
-import UserMini from "../components/UserMini";
-import ItemMini from "../components/ItemMini";
 import GroupMenu from "../components/GroupMenu";
 import DiscussionCards from "../components/DiscussionCards";
+import UserMiniList from "../components/UserMiniList";
+import ItemMiniList from "../components/ItemMiniList";
 
 const Group = () => {
     const queryParameters = new URLSearchParams(window.location.search)
@@ -15,9 +14,7 @@ const Group = () => {
     //EXTRAER GRUPO DE LA BD
 
     const [myGroup, setMyGroup] = useState([]);
-
     const [myUser, setMyUser] = useState([]);
-
     const [date, setDate] = useState({
         year: '',
         month: '',
@@ -93,7 +90,7 @@ const Group = () => {
                 day: dd
             });
           });
-    }, [])
+    }, ['http://127.0.0.1:8000/group?id=' + id])
 
     // sort discussions
 
@@ -127,9 +124,10 @@ const Group = () => {
                                     <div class="row align-items-center">
                                         <div class="col-lg-4 col-md-5 col-sm-6"><h5 class="me-5">Discusiones</h5></div>
                                         <div class="col-lg-8 col-md-7 col-sm-6">
-                                            <select class="form-select w-auto p-1 border border-1 border-dark" name="sort" value={sort} onChange={handleInputChange} id="selectlist">
-                                                <option value="new">Más recientes</option>
+                                            <select class="form-select w-auto p-1 border border-1 border-dark" name="sortby" value={sort} onChange={handleInputChange} id="selectlist">
                                                 <option value="popular">Más populares</option>
+                                                <option value="new">Más recientes</option>
+                                                <option value="old">Más antiguas</option>
                                                 <option value="controversial">Más controvertidas</option>
                                             </select>
                                         </div>
@@ -144,7 +142,7 @@ const Group = () => {
 
                         <div class="row mb-5">
                             <div class="col-12">
-                                <DiscussionCards id={myGroup._id}/>
+                                <DiscussionCards id={myGroup._id} sortby={sort}/>
                             </div>
                         </div>
                     </div>
@@ -161,9 +159,7 @@ const Group = () => {
 
                                 <br/>
 
-                                <div class="d-flex flex-row border border-1 rounded p-1 scrollable">
-                                    <UserMini id={myGroup.creator_id}/>
-                                </div>
+                                <UserMiniList group_id={myGroup._id}/>
 
                                 <br/><br/><br/>
 
@@ -174,9 +170,7 @@ const Group = () => {
 
                                 <br/>
 
-                                <div class="d-flex flex-row border border-1 rounded p-1 scrollable">
-                                    <ItemMini id="0"/>
-                                </div>
+                                <ItemMiniList group_id={myGroup._id}/>
                             </div>
                         </div>
                     </div>

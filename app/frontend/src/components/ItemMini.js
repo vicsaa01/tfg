@@ -1,22 +1,36 @@
 import React from "react";
 
-import ItemIcon0 from "../img/test-item-skyrim.png";
-import ItemIcon1 from "../img/test-item-gta-v.png";
-import NotFoundIcon from "../img/item-not-found.png";
+import { useState, useEffect } from "react";
 
 const ItemMini = (props) => {
-    var icon = NotFoundIcon;
+    
+    //EXTRAER DE LA BD
 
-    if (props.id=="0") {
-        icon = ItemIcon0;
-    } else if (props.id=="1") {
-        icon = ItemIcon1;
-    }
+    const [item, setItem] = useState([]);
+    const [myItem, setMyItem] = useState([]);
 
-    var link = "/user?id=" + props.id;
+    useEffect(() => {
+        fetch('http://127.0.0.1:8000/favorite-item?id=' + props.favorite_item_id)
+          .then((res) => {
+            return res.json();
+          })
+          .then((data) => {
+            console.log(data);
+            setItem(data);
+
+            fetch('http://127.0.0.1:8000/item?id=' + data.item_id)
+            .then((res) => {
+              return res.json();
+            })
+            .then((data) => {
+              console.log(data);
+              setMyItem(data);
+            });
+          });
+    }, ['http://127.0.0.1:8000/favorite-item?id=' + props.favorite_item_id])
 
     return(
-        <a class="btn m-0 mr-3 p-0 scrolled" href={link}><img src={icon} width="80" height="80"/></a>
+        <a class="btn m-0 mr-3 p-0 scrolled" href={'/item=id=' + myItem._id}><img src={'/img/' + myItem.icon} width="80" height="80"/></a>
     );
 };
 

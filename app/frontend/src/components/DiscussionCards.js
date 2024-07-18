@@ -6,11 +6,14 @@ import DiscussionCard from "./DiscussionCard";
 
 const DiscussionCards = (props) => {
 
+    console.log('Sorting discussions by: ' + props.sortby);
+
     //EXTRAER DISCUSIONES DE LA BD
+    
     const [discussions, setDiscussions] = useState([]);
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/discussions?group_id=' + props.id)
+        fetch('http://127.0.0.1:8000/' + props.sortby + '-discussions?group_id=' + props.id)
           .then((res) => {
             return res.json();
           })
@@ -18,7 +21,7 @@ const DiscussionCards = (props) => {
             console.log(data);
             setDiscussions(data);
           });
-    }, ['http://127.0.0.1:8000/discussions?group_id=' + props.id])
+    }, ['http://127.0.0.1:8000/' + props.sortby + '-discussions?group_id=' + props.id])
 
     return(
                                 <div class="scrollable-card-group my-cards">

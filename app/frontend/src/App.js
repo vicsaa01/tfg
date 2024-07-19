@@ -36,6 +36,8 @@ import AddRecommendation from './pages/add-recommendation';
 import Invites from './pages/invites';
 import InviteUser from './pages/invite-user';
 import JoinRequests from './pages/join-requests';
+import AddToGroup from './pages/add-to-group';
+import AddToList from './pages/add-to-list';
 
 const App = () => {
   
@@ -57,6 +59,8 @@ const App = () => {
                     <Route path="/item" element={<Item />} />
                     <Route path="/add-item" element={<AddItem />} />
                     <Route path="/add-recommendation" element={<AddRecommendation />} />
+                    <Route path="/add-to-group" element={<AddToGroup />} />
+                    <Route path="/add-to-list" element={<AddToList />} />
 
                     <Route path="/community" element={<Community />} />
                     <Route path="/group" element={<Group />} />

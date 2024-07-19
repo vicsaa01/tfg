@@ -18,7 +18,7 @@ const ItemMini = (props) => {
             console.log(data);
             setItem(data);
 
-            fetch('http://127.0.0.1:8000/item?id=' + data.item_id)
+            fetch('http://127.0.0.1:8000/item?id=' + data.item)
             .then((res) => {
               return res.json();
             })

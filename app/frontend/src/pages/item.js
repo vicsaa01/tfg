@@ -7,6 +7,7 @@ import ItemDescription from "../components/ItemDescription";
 import ItemRating from "../components/ItemRating";
 import ItemComments from "../components/ItemComments";
 import Recommendations from "../components/Recommendations";
+import ItemMenu from "../components/ItemMenu";
 
 const Item = () => {
 
@@ -108,7 +109,8 @@ const Item = () => {
         setSort(value);
     }
 
-    //EXTRAER DE LA BD
+    //EXTRAER ÍTEM DE LA BD
+
     const [myItem, setMyItem] = useState([]);
 
     useEffect(() => {
@@ -154,8 +156,7 @@ const Item = () => {
                             <div class="col-lg-3 col-md-4">
                                 <div class="row">
                                     <div class="col">
-                                        <a class="btn rounded w-100 bg-dark text-white float-right">+ Añadir a lista</a>
-                                        <a class="btn rounded w-100 bg-dark text-white float-right mt-3">+ Añadir a grupo</a>
+                                        <ItemMenu id={id}/>
                                     </div>
                                 </div>
 

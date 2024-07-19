@@ -134,10 +134,15 @@ const listelementsSchema = new mongoose.Schema({
   item: {type: String, required: true},
   list: {type: String, required: true},
   votes: {type: Number, required: false, default: 0},
-  next_item: {type: String, required: false},
-  first: {type: Boolean, required: false}
+  prev: {type: String, required: false, default: ""}
 });
 const listelements = mongoose.model('Listelements', listelementsSchema);
+
+const favoriteitemsSchema = new mongoose.Schema({
+  item: {type: String, required: true},
+  group: {type: String, required: true}
+});
+const favoriteitems = mongoose.model('Favoriteitems', favoriteitemsSchema);
 
 const membersSchema = new mongoose.Schema({
   user_id: {type: String, required: true},
@@ -145,12 +150,6 @@ const membersSchema = new mongoose.Schema({
   is_mod: {type: Boolean, required: true, default: false}
 });
 const members = mongoose.model('Members', membersSchema);
-
-const favoriteitemsSchema = new mongoose.Schema({
-  item_id: {type: String, required: true},
-  group_id: {type: String, required: true}
-});
-const favoriteitems = mongoose.model('Favoriteitems', favoriteitemsSchema);
 
 
 
@@ -359,11 +358,15 @@ app.get('/groups', async (req, res) => {
 
 // List
 
-app.get('/poll-elements', async (req, res) => {
+app.get('/list-elements', async (req, res) => {
   list_id = req.query.list_id;
-  const pollElementsList = await item_in.find({list: list_id}).sort({votes: 'desc'}).select('_id -item -list -votes -__v');
-  res.json(pollElementsList);
+  const elements = await listelements.find({list: list_id}).sort({votes: 'desc'}).select('_id -item -list -votes -prev -__v');
+  res.json(elements);
 });
+
+app.get('/view-list', async (req, res) => {
+  // views++
+})
 
 
 
@@ -379,7 +382,7 @@ app.get('/members', async (req, res) => {
 
 app.get('/favorite-items', async (req, res) => {
   group_id = req.query.group_id;
-  const itemsList = await favoriteitems.find({group_id: group_id}).select('_id -item_id -group_id -__v');
+  const itemsList = await favoriteitems.find({group: group_id}).select('_id -item -group -__v');
   res.json(itemsList);
 });
 
@@ -472,10 +475,8 @@ app.get('/accept-request', async (req, res) => {
   const newMember = new members(insertData);
   newMember.save();
 
-  // update group
+  // update group and remove request
   const update = await groups.updateOne({_id: request.group}, { $inc: {members: 1}});
-
-  // delete request
   const deletion = await requests.findOneAndDelete({_id: id});
 
   res.json({modified: requestList.length});
@@ -811,6 +812,55 @@ app.get('/search', async (req, res) => {
   }
   res.json(searchList);
 });
+
+
+
+
+
+// Add item to list/group
+
+app.post('/add-to-list', async (req, res) => {
+  const searchList = await lists.find({name: req.body.list}).select('_id -name -type -scope -creator_id -created_at -items -views -__v');
+  if (searchList.length > 0) { 
+    const list_id = searchList[0]._id;
+    const list = await lists.findById(list_id);
+    if (list.creator_id == req.body.sender) {
+      if (list.type == 'clasificación') {
+        // set prev
+        insertData = {'item': req.body.item, 'list': list_id, 'prev': ""};
+      } else {
+        insertData = {'item': req.body.item, 'list': list_id};
+      }
+      const newListElement = new listelements(insertData);
+      newListElement.save();
+      const update = await lists.updateOne({_id: list_id}, { $inc: {items: 1}});
+      res.status(201).json({message: 'El ítem ha sido añadido a la lista.', item: req.body.item});
+    } else {
+      res.status(401).json({message: 'Debes ser el/la propietario/propietaria de la lista para poder añadir el ítem.'});
+    }
+  } else {
+    res.status(404).json({message: 'No se ha encontrado ninguna lista llamada "' + req.body.list + '"'});
+  }
+})
+
+app.post('/add-to-group', async (req, res) => {
+  const searchList = await groups.find({name: req.body.group}).select('_id -name -type -logo -creator_id -created_at -members -items -__v');
+  if (searchList.length > 0) {  
+    const group_id = searchList[0]._id;
+    const moderator = await members.find({group_id: group_id, user_id: req.body.sender, is_mod: true}).select('_id -user_id -group_id -is_mod -__v');
+    if (moderator.length > 0) {
+      insertData = {'item': req.body.item, 'group': group_id};
+      const newFavoriteItem = new favoriteitems(insertData);
+      newFavoriteItem.save();
+      const update = await groups.updateOne({_id: group_id}, { $inc: {items: 1}});
+      res.status(201).json({message: 'El ítem ha sido añadido al grupo.', item: req.body.item});
+    } else {
+      res.status(401).json({message: 'Debes ser un moderador del grupo para poder añadir el ítem.'});
+    }
+  } else {
+    res.status(404).json({message: 'No se ha encontrado ningún grupo llamado "' + req.body.group + '"'});
+  }
+})
 
 
 

@@ -13,7 +13,7 @@ const InviteUser = () => {
     const queryParameters = new URLSearchParams(window.location.search)
     const user_id = queryParameters.get("user_id")
 
-    // add recommendation
+    // invite user
 
     const [formData, setFormData] = useState({
         user: '',

@@ -2,8 +2,8 @@ import React from "react";
 
 import { useState, useEffect } from "react";
 
-import PollElement from "../components/PollElement";
 import ListMenu from "../components/ListMenu";
+import ListContent from "../components/ListContent";
 
 const List = () => {
     const queryParameters = new URLSearchParams(window.location.search)
@@ -32,7 +32,7 @@ const List = () => {
                 setMyUser(data);
             });
           });
-    }, [])
+    }, ['http://127.0.0.1:8000/list?id=' + id])
 
     return(
         <main class="m-5">
@@ -48,10 +48,7 @@ const List = () => {
 
                 <div class="row mb-5">
                     <div class="col-12">
-                        <div class="scrollable-card-group my-cards">
-                            <PollElement position="1"/>
-                            <PollElement position="2"/>
-                        </div>
+                        <ListContent id={myList._id} type={myList.type}/>
                     </div>
                 </div>
             </main>

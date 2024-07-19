@@ -23,25 +23,39 @@ const ListContent = (props) => {
           });
     }, ['http://127.0.0.1:8000/list-elements?id=' + props.id])
 
+    // ranks
+
+    var rank = 1;
+
     if (props.type == 'encuesta') {
         return(
             <div class="scrollable-card-group my-cards">
-                <PollElement/>
-            </div>
-        )
-    } else if (props.type == 'clasificación') {
-        return(
-            <div class="scrollable-card-group my-cards">
-                <RankingElement/>
+                {elements.map((element) => (
+                    <PollElement id={element._id} position={rank++}/>
+                ))}
             </div>
         )
     } else {
         return(
             <div class="scrollable-card-group my-cards">
-                <UnorderedElement/>
+                {elements.map((element) => (
+                    <UnorderedElement id={element._id} position={rank++}/>
+                ))}
             </div>
         )
     }
+    
+    /*
+    else if (props.type == 'clasificación') {
+        return(
+            <div class="scrollable-card-group my-cards">
+                {elements.map((element) => (
+                    <RankingElement id={element._id}/>
+                ))}
+            </div>
+        )
+    }
+    */
 }
 
 export default ListContent;

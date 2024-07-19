@@ -359,13 +359,22 @@ app.get('/groups', async (req, res) => {
 // List
 
 app.get('/list-elements', async (req, res) => {
-  list_id = req.query.list_id;
-  const elements = await listelements.find({list: list_id}).sort({votes: 'desc'}).select('_id -item -list -votes -prev -__v');
+  id = req.query.id;
+  const elements = await listelements.find({list: id}).sort({votes: 'desc'}).select('_id -item -list -votes -prev -__v');
   res.json(elements);
 });
 
 app.get('/view-list', async (req, res) => {
-  // views++
+  id = req.query.id;
+  const result = await lists.updateOne({_id: id}, { $inc: {views: 1}});
+  res.json({modified: result.modifiedCount});
+})
+
+app.get('/vote-list-element', async (req, res) => {
+  id = req.query.id;
+  const result = await listelements.updateOne({_id: id}, { $inc: {votes: 1}});
+  const element = await listelements.findById(id);
+  res.json(element);
 })
 
 
@@ -826,14 +835,14 @@ app.post('/add-to-list', async (req, res) => {
     const list = await lists.findById(list_id);
     if (list.creator_id == req.body.sender) {
       if (list.type == 'clasificación') {
-        // set prev
-        insertData = {'item': req.body.item, 'list': list_id, 'prev': ""};
+        insertData = {'item': req.body.item, 'list': list_id, 'prev': ""}; // prev has to be set
       } else {
         insertData = {'item': req.body.item, 'list': list_id};
       }
       const newListElement = new listelements(insertData);
       newListElement.save();
-      const update = await lists.updateOne({_id: list_id}, { $inc: {items: 1}});
+      const update = await lists.updateOne({_id: list_id}, { $inc: {items: 1}}); // not working!!!
+      console.log(update)
       res.status(201).json({message: 'El ítem ha sido añadido a la lista.', item: req.body.item});
     } else {
       res.status(401).json({message: 'Debes ser el/la propietario/propietaria de la lista para poder añadir el ítem.'});

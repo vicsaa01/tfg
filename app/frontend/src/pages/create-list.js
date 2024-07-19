@@ -91,16 +91,12 @@ const CreateList = () => {
                                 <div class="row mb-5 text-start">
                                     <div class="col w-100 p-3 border rounded">
                                         <div class="form-check mb-3">
-                                            <input name="type" type="radio" class="form-check-input" id="type1" value="lista sin orden" onChange={handleInputChange} required/>
-                                            <label for="type1" class="form-check-label">Lista sin orden</label>
-                                        </div>
-                                        <div class="form-check mb-3">
-                                            <input name="type" type="radio" class="form-check-input" id="type2" value="clasificación" onChange={handleInputChange} required/>
-                                            <label for="type2" class="form-check-label">Clasificación</label>
+                                            <input name="type" type="radio" class="form-check-input" id="type1" value="lista" onChange={handleInputChange} required/>
+                                            <label for="type1" class="form-check-label">Lista ordenada</label>
                                         </div>
                                         <div class="form-check">
-                                            <input name="type" type="radio" class="form-check-input" id="type3" value="encuesta" onChange={handleInputChange} required/>
-                                            <label for="type3" class="form-check-label">Encuesta</label>
+                                            <input name="type" type="radio" class="form-check-input" id="type2" value="encuesta" onChange={handleInputChange} required/>
+                                            <label for="type2" class="form-check-label">Encuesta</label>
                                         </div>
                                     </div>
                                 </div>

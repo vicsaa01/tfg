@@ -4,27 +4,94 @@ import { useCookies } from 'react-cookie';
 
 const GroupMenu = (props) => {
 
+    // get session
+
     const [cookies, setCookie, removeCookie] = useCookies(['session']);
     const session = cookies['session'];
 
-    const handleJoin = () => {}
+    // unirse a grupo
+
+    const handleJoin = () => {
+        if (props.group_type == 'closed') {
+            const data = {
+                user: session.user_id,
+                group: props.id
+            }
+
+            console.log(data);
+
+            fetch('http://127.0.0.1:8000/send-request', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                alert(data.message);
+            })
+            .catch((error) => {
+                alert(error);
+            });
+        } else if (props.group_type == 'open') {
+            const data = {
+                user: session.user_id,
+                group: props.id
+            }
+
+            console.log(data);
+
+            fetch('http://127.0.0.1:8000/join-group', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                alert(data.message);
+                window.location.href = "/group?id=" + props.id;
+            })
+            .catch((error) => {
+                alert(error);
+            });
+        }
+    }
 
     if (session != undefined && session.user_id == props.creator_id) {
-        return(
-            <>
-                    <div class="col-6 text-start">
-                        <p class="mt-3 mb-3 text-dark">Grupo creado por <a href={"/user?id=" + props.creator_id}>tí</a> el {props.date.day} de {props.date.month} de {props.date.year}</p>
-                    </div>
+        if (props.group_type == 'open') {
+            return(
+                <>
+                        <div class="col-6 text-start">
+                            <p class="mt-3 mb-3 text-dark">Grupo creado por <a href={"/user?id=" + props.creator_id}>tí</a> el {props.date.day} de {props.date.month} de {props.date.year}</p>
+                        </div>
 
-                    <div class="col-4 text-end">
-                            <a class="btn w-25 bg-white text-dark boton-volver border border-dark rounded" href={"/requests?group_id=" + props.id}>Ver solicitudes</a>
-                    </div>
+                        <div class="col-4"></div>
 
-                    <div class="col-2 text-end">
-                            <a class="btn w-50 bg-dark text-white" href={"/edit-group?id=" + props.id}>Editar grupo</a>
-                    </div>
-            </>
-        );
+                        <div class="col-2 text-end">
+                                <a class="btn w-50 bg-dark text-white" href={"/edit-group?id=" + props.id}>Editar grupo</a>
+                        </div>
+                </>
+            );
+        } else {
+            return(
+                <>
+                        <div class="col-6 text-start">
+                            <p class="mt-3 mb-3 text-dark">Grupo creado por <a href={"/user?id=" + props.creator_id}>tí</a> el {props.date.day} de {props.date.month} de {props.date.year}</p>
+                        </div>
+
+                        <div class="col-4 text-end">
+                                <a class="btn w-25 bg-white text-dark boton-volver border border-dark rounded" href={"/join-requests?group_id=" + props.id}>Ver solicitudes</a>
+                        </div>
+
+                        <div class="col-2 text-end">
+                                <a class="btn w-50 bg-dark text-white" href={"/edit-group?id=" + props.id}>Editar grupo</a>
+                        </div>
+                </>
+            );
+        }
     } else {
         return(
             <>

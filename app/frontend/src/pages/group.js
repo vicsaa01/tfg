@@ -110,7 +110,7 @@ const Group = () => {
                 </div>
 
                 <div class="row mb-3 align-items-center">
-                    <GroupMenu id={myGroup._id} creator_id={myGroup.creator_id} username={myUser.name} created_at={myGroup.created_at} date={date}/>
+                    <GroupMenu id={myGroup._id} creator_id={myGroup.creator_id} username={myUser.name} date={date} group_type={myGroup.type}/>
                 </div>
 
                 <br/><br/><br/>

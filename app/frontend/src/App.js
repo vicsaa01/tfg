@@ -33,6 +33,9 @@ import AddItem from './pages/add-item';
 import Register from './pages/register';
 import ForgotPass from './pages/forgot-pass';
 import AddRecommendation from './pages/add-recommendation';
+import Invites from './pages/invites';
+import InviteUser from './pages/invite-user';
+import JoinRequests from './pages/join-requests';
 
 const App = () => {
   
@@ -64,12 +67,15 @@ const App = () => {
                     <Route path="/create-list" element={<CreateList />} />
                     <Route path="/edit-group" element={<EditGroup />} />
                     <Route path="/edit-list" element={<EditList />} />
+                    <Route path="/join-requests" element={<JoinRequests />} />
 
                     <Route path="/login" element={<Login setNav={setShowNav} />}/>
                     <Route path="/register" element={<Register setNav={setShowNav} />} />
                     <Route path="/forgot-pass" element={<ForgotPass setNav={setShowNav} />} />
                     <Route path="/user" element={<User />} />
                     <Route path="/edit-user" element={<EditUser />} />
+                    <Route path="/invites" element={<Invites />} />
+                    <Route path="/invite-user" element={<InviteUser />} />
                 </Routes>
                 {showNav && <Footer />}
             </div>

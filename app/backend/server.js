@@ -101,6 +101,14 @@ const discussionsSchema = new mongoose.Schema({
 });
 const discussions = mongoose.model('Discussions', discussionsSchema);
 
+const requestsSchema = new mongoose.Schema({
+  user: {type: String, required: true},
+  group: {type: String, required: true},
+  is_invite: {type: Boolean, required: true},
+  created_at: {type: Date, required: true, default: Date.now()}
+});
+const requests = mongoose.model('Requests', requestsSchema);
+
 
 
 const commentsSchema = new mongoose.Schema({
@@ -187,6 +195,12 @@ app.get('/discussion', async (req, res) => {
   id = req.query.id;
   const discussionsList = await discussions.findById(id);
   res.json(discussionsList);
+});
+
+app.get('/request', async (req, res) => {
+  id = req.query.id;
+  const requestsList = await requests.findById(id);
+  res.json(requestsList);
 });
 
 
@@ -392,6 +406,87 @@ app.get('/controversial-discussions', async (req, res) => {
   const discussionsList = await discussions.find({group_id: group_id}).sort({dislikes: 'desc'}).select('_id -title -text -tags -group_id -creator_id -created_at -likes -dislikes -__v');
   res.json(discussionsList);
 });
+
+
+
+
+
+// Requests to join
+
+app.get('/requests', async (req, res) => {
+  group_id = req.query.group_id;
+  const requestsList = await requests.find({group: group_id, is_invite: false}).sort({created_at: 'desc'}).select('_id -user -group -is_invite -created_at -__v');
+  res.json(requestsList);
+})
+
+app.get('/invites', async (req, res) => {
+  user_id = req.query.user_id;
+  const requestsList = await requests.find({user: user_id, is_invite: true}).sort({created_at: 'desc'}).select('_id -user -group -is_invite -created_at -__v');
+  res.json(requestsList);
+})
+
+
+
+app.post('/invite-user', async (req, res) => {
+  const searchList = await groups.find({name: req.body.group}).select('_id -name -type -logo -creator_id -created_at -members -items -__v');
+  if (searchList.length > 0) {  
+    const group_id = searchList[0]._id;
+    const moderator = await members.find({group_id: group_id, user_id: req.body.sender, is_mod: true}).select('_id -user_id -group_id -is_mod -__v');
+    if (moderator.length > 0) {
+      insertData = {'user': req.body.user, 'group': group_id, 'is_invite': true, 'created_at': Date.now()};
+      const newRequest = new requests(insertData);
+      newRequest.save();
+      res.status(201).json({message: 'Se ha enviado la invitación', user: req.body.user});
+    } else {
+      res.status(401).json({message: 'Debes ser un moderador del grupo para poder enviar invitaciones.'});
+    }
+  } else {
+    res.status(404).json({message: 'No se ha encontrado ningún grupo llamado ' + req.body.group});
+  }
+})
+
+app.post('/send-request', async (req, res) => {
+    insertData = {'user': req.body.user, 'group': req.body.group, 'is_invite': false, 'created_at': Date.now()};
+    const newRequest = new requests(insertData);
+    newRequest.save();
+    res.json({message: 'Se ha enviado la solicitud'});
+})
+
+app.post('/join-group', async (req, res) => {
+  insertData = {'user_id': req.body.user, 'group_id': req.body.group, 'is_mod': false};
+  const newMember = new members(insertData);
+  newMember.save();
+  const update = await groups.updateOne({_id: req.body.group}, { $inc: {members: 1}});
+  res.json({message: 'Te has unido al grupo'});
+})
+
+
+
+app.get('/accept-request', async (req, res) => {
+  id = req.query.id;
+  const requestList = await requests.find({_id: id}).select('_id -user -group -is_invite -created_at -__v');
+  const request = await requests.findById(id);
+
+  // add member
+  insertData = {'user_id': request.user, 'group_id': request.group, 'is_mod': false};
+  const newMember = new members(insertData);
+  newMember.save();
+
+  // update group
+  const update = await groups.updateOne({_id: request.group}, { $inc: {members: 1}});
+
+  // delete request
+  const deletion = await requests.findOneAndDelete({_id: id});
+
+  res.json({modified: requestList.length});
+})
+
+app.get('/reject-request', async (req, res) => {
+  id = req.query.id;
+  const requestList = await requests.find({_id: id}).select('_id -user -group -is_invite -created_at -__v');
+  const result = await requests.findOneAndDelete({_id: id});
+  res.json({modified: requestList.length});
+})
 
 
 
@@ -731,9 +826,15 @@ app.post('/create-list', (req, res) => {
 })
 
 app.post('/create-group', (req, res) => {
-  insertData = {'name': req.body.name, 'type': req.body.type, 'creator_id': req.body.creator_id, 'created_at': Date.now()};
+  insertData = {'name': req.body.name, 'type': req.body.type, 'creator_id': req.body.creator_id, 'created_at': Date.now(), 'members': 1};
   const newGroup = new groups(insertData);
   newGroup.save();
+
+  // add member
+  insertData = {'user_id': req.body.creator_id, 'group_id': newGroup._id, 'is_mod': true};
+  const newMember = new members(insertData);
+  newMember.save();
+
   res.status(201).json(newGroup);
 })
 

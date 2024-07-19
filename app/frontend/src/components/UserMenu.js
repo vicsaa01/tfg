@@ -27,7 +27,7 @@ const UserMenu = (props) => {
     } else {
         return(
             <>
-                <a class="btn bg-dark text-white rounded text-right" onClick={handleInvite}>+ Invitar a un grupo</a>
+                <a class="btn bg-dark text-white rounded text-right" href={"/invite-user?user_id=" + props.id}>+ Invitar a un grupo</a>
             </>
         );
     }

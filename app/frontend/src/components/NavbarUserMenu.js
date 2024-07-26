@@ -26,7 +26,7 @@ const NavbarUserMenu = (props) => {
                 setMyUser(data);
             });
         }
-    }, [baseUrl + '/user?id=' + session.user_id])
+    }, [baseUrl + '/user?id='])
 
     //IR AL LOGIN
 

@@ -82,37 +82,42 @@ const Discussion = () => {
             return res.json();
           })
           .then((data) => {
-            console.log(data);
-            setMyDiscussion(data);
-
-            let yyyy = data.created_at.substring(0,4);
-            let mm = data.created_at.substring(5,7);
-            let dd = data.created_at.substring(8,10);
-            let t = data.created_at.substring(11,16);
-            setDateTime({
-                year: yyyy,
-                month: mm,
-                day: dd,
-                time: t
-            });
-
-            fetch('http://127.0.0.1:8000/group?id=' + data.group_id)
-            .then((res) => {
-                return res.json();
-            })
-            .then((data) => {
+            if (data.hasOwnProperty('message')) {
+                alert(data.message);
+                window.location.href = '/';
+            } else {
                 console.log(data);
-                setMyGroup(data);
-            });
-
-            fetch('http://127.0.0.1:8000/user?id=' + data.creator_id)
-            .then((res) => {
-                return res.json();
-            })
-            .then((data) => {
-                console.log(data);
-                setMyUser(data);
-            });
+                setMyDiscussion(data);
+    
+                let yyyy = data.created_at.substring(0,4);
+                let mm = data.created_at.substring(5,7);
+                let dd = data.created_at.substring(8,10);
+                let t = data.created_at.substring(11,16);
+                setDateTime({
+                    year: yyyy,
+                    month: mm,
+                    day: dd,
+                    time: t
+                });
+    
+                fetch('http://127.0.0.1:8000/group?id=' + data.group_id)
+                .then((res) => {
+                    return res.json();
+                })
+                .then((data) => {
+                    console.log(data);
+                    setMyGroup(data);
+                });
+    
+                fetch('http://127.0.0.1:8000/user?id=' + data.creator_id)
+                .then((res) => {
+                    return res.json();
+                })
+                .then((data) => {
+                    console.log(data);
+                    setMyUser(data);
+                });
+            }
           });
     }, ['http://127.0.0.1:8000/discussion?id=' + id])
 

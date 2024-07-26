@@ -119,10 +119,15 @@ const Item = () => {
             return res.json();
           })
           .then((data) => {
-            console.log(data);
-            setMyItem(data);
+            if (data.hasOwnProperty('message')) {
+                alert(data.message);
+                window.location.href = '/';
+            } else {
+                console.log(data);
+                setMyItem(data);
+            }
           });
-    }, [])
+    }, ['http://127.0.0.1:8000/item?id=' + id])
 
     return(
         <main class="m-5">
@@ -204,53 +209,57 @@ const Item = () => {
 
                 <div class="row mb-5">
                     <div class="col mb-5 text-center">
-                        <h4>Comentarios</h4>
+                        <div class="row">
+                            <h4>Comentarios</h4>
 
-                        <form onSubmit={handleSubmitComment}>
-                            <div class="row mt-3">
-                                <div class="col">
-                                    <textarea name="text" value={formData.text} onChange={handleWriteComment} class="form-control" placeholder="Añade un comentario..."></textarea>
-                                </div>
-                            </div>
-
-                            <div class="row mt-1 mb-3">
-                                <div class="col">
-                                    <button type="submit" class="rounded p-1 bg-dark text-white float-end">Publicar</button>
-                                </div>
-                            </div>
-                        </form>
-                        
-                            <div class="row align-items-center mt-3 mb-3">
-                                <div class="col-lg-2 col-md-4 col-sm-6 text-start">
-                                    <br/>
-                                    <p class="mt-3">Ordenar por:</p>
+                            <form onSubmit={handleSubmitComment}>
+                                <div class="row mt-3">
+                                    <div class="col">
+                                        <textarea name="text" value={formData.text} onChange={handleWriteComment} class="form-control" placeholder="Añade un comentario..."></textarea>
+                                    </div>
                                 </div>
 
-                                <div class="col-lg-10 col-md-8 col-sm-6">
-                                    <select class="form-select w-auto p-1 ml-3 border border-1 border-dark" name="sortby" onChange={handleInputChange}>
-                                        <option value="popular">Más populares</option>
-                                        <option value="old">Más antiguos</option>
-                                        <option value="new">Más recientes</option>
-                                        <option value="controversial">Más controvertidos</option>
-                                    </select>
+                                <div class="row mt-1 mb-3">
+                                    <div class="col">
+                                        <button type="submit" class="rounded p-1 bg-dark text-white float-end">Publicar</button>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
+                            
+                                <div class="row align-items-center mt-3 mb-3">
+                                    <div class="col-lg-2 col-md-4 col-sm-6 text-start">
+                                        <br/>
+                                        <p class="mt-3">Ordenar por:</p>
+                                    </div>
 
-                        <ItemComments id={myItem._id} sortby={sort}/>
+                                    <div class="col-lg-10 col-md-8 col-sm-6">
+                                        <select class="form-select w-auto p-1 ml-3 border border-1 border-dark" name="sortby" onChange={handleInputChange}>
+                                            <option value="popular">Más populares</option>
+                                            <option value="old">Más antiguos</option>
+                                            <option value="new">Más recientes</option>
+                                            <option value="controversial">Más controvertidos</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            <ItemComments id={myItem._id} sortby={sort}/>
+                        </div>
                     </div>
 
                     <div class="col-1"></div>
 
                     <div class="col text-center">
-                        <h4>Recomendaciones</h4>
+                        <div class="row">
+                            <h4>Recomendaciones</h4>
 
-                        <div class="row mt-3 mb-3">
-                                <div class="col">
-                                    <a class="btn w-100 border border-1 border-dark rounded boton-volver text-dark" href={"/add-recommendation?item_id=" + myItem._id}>+ Añade una recomendación</a>
-                                </div>
+                            <div class="row mt-3 mb-3">
+                                    <div class="col">
+                                        <a class="btn w-100 border border-1 border-dark rounded boton-volver text-dark" href={"/add-recommendation?item_id=" + myItem._id}>+ Añade una recomendación</a>
+                                    </div>
+                            </div>
+
+                            <Recommendations id={myItem._id}/>
                         </div>
-
-                        <Recommendations id={myItem._id}/>
                     </div>
                 </div>
             </main>

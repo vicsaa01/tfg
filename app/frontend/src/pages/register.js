@@ -40,9 +40,13 @@ const Register = (props) => {
                 body: JSON.stringify(formData)
             })
             .then((response) => response.json())
-            .then(() => {
-                alert('Se ha registrado el usuario');
-                window.location.href = '/login';
+            .then((data) => {
+                if (data.hasOwnProperty('message')) {
+                    alert(data.message);
+                } else {
+                    alert('Se ha registrado el usuario');
+                    window.location.href = '/login';
+                }
             })
             .catch((error) => {
                 alert(error);
@@ -78,9 +82,9 @@ const Register = (props) => {
                 </div>
                 
                 <div class="row mb-5">
-                    <div class="col-4"></div>
+                    <div class="col-lg-4 col-md-2"></div>
 
-                    <div class="col-4">
+                    <div class="col-lg-4 col-md-8">
 
                         <form onSubmit={handleSubmit}>
                             <label for="name" class="mt-3">Nombre de usuario:</label>
@@ -104,7 +108,8 @@ const Register = (props) => {
                                     <ToLogin/>
                                 </div>
                                 <div class="col text-end">
-                                    <button type="submit" class="btn w-100 bg-dark text-white">Registrarse</button>
+                                    <button type="submit" class="btn w-100 bg-dark text-white" onClick={handleLogin}>Registrarse</button>
+                                    <ToLogin/>
                                 </div>                                
                             </div>
 
@@ -117,7 +122,7 @@ const Register = (props) => {
                         </form>
                     </div>
 
-                    <div class="col-4"></div>
+                    <div class="col-lg-4 col-md-2"></div>
                 </div>
 
                 <br/><br/><br/><br/><br/>

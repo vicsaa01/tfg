@@ -9,11 +9,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Función para generar un identificador aleatorio, usada para generar un token de acceso cada vez que se inicia sesión
 
-
-// Define some supporting functions
-
-// generates random ID
 function makeid(length) {
   let result = '';
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -26,9 +23,7 @@ function makeid(length) {
   return result;
 }
 
-
-
-// Connection to MongoDB
+// Conexión a MongoDB
 
 mongoose.connect('mongodb://127.0.0.1:27017', {
   dbName: 'tfg',
@@ -36,16 +31,14 @@ mongoose.connect('mongodb://127.0.0.1:27017', {
   useUnifiedTopology: true
 }).then(() => console.log('Connected to MongoDB')).catch((error) => console.error('Connection error:', error));
 
-
-
-// DB schemas and models
+// Definición de esquemas para la base de datos
 
 const usersSchema = new mongoose.Schema({
   name: {type: String, required: true},
   email: {type: String, required: true},
   password: {type: String, required: true},
   avatar: {type: String, required: true, default: 'default-user-avatar.png'},
-  info: {type: String, required: false},
+  info: {type: String, required: true, default: '¡Hola, soy nuev@ en GameForum!'},
   created_at: {type: Date, required: true, default: Date.now()},
   is_admin: {type: Boolean, required: true, default: false}
 });
@@ -59,7 +52,7 @@ const itemsSchema = new mongoose.Schema({
     icon: {type: String, required: true, default: 'default-item-icon.png'},
     points: {type: Number, required: true, default: 0},
     ratings: {type: Number, required: true, default: 0},
-    creators: {type: String, required: true},
+    creators: {type: String, required: false},
     producers: {type: String, required: false},
     year: {type: Number, required: true},
     country: {type: String, required: true},
@@ -153,7 +146,10 @@ const members = mongoose.model('Members', membersSchema);
 
 
 
-// Server listen
+
+
+// Poner en marcha el servidor
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
@@ -162,83 +158,125 @@ app.listen(PORT, () => {
 
 
 
-
-
-// Routes to fetch by ID
+// Rutas para consultar un objeto buscando por su ID
 
 app.get('/user', async (req, res) => {
   id = req.query.id;
-  const userList = await users.findById(id);
-  res.json(userList);
+  try {
+    const userList = await users.findById(id);
+    res.json(userList);
+  } catch (e) {
+    res.json({message: 'Error: ' + e});
+  }
 });
 
 app.get('/item', async (req, res) => {
   id = req.query.id;
-  const itemList = await items.findById(id);
-  res.json(itemList);
+  try {
+    const itemList = await items.findById(id);
+    res.json(itemList);
+  } catch (e) {
+    res.json({message: 'Error: ' + e});
+  }
 });
 
 app.get('/list', async (req, res) => {
   id = req.query.id;
-  const listList = await lists.findById(id);
-  res.json(listList);
+  try {
+    const listList = await lists.findById(id);
+    res.json(listList);
+  } catch (e) {
+    res.json({message: 'Error: ' + e});
+  }
 });
 
 app.get('/group', async (req, res) => {
   id = req.query.id;
-  const group = await groups.findById(id);
-  res.json(group);
+  try {
+    const group = await groups.findById(id);
+    res.json(group);
+  } catch (e) {
+    res.json({message: 'Error: ' + e});
+  }
 });
 
 app.get('/discussion', async (req, res) => {
   id = req.query.id;
-  const discussionsList = await discussions.findById(id);
-  res.json(discussionsList);
+  try {
+    const discussionsList = await discussions.findById(id);
+    res.json(discussionsList);
+  } catch (e) {
+    res.json({message: 'Error: ' + e});
+  }
 });
 
 app.get('/request', async (req, res) => {
   id = req.query.id;
-  const requestsList = await requests.findById(id);
-  res.json(requestsList);
+  try {
+    const requestsList = await requests.findById(id);
+    res.json(requestsList);
+  } catch (e) {
+    res.json({message: 'Error: ' + e});
+  }
 });
 
 
 
 app.get('/comment', async (req, res) => {
   id = req.query.id;
-  const commentsList = await comments.findById(id);
-  res.json(commentsList);
+  try {
+    const commentsList = await comments.findById(id);
+    res.json(commentsList);
+  } catch (e) {
+    res.json({message: 'Error: ' + e});
+  }
 });
 
 app.get('/recommendation', async (req, res) => {
   id = req.query.id;
-  const recommendationsList = await recommendations.findById(id);
-  res.json(recommendationsList);
+  try {
+    const recommendationsList = await recommendations.findById(id);
+    res.json(recommendationsList);
+  } catch (e) {
+    res.json({message: 'Error: ' + e});
+  }
 });
 
 app.get('/list-element', async (req, res) => {
   id = req.query.id;
-  const list_element = await listelements.findById(id);
-  res.json(list_element);
+  try {
+    const list_element = await listelements.findById(id);
+    res.json(list_element);
+  } catch (e) {
+    res.json({message: 'Error: ' + e});
+  }
 });
 
 app.get('/member', async (req, res) => {
   id = req.query.id;
-  const member = await members.findById(id);
-  res.json(member);
+  try {
+    const member = await members.findById(id);
+    res.json(member);
+  } catch (e) {
+    res.json({message: 'Error: ' + e});
+  }
 });
 
 app.get('/favorite-item', async (req, res) => {
   id = req.query.id;
-  const favorite_item = await favoriteitems.findById(id);
-  res.json(favorite_item);
+  try {
+    const favorite_item = await favoriteitems.findById(id);
+    res.json(favorite_item);
+  } catch (e) {
+    res.json({message: 'Error: ' + e});
+  }
 });
 
 
 
 
 
-// Routes to fetch newest items
+// Rutas para consultar las listas de ítems más nuevos, según el tipo
 
 app.get('/newest-items', async (req, res) => {
   const itemList = await items.find().sort({year: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
@@ -274,7 +312,7 @@ app.get('/newest-books', async (req, res) => {
 
 
 
-// Routes to fetch most popular items
+// Rutas para consultar las listas de ítems más populares, según el tipo
 
 app.get('/popular-items', async (req, res) => {
   const itemList = await items.find().sort({points: 'desc'}).select('_id -name -icon -info -type -year -points -ratings -genres -platforms -studio -country -directors -length');
@@ -375,6 +413,13 @@ app.get('/vote-list-element', async (req, res) => {
   const result = await listelements.updateOne({_id: id}, { $inc: {votes: 1}});
   const element = await listelements.findById(id);
   res.json(element);
+})
+
+app.get('/delete-list-element', async (req, res) => {
+  id = req.query.id;
+  const result = await listelements.findOneAndDelete({_id: id});
+  console.log(result)
+  res.json(result);
 })
 
 
@@ -875,24 +920,28 @@ app.post('/add-to-group', async (req, res) => {
 
 
 
-// Routes to upload forms
+// Rutas para crear objetos ítem, lista, grupo o discusión
 
 app.post('/create-list', (req, res) => {
   insertData = {'name': req.body.name, 'type': req.body.type, 'scope': req.body.scope, 'creator_id': req.body.creator_id, 'created_at': Date.now()};
   const newList = new lists(insertData);
   newList.save();
+  console.log(newList);
   res.status(201).json(newList);
 })
 
 app.post('/create-group', (req, res) => {
+  // Crear grupo
   insertData = {'name': req.body.name, 'type': req.body.type, 'creator_id': req.body.creator_id, 'created_at': Date.now(), 'members': 1};
   const newGroup = new groups(insertData);
   newGroup.save();
+  console.log(newGroup);
 
-  // add member
+  // Añadir miembro
   insertData = {'user_id': req.body.creator_id, 'group_id': newGroup._id, 'is_mod': true};
   const newMember = new members(insertData);
   newMember.save();
+  console.log(newMember);
 
   res.status(201).json(newGroup);
 })
@@ -901,6 +950,7 @@ app.post('/create-discussion', (req, res) => {
   insertData = {'title': req.body.title, 'text': req.body.text, 'tags': req.body.tags, 'group_id': req.body.group_id, 'creator_id': req.body.creator_id, 'created_at': Date.now()};
   const newDiscussion = new discussions(insertData);
   newDiscussion.save();
+  console.log(newDiscussion);
   res.status(201).json(newDiscussion);
 })
 
@@ -908,6 +958,7 @@ app.post('/add-item', (req, res) => {
   insertData = {'name': req.body.name, 'info': req.body.info, 'type': req.body.type, 'genres': req.body.genres, 'year': req.body.year, 'country': req.body.country, 'creators': req.body.creators, 'producers': req.body.creators, 'length': req.body.length, 'platforms': req.body.platforms};
   const newItem = new items(insertData);
   newItem.save();
+  console.log(newItem);
   res.status(201).json(newItem);
 })
 
@@ -945,27 +996,38 @@ app.post('/edit-user', async (req, res) => {
 
 
 
-// Routes to register and login users
+// Rutas para el registro de usuario y el inicio de sesión
 
-app.post('/register', (req, res) => {
+app.post('/register', async (req, res) => {
   insertData = {'name': req.body.name, 'email': req.body.email, 'password': req.body.pass, 'info': req.body.info, 'created_at': Date.now()};
 
-  // check if username or email exists
-
-  const newUser = new users(insertData);
-  newUser.save();
-  res.status(201).json(newUser);
+  // Comprobar que el nombre de usuario no se ha usado antes
+  const user = await users.find({name: req.body.name});
+  if (user.length == 0) {
+    // Crear usuario
+    const newUser = new users(insertData);
+    newUser.save();
+    res.status(201).json(newUser);
+  } else {
+    res.status(401).json({message: 'El nombre de usuario ya existe'});
+  }
 })
 
 app.post('/auth', async (req, res) => {
   const user = await users.find({name: req.body.name});
   if (user.length == 1) {
+    // Si se encuentra el nombre de usuario y la contraseña coincide,
+    // devolver una respuesta con la ID del usuario y un token de acceso aleatorio
     if (user[0].password == req.body.pass) {
       res.status(200).json({message: 'Se ha iniciado sesión', user_id: user[0]._id, access_token: makeid(16)});
-    } else {
+    }
+    // Si se encuentra el nombre de usuario pero la contraseña no coincide, devolver un error 401 Unauthorized
+    else {
       res.status(401).json({message: 'Contraseña incorrecta'});
     }
-  } else {
+  }
+  // Si no se encuentra el nombre de usuario, devolver un error 401 Unauthorized
+  else {
     res.status(401).json({message: 'El usuario no existe'});
   }
 })
@@ -976,7 +1038,7 @@ app.post('/reset-pass', async (req, res) => {
     if (user[0].email == req.body.email) {
       res.status(200).json({message: 'Se enviará un correo para restablecer la contraseña', email: true});
 
-      // send email
+      // Enviar correo (no completado)
 
     } else {
       res.status(401).json({message: 'El correo electrónico no coincide con el del usuario', email: false});

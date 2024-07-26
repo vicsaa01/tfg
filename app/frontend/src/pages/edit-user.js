@@ -1,14 +1,16 @@
 import React from "react";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const UserEdit = () => {
     const queryParameters = new URLSearchParams(window.location.search)
     const id = queryParameters.get("id")
+    const name = queryParameters.get("name")
+    const info = queryParameters.get("info")
 
     const [formData, setFormData] = useState({
-        name: '',
-        info: ''
+        name: name,
+        info: info
     });
 
     const handleInputChange = (e) => {
@@ -58,19 +60,9 @@ const UserEdit = () => {
                 </div>
                 
                 <div class="row mb-5">
-                    <div class="col-3"></div>
+                    <div class="col-lg-3 col-md-2"></div>
 
-                    <div class="col-6">
-                        <div class="row">
-                            <div class="col">
-                                <img src='' class="rounded float-end" width="200" height="200"/>
-                            </div>
-                            
-                            <div class="col">
-                                <button class="mt-5 ms-3 p-1 rounded bg-dark text-white align-text-bottom float-start">Cambiar avatar</button>
-                            </div>
-                        </div>
-
+                    <div class="col-lg-6 col-md-8">
                         <form onSubmit={handleSubmit}>
                             <label for="name" class="mt-5">Nombre de usuario</label>
                             <input type="text" class="form-control" name="name" value={formData.name} onChange={handleInputChange}/>
@@ -83,13 +75,13 @@ const UserEdit = () => {
                                     <a class="btn w-50 border border-1 border-dark rounded boton-volver text-dark" href={"/user?id=" + id}>Volver</a>
                                 </div>
                                 <div class="col-6 text-end">
-                                    <button type="submit" class="btn w-50 bg-dark text-white">Guardar cambios</button>
+                                    <button type="submit" class="btn w-50 bg-dark text-white">Guardar</button>
                                 </div>                                
                             </div>
                         </form>
                     </div>
 
-                    <div class="col-3"></div>
+                    <div class="col-lg-3 col-md-2"></div>
                 </div>
             </main>
     );

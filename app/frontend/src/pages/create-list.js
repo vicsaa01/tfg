@@ -4,8 +4,13 @@ import { useCookies } from 'react-cookie';
 import { useState } from "react";
 
 const CreateList = () => {
+
+    // Recuperar la sesión de usuario, accediendo a los cookies del navegador
+
     const [cookies, setCookie, removeCookie] = useCookies(['session']);
     const session = cookies['session'];
+
+    // Construir el objeto formData para guardar la información del formulario
 
     const [formData, setFormData] = useState({
         name: '',
@@ -13,6 +18,8 @@ const CreateList = () => {
         scope: '',
         creator_id: ''
     });
+
+    // Función para guardar en formData las respuestas de los usuarios
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -22,13 +29,17 @@ const CreateList = () => {
         }));
     }
 
+    // Función para enviar el formulario
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        // Guardar la ID del usuario accediendo a la sesión
         formData.creator_id = session.user_id;
 
         console.log(formData);
 
+        // Envío de los datos por HTTP POST al servidor backend
         fetch('http://127.0.0.1:8000/create-list', {
             method: 'POST',
             headers: {
@@ -39,26 +50,31 @@ const CreateList = () => {
         .then((response) => response.json())
         .then((data) => {
             alert('Se ha creado la lista');
+            // Reiniciar los datos del formulario
             setFormData({
                 name: '',
                 type: '',
                 scope: '',
                 creator_id: ''
             });
+            // Navegar a la página de la lista creada
             window.location.href = '/list?id=' + data._id;
         })
         .catch((error) => {
+            // Alertar en caso de error
             alert(error);
         });
     }
+
+    // Cargar la página con el formulario si se ha iniciado sesión
 
     if (session != undefined){
         return(
             <main class="m-5">
                     <div class="row mb-3 text-center">
-                        <div class="col-3"></div>
+                        <div class="col-lg-3 col-md-2"></div>
 
-                        <div class="col-6">
+                        <div class="col-lg-6 col-md-8">
                             <h3 class="mb-5 text-dark">Crear una lista nueva</h3>
 
                             <form id="form" onSubmit={handleSubmit}>
@@ -92,11 +108,11 @@ const CreateList = () => {
                                     <div class="col w-100 p-3 border rounded">
                                         <div class="form-check mb-3">
                                             <input name="type" type="radio" class="form-check-input" id="type1" value="lista" onChange={handleInputChange} required/>
-                                            <label for="type1" class="form-check-label">Lista ordenada</label>
+                                            <label for="type1" class="form-check-label">Lista (los ítems se podrán ordenar por nombre, fecha o popularidad)</label>
                                         </div>
                                         <div class="form-check">
                                             <input name="type" type="radio" class="form-check-input" id="type2" value="encuesta" onChange={handleInputChange} required/>
-                                            <label for="type2" class="form-check-label">Encuesta</label>
+                                            <label for="type2" class="form-check-label">Encuesta (Los ítems pueden recibir votos de los usuarios)</label>
                                         </div>
                                     </div>
                                 </div>
@@ -114,11 +130,15 @@ const CreateList = () => {
                             </form>
                         </div>
 
-                        <div class="col-3"></div>
+                        <div class="col-lg-3 col-md-2"></div>
                     </div>
                 </main>
         );
-    } else {
+    }
+    
+    // Si no se ha iniciado sesión, se carga una página que avisa de que es necesario tener una cuenta e iniciar sesión
+
+    else {
         return(
             <main class="m-5">
                 <div class="row mb-3 text-center">

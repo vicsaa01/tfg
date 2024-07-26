@@ -65,12 +65,10 @@ const GroupMenu = (props) => {
             return(
                 <>
                         <div class="col-6 text-start">
-                            <p class="mt-3 mb-3 text-dark">Grupo creado por <a href={"/user?id=" + props.creator_id}>tí</a> el {props.date.day} de {props.date.month} de {props.date.year}</p>
+                            <p class="mt-3 mb-3 text-dark">Grupo creado por tí el {props.date.day} de {props.date.month} de {props.date.year}</p>
                         </div>
 
-                        <div class="col-4"></div>
-
-                        <div class="col-2 text-end">
+                        <div class="col-6 text-end">
                                 <a class="btn w-50 bg-dark text-white" href={"/edit-group?id=" + props.id}>Editar grupo</a>
                         </div>
                 </>
@@ -78,16 +76,16 @@ const GroupMenu = (props) => {
         } else {
             return(
                 <>
-                        <div class="col-6 text-start">
-                            <p class="mt-3 mb-3 text-dark">Grupo creado por <a href={"/user?id=" + props.creator_id}>tí</a> el {props.date.day} de {props.date.month} de {props.date.year}</p>
+                        <div class="col-lg-6 col-md-4 text-start">
+                            <p class="mt-3 mb-3 text-dark mb-3">Grupo creado por <a href={"/user?id=" + props.creator_id}>tí</a> el {props.date.day} de {props.date.month} de {props.date.year}</p>
                         </div>
 
-                        <div class="col-4 text-end">
-                                <a class="btn w-25 bg-white text-dark boton-volver border border-dark rounded" href={"/join-requests?group_id=" + props.id}>Ver solicitudes</a>
+                        <div class="col-lg-3 col-md-4 text-end">
+                                <a class="btn w-50 bg-white text-dark boton-volver border border-dark rounded mb-3" href={"/join-requests?group_id=" + props.id}>Ver solicitudes</a>
                         </div>
 
-                        <div class="col-2 text-end">
-                                <a class="btn w-50 bg-dark text-white" href={"/edit-group?id=" + props.id}>Editar grupo</a>
+                        <div class="col-lg-3 col-md-4 text-end">
+                                <a class="btn w-50 bg-dark text-white mb-3" href={"/edit-group?id=" + props.id}>Editar grupo</a>
                         </div>
                 </>
             );

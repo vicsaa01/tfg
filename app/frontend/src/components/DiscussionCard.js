@@ -48,25 +48,25 @@ const DiscussionCard = (props) => {
                                     <div class="card-body d-flex flex-row text-start align-items-center">
                                         <div class="col-7">
                                             <div class="row align-items-center">
-                                                <div class="col-4"><a class="me-3 mb-1" href={"/discussion?id=" + props.id}><h5 class="card-title m-0 p-0">{myDiscussion.title}</h5></a></div>
-                                                <div class="col-1"><a class="p-1 me-1 mb-1 btn rounded border boton-tag" href={"/search?search=" + myDiscussion.tags}>{myDiscussion.tags}</a></div>
+                                                <div class="col-5"><a class="me-3 mb-1" href={"/discussion?id=" + props.id}><h5 class="card-title m-0 p-0">{myDiscussion.title}</h5></a></div>
+                                                <div class="col-2"><a class="p-1 me-1 mb-1 btn rounded border boton-tag" href={"/search?search=" + myDiscussion.tags}>{myDiscussion.tags}</a></div>
                                             </div>
                                         </div>
 
-                                        <div class="col-1">
+                                        <div class="col-1 d-none d-md-block">
                                             <div class="row align-items-center">
                                                 <p class="card-text m-0 mr-1 p-0">{myDiscussion.likes} <img src='/img/like.png' width="15" height="15"/></p>
                                             </div>
                                         </div>
 
-                                        <div class="col-1">
-                                            <div class="row align-items-center">
+                                        <div class="col-1 d-none d-md-block">
+                                            <div class="row align-items-center d-none d-md-block">
                                                 <p class="card-text m-0 mr-1 p-0">{myDiscussion.dislikes} <img src='/img/dislike.png' width="15" height="15"/></p>
                                             </div>
                                         </div>
 
-                                        <div class="col-3">
-                                            <div class="row align-items-center">
+                                        <div class="col-3 d-none d-md-block">
+                                            <div class="row align-items-center d-none d-md-block">
                                                 <p class="card-text m-0 ml-1 p-0">Comenzada el {date.day}/{date.month}/{date.year} por {myUser.name}</p>
                                             </div>
                                         </div>

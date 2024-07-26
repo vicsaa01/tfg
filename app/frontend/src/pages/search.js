@@ -218,25 +218,21 @@ const Search = (props) => {
                         <div class="col">
                             <form id="searchForm">
                                 <div class="row">
-                                    <div class="col-lg-2 col-md-3 col-sm-4"><p class="mt-3 ms-1">Ordenar por:</p></div>
+                                    <div class="col-lg-2 col-md-4"><p class="mt-3 ms-1">Ordenar por:</p></div>
 
-                                    <div class="col-1"></div>
-
-                                    <div class="col-lg-2 col-md-3 col-sm-4"><p class="mt-3 ms-1">Filtrar por:</p></div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-2 col-md-3">
-                                                <select class="form-select p-1 border border-1 border-dark" name="order_select" onChange={handleOrderSelect}>
+                                    <div class="col-lg-4 col-md-8">
+                                                <select class="form-select mt-2 ms-1 p-1 border border-1 border-dark" name="order_select" onChange={handleOrderSelect}>
                                                     <option value="popular">Más populares</option>
                                                     <option value="newest">Más nuevos</option>
                                                 </select>
                                     </div>
+                                </div>
+                                <div class="row mb-3">
 
-                                    <div class="col-1"></div>
+                                    <div class="col-lg-2 col-md-4"><p class="mt-3 ms-1">Filtrar por:</p></div>
 
-                                    <div class="col-lg-2 col-md-3 text-end">
-                                                <select class="form-select p-1 border border-1 border-dark" name="filter_select" onChange={handleFilterSelect}>
+                                    <div class="col-lg-4 col-md-8">
+                                                <select class="form-select mt-2 ms-1 p-1 border border-1 border-dark" name="filter_select" onChange={handleFilterSelect}>
                                                     <option value="all">Ítems (todos los tipos)</option>
                                                     <option value="music">Música</option>
                                                     <option value="games">Juegos</option>
@@ -248,9 +244,11 @@ const Search = (props) => {
                                                     <option value="discussions">Discusiones</option>
                                                 </select>
                                     </div>
+                                </div>
 
-                                    <div class="col-lg-2 col-md-3 text-end">
-                                        <a class="btn rounded bg-dark text-white mt-0 mb-3" href={'/search?search=' + search + '&order=' + filters[0] + '&filter=' + filters[1]}>Buscar</a>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-12 text-end">
+                                        <a class="btn rounded bg-dark text-white mt-0 mb-3" href={'/search?search=' + search + '&order=' + filters[0] + '&filter=' + filters[1]}>Repetir búsqueda</a>
                                     </div>
                                 </div>
                             </form>

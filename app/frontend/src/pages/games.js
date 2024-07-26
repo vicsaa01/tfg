@@ -13,10 +13,11 @@ const Games = () => {
 
                 <ItemCardList title="Últimos lanzamientos" type="games" criteria="newest" genre="all"/>
                 <ItemCardList title="Más populares en acción" type="games" criteria="popular" genre="acción"/>
+                <ItemCardList title="Más populares en shooters" type="games" criteria="popular" genre="shooter"/>
                 <ItemCardList title="Más populares en aventura" type="games" criteria="popular" genre="aventura"/>
                 <ItemCardList title="Más populares en estrategia" type="games" criteria="popular" genre="estrategia"/>
-                <ItemCardList title="Más populares en simuladores" type="games" criteria="popular" genre="simuladores"/>
-            </main>
+                <ItemCardList title="Más populares en simuladores" type="games" criteria="popular" genre="simulador"/>
+        </main>
     );
 };
 

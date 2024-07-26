@@ -50,9 +50,9 @@ const AddItem = () => {
     return(
         <main class="m-5">
                 <div class="row mb-3 text-center">
-                    <div class="col-3"></div>
+                    <div class="col-lg-3 col-md-2"></div>
 
-                    <div class="col-6">
+                    <div class="col-lg-6 col-md-8">
                         <h3 class="mb-5 text-dark">Añadir un ítem nuevo</h3>
 
                         <form onSubmit={handleSubmit}>
@@ -63,7 +63,7 @@ const AddItem = () => {
 
                             <div class="row mb-5 p-0 text-start">
                                 <label for="info" class="mb-2 p-1">Descripción:</label>
-                                <textarea name="info" class="form-control" value={formData.info} onChange={handleInputChange}/>
+                                <textarea name="info" class="form-control" value={formData.info} onChange={handleInputChange} required/>
                             </div>
 
                             <div class="row text-start">
@@ -145,7 +145,7 @@ const AddItem = () => {
                         <br/><br/><br/>
                     </div>
 
-                    <div class="col-3"></div>
+                    <div class="col-lg-3 col-md-2"></div>
                 </div>
             </main>
     );

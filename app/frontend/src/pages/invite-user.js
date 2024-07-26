@@ -64,9 +64,9 @@ const InviteUser = () => {
     return(
         <main class="m-5">
                 <div class="row mb-3 text-center">
-                    <div class="col-3"></div>
+                    <div class="col-lg-3 col-md-4"></div>
 
-                    <div class="col-6">
+                    <div class="col-lg-6 col-md-8">
                         <h3 class="mb-5 text-dark">Invitar al usuario a un grupo</h3>
 
                         <form onSubmit={handleSubmit}>
@@ -82,7 +82,7 @@ const InviteUser = () => {
                                     <a class="btn w-50 border border-1 border-dark rounded boton-volver text-dark" href={"/user?id=" + user_id}>Volver</a>
                                 </div>
                                 <div class="col-6 p-0 text-end">
-                                    <button type="submit" class="btn w-50 bg-dark text-white">Enviar invitación</button>
+                                    <button type="submit" class="btn w-50 bg-dark text-white">Invitar</button>
                                 </div>                                
                             </div>
                         </form>
@@ -90,7 +90,7 @@ const InviteUser = () => {
                         <br/><br/><br/>
                     </div>
 
-                    <div class="col-3"></div>
+                    <div class="col-lg-3 col-md-4"></div>
                 </div>
             </main>
     );

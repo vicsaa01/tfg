@@ -81,19 +81,19 @@ const PollElement = (props) => {
                 <div class="scrollable-card my-card w-100 mb-2">
                     <div class="card">
                         <div class="card-body d-flex flex-row text-left align-items-center">
-                            <div class="col-lg-1 col-md-1">
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-0">
                                 <h5 class="card-title m-0 p-0">{props.position}.</h5>
                             </div>
-                            <div class="col-lg-2 col-md-2">
+                            <div class="col-lg-2 col-md-0 col-sm-0 d-none d-md-block">
                                 <a class="btn m-0 p-0" href={"/item?id=" + item._id}><img src={"/img/" + item.icon} width="80" height="80"/></a>
                             </div>
-                            <div class="col-lg-6 col-md-4">
+                            <div class="col-lg-6 col-md-6 col-sm-4 col-xs-5">
                                 <a href={"/item?id=" + item._id}><h5 class="card-title m-0 p-0">{item.name}</h5></a>
                             </div>
-                            <div class="col-lg-2 col-md-3">
+                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4">
                                 <p class="card-text m-0 p-0">{element.votes} votos</p>
                             </div>
-                            <div class="col-lg-1 col-md-2">
+                            <div class="col-lg-1 col-md-2 col-sm-3 col-xs-3">
                                 <a class="btn bg-dark text-white" onClick={handleVote}>Votar</a>
                             </div>
                         </div>

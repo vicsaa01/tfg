@@ -17,8 +17,8 @@ const UserMenu = (props) => {
     if (session != undefined && session.user_id == props.id) {
         return(
             <>
-                <div class="col">
-                    <div class="row"><a class="btn bg-dark text-white rounded" href={"/edit-user?id=" + props.id}>Editar perfil</a></div>
+                <div class="col-12">
+                    <div class="row"><a class="btn bg-dark text-white rounded" href={"/edit-user?id=" + props.id + "&name=" + props.name + "&info=" + props.info}>Editar perfil</a></div>
                     <div class="row"><a class="btn bg-white text-dark boton-volver border border-dark rounded mt-3" href={"/invites?user_id=" + props.id}>Invitaciones</a></div>
                     <div class="row"><a class="btn bg-white text-dark boton-volver border border-dark rounded mt-3" href="/" onClick={handleLogout}>Cerrar sesión</a></div>
                 </div>

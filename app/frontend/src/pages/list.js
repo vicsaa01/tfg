@@ -22,17 +22,22 @@ const List = () => {
             return res.json();
           })
           .then((data) => {
-            console.log(data);
-            setMyList(data);
-
-            fetch('http://127.0.0.1:8000/user?id=' + data.creator_id)
-            .then((res) => {
-                return res.json();
-            })
-            .then((data) => {
+            if (data.hasOwnProperty('message')) {
+                alert(data.message);
+                window.location.href = '/';
+            } else {
                 console.log(data);
-                setMyUser(data);
-            });
+                setMyList(data);
+    
+                fetch('http://127.0.0.1:8000/user?id=' + data.creator_id)
+                .then((res) => {
+                    return res.json();
+                })
+                .then((data) => {
+                    console.log(data);
+                    setMyUser(data);
+                });
+            }
           });
     }, ['http://127.0.0.1:8000/list?id=' + id])
 
@@ -65,13 +70,13 @@ const List = () => {
                     </div>
                 </div>
 
-                <div class="row mb-4 text-left text-dark">
-                    <ListMenu id={id} creator_id={myList.creator_id} username={myUser.name} created_at={myList.created_at}/>
+                <div class="row mb-5 text-left text-dark">
+                    <ListMenu id={id} username={myUser.name}/>
                 </div>
 
                 <div class="row mb-5">
                     <div class="col-12">
-                        <ListContent id={myList._id} type={myList.type}/>
+                        <ListContent id={myList._id} type={myList.type} creator_id={myList.creator_id}/>
                     </div>
                 </div>
             </main>

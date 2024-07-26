@@ -3,7 +3,6 @@ import React from "react";
 import { useState, useEffect } from "react";
 
 import PollElement from "../components/PollElement";
-import RankingElement from "../components/RankingElement";
 import UnorderedElement from "../components/UnorderedElement";
 
 const ListContent = (props) => {
@@ -39,23 +38,11 @@ const ListContent = (props) => {
         return(
             <div class="scrollable-card-group my-cards">
                 {elements.map((element) => (
-                    <UnorderedElement id={element._id} position={rank++}/>
+                    <UnorderedElement id={element._id} position={rank++} list_id={props.id} creator_id={props.creator_id}/>
                 ))}
             </div>
         )
     }
-    
-    /*
-    else if (props.type == 'clasificación') {
-        return(
-            <div class="scrollable-card-group my-cards">
-                {elements.map((element) => (
-                    <RankingElement id={element._id}/>
-                ))}
-            </div>
-        )
-    }
-    */
 }
 
 export default ListContent;

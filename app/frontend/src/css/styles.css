@@ -33,6 +33,7 @@
 
 .card-body {
     white-space: wrap;
+    min-height: 100px;
 }
 
 .group {

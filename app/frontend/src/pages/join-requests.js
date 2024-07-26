@@ -38,8 +38,8 @@ const JoinRequests = () => {
                 <div class="row mb-5">
                     <div class="col-12">
                         <div class="d-flex flex-row w-100 p-3">
-                            <div class="col-5"><h5 class="card-title">Usuario</h5></div>
-                            <div class="col-7"><p class="card-text">Enviada</p></div>
+                            <div class="col-lg-5 col-md-3 col-sm-3"><h5 class="card-title">Usuario</h5></div>
+                            <div class="col-lg-7 col-md-9 col-sm-9"><p class="card-text">Enviada</p></div>
                         </div>
                     </div>
 

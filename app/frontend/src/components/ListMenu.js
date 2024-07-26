@@ -9,6 +9,7 @@ const ListMenu = (props) => {
     const session = cookies['session'];
 
     //EXTRAER LISTA DE LA BD
+    const [list, setList] = useState();
     const [date, setDate] = useState({
         year: '',
         month: '',
@@ -22,6 +23,8 @@ const ListMenu = (props) => {
           })
           .then((data) => {
             console.log(data);
+            setList(data);
+
             let yyyy = data.created_at.substring(0,4);
             let mm = data.created_at.substring(5,7);
             switch(mm) {
@@ -75,14 +78,26 @@ const ListMenu = (props) => {
           });
     }, [])
 
-    if (session != undefined && session.user_id == props.creator_id) {
+    var type = '';
+    if (list != undefined && list.type == 'encuesta') type = 'Encuesta';
+    else type = 'Lista';
+
+    if ((session != undefined && list != undefined) && session.user_id == list.creator_id) {
         return(
             <>
                     <div class="col-6">
-                        <p>Lista creada por <a href={"/user?id=" + props.creator_id}>tí</a> el {date.day} de {date.month} de {date.year}</p>
+                        <p>{type} creada por tí el {date.day} de {date.month} de {date.year}</p>
                     </div>
                     <div class="col-6 text-end">
-                        <a class="btn bg-dark text-white" href={"/edit-list?id=" + props.id}>Editar lista</a>
+                        <a class="btn bg-dark text-white" href={"/edit-list?id=" + list._id}>Editar lista</a>
+                    </div>
+            </>
+        );
+    } else if (list != undefined) {
+        return(
+            <>
+                    <div class="col-12">
+                        <p>{type} creada por <a href={"/user?id=" + list.creator_id}>{props.username}</a> el {date.day} de {date.month} de {date.year}</p>
                     </div>
             </>
         );
@@ -90,10 +105,10 @@ const ListMenu = (props) => {
         return(
             <>
                     <div class="col-12">
-                        <p>Lista creada por <a href={"/user?id=" + props.creator_id}>{props.username}</a> el {date.day} de {date.month} de {date.year}</p>
+                        <p>{type} creada por usuario indefinido el {date.day} de {date.month} de {date.year}</p>
                     </div>
             </>
-        );
+        )
     }
 }
 

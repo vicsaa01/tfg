@@ -4,18 +4,25 @@ import { useState, useEffect } from "react";
 import ItemCard from "../components/ItemCard";
 
 const ItemCardList = (props) => {
+
+    // Crear la lista de ítems que se usará como estado del componente
+
     const [items, setItems] = useState([])
+
+    // Consultar en la base de datos los ítems a meter en la lista, haciendo una petición GET a la API
 
     useEffect(() => {
         fetch('http://127.0.0.1:8000/' + props.criteria + '-' + props.type + '?genre=' + props.genre)
-          .then((res) => {
+        .then((res) => {
             return res.json();
-          })
-          .then((data) => {
+        })
+        .then((data) => {
             console.log(data);
             setItems(data);
-          });
-    }, [])
+        });
+    }, ['http://127.0.0.1:8000/' + props.criteria + '-' + props.type + '?genre=' + props.genre])
+
+    // Cargar el componente con componentes ItemCard para cada ítem de la lista
 
     return(
                 <>

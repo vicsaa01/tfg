@@ -3,9 +3,11 @@ import { useState, useEffect } from "react";
 
 const ItemCard = (props) => {
 
-    //EXTRAER ÍTEM DE LA BD
+    // Crear el objeto myItem que representa el ítem a mostrar
 
     const [myItem, setMyItem] = useState([])
+
+    // Consultar en la base de datos el ítem correspondiente, haciendo una petición GET a la API, y guardarlo en myItem
 
     useEffect(() => {
         fetch('http://127.0.0.1:8000/item?id=' + props.id)
@@ -16,9 +18,9 @@ const ItemCard = (props) => {
             console.log(data);
             setMyItem(data);
           });
-    }, [])
+    }, ['http://127.0.0.1:8000/item?id=' + props.id])
 
-    // set rating color
+    // Determinar el color a mostrar según la valoración media del ítem
 
     var color = ""
     if (myItem.ratings < 1) { color = " valoracion-inexistente" }
@@ -29,8 +31,10 @@ const ItemCard = (props) => {
     if (rating < 50) { color = " valoracion-negativa" }
     else if (rating < 70) { color = " valoracion-mixta" }
     else if (rating < 90) { color = " valoracion-positiva" }
-    else if (rating <= 100) { color = "valoracion-muy-positiva" }
+    else if (rating <= 100) { color = " valoracion-muy-positiva" }
     else { color = " valoracion-inexistente" }
+
+    // Cargar el componente
 
     return(
                             <div class="scrollable-card item-in-home">

@@ -54,9 +54,9 @@ const CreateGroup = () => {
         return(
             <main class="m-5">
                     <div class="row mb-3 text-center">
-                        <div class="col-3"></div>
+                        <div class="col-lg-3 col-md-2"></div>
 
-                        <div class="col-6">
+                        <div class="col-lg-6 col-md-8">
                             <h3 class="mb-5 text-dark">Crear un grupo nuevo</h3>
 
                             <form onSubmit={handleSubmit}>
@@ -97,7 +97,7 @@ const CreateGroup = () => {
                             <br/><br/><br/>
                         </div>
 
-                        <div class="col-3"></div>
+                        <div class="col-lg-3 col-md-2"></div>
                     </div>
                 </main>
         );

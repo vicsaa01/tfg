@@ -24,9 +24,7 @@ const Groups = () => {
             <div class="row mt-3 mb-4 text-left">
                 <div class="col-8"><h3>Explorar grupos</h3></div>
 
-                <div class="col-2"></div>
-
-                <div class="col-2">
+                <div class="col-4">
                     <div class="d-flex flex-row justify-content-end">
                         <a class="btn m-0 r-0 bg-dark text-white" href="/create-group">
                             + Crear nuevo grupo

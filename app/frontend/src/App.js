@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 /* import axios from 'axios'; */
 
+import ErrorBoundary from "./components/ErrorBoundary"
+
 import {
     BrowserRouter as Router,
     Routes,
@@ -40,9 +42,7 @@ import AddToGroup from './pages/add-to-group';
 import AddToList from './pages/add-to-list';
 
 const App = () => {
-  
   const [showNav, setShowNav] = useState(true);
-
   return (
     <Router>
         <body class="h-100">

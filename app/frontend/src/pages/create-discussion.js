@@ -61,9 +61,9 @@ const CreateDiscussion = () => {
         return(
             <main class="m-5">
                     <div class="row mb-3 text-center">
-                        <div class="col-3"></div>
+                        <div class="col-lg-3 col-md-2"></div>
 
-                        <div class="col-6">
+                        <div class="col-lg-6 col-md-8">
                             <h3 class="mb-5 text-dark">Iniciar una discusión</h3>
 
                             <form onSubmit={handleSubmit}>
@@ -78,7 +78,7 @@ const CreateDiscussion = () => {
                                 </div>
 
                                 <div class="row mb-5 p-0 text-start">
-                                    <label for="tags" class="mb-2 p-1">Etiquetas (separadas por comas):</label>
+                                    <label for="tags" class="mb-2 p-1">Ítem sobre el que trata la discusión (opcional):</label>
                                     <input name="tags" type="text" class="form-control" value={formData.tags} onChange={handleInputChange} required/>
                                 </div>
 
@@ -89,7 +89,7 @@ const CreateDiscussion = () => {
                                         <a class="btn w-50 border border-1 border-dark rounded boton-volver text-dark" href={"/group?id=" + group_id}>Volver</a>
                                     </div>
                                     <div class="col-6 p-0 text-end">
-                                        <button type="submit" class="btn w-50 bg-dark text-white">Iniciar discusión</button>
+                                        <button type="submit" class="btn w-50 bg-dark text-white">Iniciar</button>
                                     </div>                                
                                 </div>
                             </form>
@@ -97,7 +97,7 @@ const CreateDiscussion = () => {
                             <br/><br/><br/>
                         </div>
 
-                        <div class="col-3"></div>
+                        <div class="col-lg-3 col-md-2"></div>
                     </div>
                 </main>
         );

@@ -38,7 +38,10 @@ const ForgotPass = (props) => {
         .then((response) => response.json())
         .then((data) => {
                 alert(data.message);
-                if (data.email) {window.location.href = '/login';}
+                setFormData({
+                    name: '',
+                    email: ''
+                });
         })
         .catch((error) => {
                 alert(error);
@@ -71,9 +74,9 @@ const ForgotPass = (props) => {
                 </div>
                 
                 <div class="row mb-5">
-                    <div class="col-4"></div>
+                    <div class="col-lg-4 col-md-2"></div>
 
-                    <div class="col-4">
+                    <div class="col-lg-4 col-md-8">
 
                         <form onSubmit={handleSubmit}>
                             <label for="name" class="mt-3">Nombre de usuario</label>
@@ -101,7 +104,7 @@ const ForgotPass = (props) => {
                         </form>
                     </div>
 
-                    <div class="col-4"></div>
+                    <div class="col-lg-4 col-md-2"></div>
                 </div>
 
                 <br/><br/><br/><br/><br/><br/><br/><br/><br/>

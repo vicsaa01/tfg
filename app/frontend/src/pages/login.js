@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useCookies } from 'react-cookie';
 import { useLocation, Navigate } from "react-router-dom";
 
+import baseUrl from '../url'
+
 const Login = (props) => {
 
     // No mostrar la barra de navegación
@@ -39,7 +41,7 @@ const Login = (props) => {
         console.log(formData);
 
         // Envío de los datos por HTTP POST al servidor backend
-        fetch('http://127.0.0.1:8000/auth', {
+        fetch(baseUrl + '/auth', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

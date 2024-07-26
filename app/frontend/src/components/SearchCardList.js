@@ -1,12 +1,14 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
+import baseUrl from '../url'
+
 const SearchCardList = (props) => {
     //EXTRAER DE LA BD
     const [myList, setMyList] = useState([])
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/list?id='+props.id)
+        fetch(baseUrl + '/list?id='+props.id)
           .then((res) => {
             return res.json();
           })
@@ -14,7 +16,7 @@ const SearchCardList = (props) => {
             console.log(data);
             setMyList(data);
           });
-    }, [])
+    }, [baseUrl + '/list?id='+props.id])
     
     return(
                             <div class="scrollable-card my-card w-100">

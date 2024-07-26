@@ -2,6 +2,8 @@ import React from "react";
 
 import { useState } from "react";
 
+import baseUrl from "../url";
+
 const AddRecommendation = () => {
 
     // get parameters
@@ -32,7 +34,7 @@ const AddRecommendation = () => {
 
         console.log(formData);
 
-        fetch('http://127.0.0.1:8000/add-recommendation', {
+        fetch(baseUrl + '/add-recommendation', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

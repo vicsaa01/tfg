@@ -2,6 +2,8 @@ import React from "react";
 
 import { useState } from "react";
 
+import baseUrl from "../url";
+
 const EditGroup = () => {
     const queryParameters = new URLSearchParams(window.location.search)
     const id = queryParameters.get("id")
@@ -24,7 +26,7 @@ const EditGroup = () => {
 
         console.log(formData);
 
-        fetch('http://127.0.0.1:8000/edit-group?id=' + id, {
+        fetch(baseUrl + '/edit-group?id=' + id, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

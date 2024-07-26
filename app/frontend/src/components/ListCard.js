@@ -2,6 +2,8 @@ import React from "react";
 
 import { useState, useEffect } from "react";
 
+import baseUrl from "../url";
+
 const ListCard = (props) => {
     //EXTRAER LISTA DE LA BD
     const [myList, setMyList] = useState([])
@@ -9,7 +11,7 @@ const ListCard = (props) => {
     const [myUser, setMyUser] = useState([])
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/list?id=' + props.id)
+        fetch(baseUrl + '/list?id=' + props.id)
           .then((res) => {
             return res.json();
           })
@@ -17,7 +19,7 @@ const ListCard = (props) => {
             console.log(data);
             setMyList(data);
 
-            fetch('http://127.0.0.1:8000/user?id=' + data.creator_id)
+            fetch(baseUrl + '/user?id=' + data.creator_id)
             .then((res) => {
                 return res.json();
             })
@@ -26,7 +28,7 @@ const ListCard = (props) => {
                 setMyUser(data);
             });
           });
-    }, [])
+    }, [baseUrl + '/list?id=' + props.id])
 
     return(
                             <div class="scrollable-card my-card w-100">

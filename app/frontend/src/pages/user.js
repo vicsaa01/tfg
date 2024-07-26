@@ -1,7 +1,10 @@
 import React from "react";
 
 import { useState, useEffect } from "react";
+
 import UserMenu from "../components/UserMenu";
+
+import baseUrl from '../url'
 
 const User = () => {
     const queryParameters = new URLSearchParams(window.location.search)
@@ -17,7 +20,7 @@ const User = () => {
     })
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/user?id=' + id)
+        fetch(baseUrl + '/user?id=' + id)
         .then((res) => {
             return res.json();
         })
@@ -82,7 +85,7 @@ const User = () => {
                 });
             }
         });
-    }, [])
+    }, [baseUrl + '/user?id=' + id])
     
     return(
         <main class="m-5">

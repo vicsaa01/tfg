@@ -3,6 +3,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 
 import InviteCard from "../components/InviteCard";
+import baseUrl from '../url'
 
 const Invites = () => {
     const queryParameters = new URLSearchParams(window.location.search)
@@ -12,7 +13,7 @@ const Invites = () => {
     const [invites, setInvites] = useState([]);
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/invites?user_id=' + user_id)
+        fetch(baseUrl + '/invites?user_id=' + user_id)
         .then((res) => {
             return res.json();
         })
@@ -20,7 +21,7 @@ const Invites = () => {
             console.log(data);
             setInvites(data);
         });
-    }, ['http://127.0.0.1:8000/invites?user_id=' + user_id]);
+    }, [baseUrl + '/invites?user_id=' + user_id]);
 
     return(
         <main class="m-5">

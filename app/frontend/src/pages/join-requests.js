@@ -3,6 +3,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 
 import JoinRequestCard from "../components/JoinRequestCard";
+import baseUrl from '../url'
 
 const JoinRequests = () => {
     const queryParameters = new URLSearchParams(window.location.search)
@@ -12,7 +13,7 @@ const JoinRequests = () => {
     const [requests, setRequests] = useState([]);
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/requests?group_id=' + group_id)
+        fetch(baseUrl + '/requests?group_id=' + group_id)
         .then((res) => {
             return res.json();
         })
@@ -20,7 +21,7 @@ const JoinRequests = () => {
             console.log(data);
             setRequests(data);
         });
-    }, ['http://127.0.0.1:8000/requests?group_id=' + group_id]);
+    }, [baseUrl + '/requests?group_id=' + group_id]);
 
     return(
         <main class="m-5">

@@ -3,6 +3,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 
 import Comment from "../components/Comment";
+import baseUrl from '../url'
 
 const DiscussionComments = (props) => {
 
@@ -13,7 +14,7 @@ const DiscussionComments = (props) => {
     const [comments, setComments] = useState([]);
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/' + props.sortby + '-discussion-comments?discussion_id=' + props.id)
+        fetch(baseUrl + '/' + props.sortby + '-discussion-comments?discussion_id=' + props.id)
             .then((res) => {
                 return res.json();
             })
@@ -21,7 +22,7 @@ const DiscussionComments = (props) => {
                 console.log(data);
                 setComments(data);
             });
-    }, ['http://127.0.0.1:8000/' + props.sortby + '-discussion-comments?discussion_id=' + props.id])
+    }, [baseUrl + '/' + props.sortby + '-discussion-comments?discussion_id=' + props.id])
 
     return(
                     <div class="col-11 ps-5 pe-5">

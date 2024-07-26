@@ -9,6 +9,8 @@ import ItemComments from "../components/ItemComments";
 import Recommendations from "../components/Recommendations";
 import ItemMenu from "../components/ItemMenu";
 
+import baseUrl from '../url'
+
 const Item = () => {
 
     // get parameters and session
@@ -37,7 +39,7 @@ const Item = () => {
 
         console.log(rating.points);
 
-        fetch('http://127.0.0.1:8000/rate-item?id=' + id, {
+        fetch(baseUrl + '/rate-item?id=' + id, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -79,7 +81,7 @@ const Item = () => {
 
         console.log(formData);
 
-        fetch('http://127.0.0.1:8000/add-item-comment', {
+        fetch(baseUrl + '/add-item-comment', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -114,7 +116,7 @@ const Item = () => {
     const [myItem, setMyItem] = useState([]);
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/item?id=' + id)
+        fetch(baseUrl + '/item?id=' + id)
           .then((res) => {
             return res.json();
           })
@@ -127,7 +129,7 @@ const Item = () => {
                 setMyItem(data);
             }
           });
-    }, ['http://127.0.0.1:8000/item?id=' + id])
+    }, [baseUrl + '/item?id=' + id])
 
     return(
         <main class="m-5">

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 
 import UserMini from "./UserMini";
+import baseUrl from '../url'
 
 const UserMiniList = (props) => {
 
     const [members, setMembers] = useState([]);
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/members?group_id=' + props.group_id)
+        fetch(baseUrl + '/members?group_id=' + props.group_id)
         .then((res) => {
             return res.json();
         })
@@ -15,7 +16,7 @@ const UserMiniList = (props) => {
             console.log(data);
             setMembers(data);
         });
-    }, ['http://127.0.0.1:8000/members?group_id=' + props.group_id])
+    }, [baseUrl + '/members?group_id=' + props.group_id])
 
     if (members.length == 0) {
         return(

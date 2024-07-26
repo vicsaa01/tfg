@@ -2,6 +2,8 @@ import React from "react";
 
 import { useState, useEffect } from "react";
 
+import baseUrl from "../url";
+
 const PollElement = (props) => {
     
     // EXTRAER ELEMENTO DE LA BD
@@ -10,7 +12,7 @@ const PollElement = (props) => {
     const [item, setItem] = useState();
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/list-element?id=' + props.id)
+        fetch(baseUrl + '/list-element?id=' + props.id)
           .then((res) => {
             return res.json();
           })
@@ -18,7 +20,7 @@ const PollElement = (props) => {
             console.log(data);
             setElement(data);
 
-            fetch('http://127.0.0.1:8000/item?id=' + data.item)
+            fetch(baseUrl + '/item?id=' + data.item)
                 .then((res) => {
                     return res.json();
                 })
@@ -27,7 +29,7 @@ const PollElement = (props) => {
                     setItem(data);
                 });
           });
-    }, ['http://127.0.0.1:8000/list-element?id=' + props.id])
+    }, [baseUrl + '/list-element?id=' + props.id])
 
     // vote
 
@@ -35,7 +37,7 @@ const PollElement = (props) => {
 
     const handleVote = () => {
         if (!voted) {
-            fetch('http://127.0.0.1:8000/vote-list-element?id=' + props.id)
+            fetch(baseUrl + '/vote-list-element?id=' + props.id)
             .then((res) => {
                 return res.json();
             })

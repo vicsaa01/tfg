@@ -3,6 +3,8 @@ import React from "react";
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
 
+import baseUrl from '../url'
+
 const ForgotPass = (props) => {
 
     props.setNav(false);
@@ -28,7 +30,7 @@ const ForgotPass = (props) => {
 
         console.log(formData);
 
-        fetch('http://127.0.0.1:8000/reset-pass', {
+        fetch(baseUrl + '/reset-pass', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

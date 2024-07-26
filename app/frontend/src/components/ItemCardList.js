@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 
 import ItemCard from "../components/ItemCard";
+import baseUrl from "../url";
 
 const ItemCardList = (props) => {
 
@@ -12,7 +13,7 @@ const ItemCardList = (props) => {
     // Consultar en la base de datos los ítems a meter en la lista, haciendo una petición GET a la API
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/' + props.criteria + '-' + props.type + '?genre=' + props.genre)
+        fetch(baseUrl + '/' + props.criteria + '-' + props.type + '?genre=' + props.genre)
         .then((res) => {
             return res.json();
         })
@@ -20,7 +21,7 @@ const ItemCardList = (props) => {
             console.log(data);
             setItems(data);
         });
-    }, ['http://127.0.0.1:8000/' + props.criteria + '-' + props.type + '?genre=' + props.genre])
+    }, [baseUrl + '/' + props.criteria + '-' + props.type + '?genre=' + props.genre])
 
     // Cargar el componente con componentes ItemCard para cada ítem de la lista
 

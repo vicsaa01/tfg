@@ -2,6 +2,8 @@ import React from "react";
 
 import { useState, useEffect } from "react";
 
+import baseUrl from '../url'
+
 const DiscussionCard = (props) => {
     
     //EXTRAER DE LA BD
@@ -14,7 +16,7 @@ const DiscussionCard = (props) => {
     })
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/discussion?id=' + props.id)
+        fetch(baseUrl + '/discussion?id=' + props.id)
           .then((res) => {
             return res.json();
           })
@@ -22,7 +24,7 @@ const DiscussionCard = (props) => {
             console.log(data);
             setMyDiscussion(data);
 
-            fetch('http://127.0.0.1:8000/user?id=' + data.creator_id)
+            fetch(baseUrl + '/user?id=' + data.creator_id)
             .then((res) => {
                 return res.json();
             })
@@ -40,7 +42,7 @@ const DiscussionCard = (props) => {
                 day: dd
             });
           });
-    }, ['http://127.0.0.1:8000/discussion?id=' + props.id])
+    }, [baseUrl + '/discussion?id=' + props.id])
 
     return(
                             <div class="scrollable-card my-card w-100 mb-2">

@@ -6,6 +6,7 @@ import GroupMenu from "../components/GroupMenu";
 import DiscussionCards from "../components/DiscussionCards";
 import UserMiniList from "../components/UserMiniList";
 import ItemMiniList from "../components/ItemMiniList";
+import baseUrl from '../url'
 
 const Group = () => {
     const queryParameters = new URLSearchParams(window.location.search)
@@ -22,7 +23,7 @@ const Group = () => {
     })
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/group?id=' + id)
+        fetch(baseUrl + '/group?id=' + id)
           .then((res) => {
             return res.json();
           })
@@ -34,7 +35,7 @@ const Group = () => {
                 console.log(data);
                 setMyGroup(data);
     
-                fetch('http://127.0.0.1:8000/user?id=' + data.creator_id)
+                fetch(baseUrl + '/user?id=' + data.creator_id)
                 .then((res) => {
                     return res.json();
                 })
@@ -95,7 +96,7 @@ const Group = () => {
                 });
             }
           });
-    }, ['http://127.0.0.1:8000/group?id=' + id])
+    }, [baseUrl + '/group?id=' + id])
 
     // sort discussions
 

@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 
 import Comment from "../components/Comment";
 
+import baseUrl from '../url'
+
 const ItemComments = (props) => {
 
     console.log('Sorting comments by: ' + props.sortby);
@@ -13,7 +15,7 @@ const ItemComments = (props) => {
     const [comments, setComments] = useState([]);
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/' + props.sortby + '-item-comments?item_id=' + props.id)
+        fetch(baseUrl + '/' + props.sortby + '-item-comments?item_id=' + props.id)
             .then((res) => {
                 return res.json();
             })
@@ -21,7 +23,7 @@ const ItemComments = (props) => {
                 console.log(data);
                 setComments(data);
             });
-    }, ['http://127.0.0.1:8000/' + props.sortby + '-item-comments?item_id=' + props.id])
+    }, [baseUrl + '/' + props.sortby + '-item-comments?item_id=' + props.id])
 
     return(
                         <div class="scrollable-card-group my-cards">

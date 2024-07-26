@@ -2,6 +2,8 @@ import React from "react";
 
 import { useCookies } from 'react-cookie';
 
+import baseUrl from '../url'
+
 const GroupMenu = (props) => {
 
     // get session
@@ -20,7 +22,7 @@ const GroupMenu = (props) => {
 
             console.log(data);
 
-            fetch('http://127.0.0.1:8000/send-request', {
+            fetch(baseUrl + '/send-request', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -42,7 +44,7 @@ const GroupMenu = (props) => {
 
             console.log(data);
 
-            fetch('http://127.0.0.1:8000/join-group', {
+            fetch(baseUrl + '/join-group', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

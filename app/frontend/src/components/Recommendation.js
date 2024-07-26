@@ -3,6 +3,8 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useCookies } from 'react-cookie';
 
+import baseUrl from '../url'
+
 const Recommendation = (props) => {
     const [cookies] = useCookies(['session']);
     const session = cookies['session'];
@@ -13,7 +15,7 @@ const Recommendation = (props) => {
     const [item, setItem] = useState([]);
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/recommendation?id=' + props.id)
+        fetch(baseUrl + '/recommendation?id=' + props.id)
             .then((res) => {
                 return res.json();
             })
@@ -21,7 +23,7 @@ const Recommendation = (props) => {
                 console.log(data);
                 setRecommendation(data);
 
-                fetch('http://127.0.0.1:8000/item?id=' + data.recommended_item)
+                fetch(baseUrl + '/item?id=' + data.recommended_item)
                 .then((res) => {
                     return res.json();
                 })
@@ -30,7 +32,7 @@ const Recommendation = (props) => {
                     setItem(data);
                 });
             });
-    }, ['http://127.0.0.1:8000/recommendation?id=' + props.id])
+    }, [baseUrl + '/recommendation?id=' + props.id])
 
     // likes y dislikes
 
@@ -44,7 +46,7 @@ const Recommendation = (props) => {
     const handleLike = () => {
         if (!interaction.disliked && session!=undefined) {
             if (interaction.liked) {
-                fetch('http://127.0.0.1:8000/not-like-recommendation?id=' + props.id)
+                fetch(baseUrl + '/not-like-recommendation?id=' + props.id)
                 .then((res) => {
                     return res.json();
                 })
@@ -62,7 +64,7 @@ const Recommendation = (props) => {
                     alert(error);
                 });
             } else {
-                fetch('http://127.0.0.1:8000/like-recommendation?id=' + props.id)
+                fetch(baseUrl + '/like-recommendation?id=' + props.id)
                 .then((res) => {
                     return res.json();
                 })
@@ -87,7 +89,7 @@ const Recommendation = (props) => {
     const handleDislike = () => {
         if (!interaction.liked && session!=undefined) {
             if (interaction.disliked) {
-                fetch('http://127.0.0.1:8000/not-dislike-recommendation?id=' + props.id)
+                fetch(baseUrl + '/not-dislike-recommendation?id=' + props.id)
                 .then((res) => {
                     return res.json();
                 })
@@ -105,7 +107,7 @@ const Recommendation = (props) => {
                     alert(error);
                 });
             } else {
-                fetch('http://127.0.0.1:8000/dislike-recommendation?id=' + props.id)
+                fetch(baseUrl + '/dislike-recommendation?id=' + props.id)
                 .then((res) => {
                     return res.json();
                 })

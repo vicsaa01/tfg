@@ -2,6 +2,8 @@ import React from "react";
 
 import { useState } from "react";
 
+import baseUrl from "../url";
+
 const AddItem = () => {
 
     const [formData, setFormData] = useState({
@@ -30,7 +32,7 @@ const AddItem = () => {
 
         console.log(formData);
 
-        fetch('http://127.0.0.1:8000/add-item', {
+        fetch(baseUrl + '/add-item', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

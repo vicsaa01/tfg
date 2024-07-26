@@ -3,12 +3,14 @@ import { useState, useEffect } from "react";
 
 import SearchCardGroup from "./SearchCardGroup";
 
+import baseUrl from '../url'
+
 const SearchCardGroupList = (props) => {
 
     const [groups, setGroups] = useState([]);
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/search?string=' + props.search + '&orderby=' + props.orderby + '&filterby=' + props.filterby)
+        fetch(baseUrl + '/search?string=' + props.search + '&orderby=' + props.orderby + '&filterby=' + props.filterby)
           .then((res) => {
             return res.json();
           })
@@ -16,7 +18,7 @@ const SearchCardGroupList = (props) => {
             console.log(data);
             setGroups(data);
           });
-    }, [])
+    }, [baseUrl + '/search?string=' + props.search + '&orderby=' + props.orderby + '&filterby=' + props.filterby])
 
     return(
                         <div class="scrollable-card-group my-cards">

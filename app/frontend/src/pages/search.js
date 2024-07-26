@@ -6,6 +6,8 @@ import SearchCardGroupList from "../components/SearchCardGroupList";
 import SearchCardListList from "../components/SearchCardListList";
 import SearchCardDiscussionList from "../components/SearchCardDiscussionList";
 
+import baseUrl from '../url'
+
 const Search = (props) => {
     const queryParameters = new URLSearchParams(window.location.search)
     const search = queryParameters.get("search")

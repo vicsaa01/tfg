@@ -3,6 +3,8 @@ import React from "react";
 import { useCookies } from 'react-cookie';
 import { useState } from "react";
 
+import baseUrl from "../url";
+
 const CreateGroup = () => {
     const [cookies, setCookie, removeCookie] = useCookies(['session']);
     const session = cookies['session'];
@@ -28,7 +30,7 @@ const CreateGroup = () => {
 
         console.log(formData);
 
-        fetch('http://127.0.0.1:8000/create-group', {
+        fetch(baseUrl + '/create-group', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

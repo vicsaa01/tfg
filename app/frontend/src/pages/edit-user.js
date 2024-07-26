@@ -2,6 +2,8 @@ import React from "react";
 
 import { useState, useEffect } from "react";
 
+import baseUrl from "../url";
+
 const UserEdit = () => {
     const queryParameters = new URLSearchParams(window.location.search)
     const id = queryParameters.get("id")
@@ -26,7 +28,7 @@ const UserEdit = () => {
 
         console.log(formData);
 
-        fetch('http://127.0.0.1:8000/edit-user?id=' + id, {
+        fetch(baseUrl + '/edit-user?id=' + id, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

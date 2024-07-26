@@ -2,12 +2,14 @@ import React from "react";
 
 import { useState, useEffect } from "react";
 
+import baseUrl from "../url";
+
 const GroupCard = (props) => {
     //EXTRAER DE LA BD
     const [myGroup, setMyGroup] = useState([])
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/group?id='+props.id)
+        fetch(baseUrl + '/group?id=' + props.id)
           .then((res) => {
             return res.json();
           })
@@ -15,7 +17,7 @@ const GroupCard = (props) => {
             console.log(data);
             setMyGroup(data);
           });
-    }, [])
+    }, [baseUrl + '/group?id=' + props.id])
 
     return(
                             <div class="scrollable-card group">

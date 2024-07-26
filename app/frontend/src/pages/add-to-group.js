@@ -3,6 +3,8 @@ import React from "react";
 import { useState } from "react";
 import { useCookies } from 'react-cookie';
 
+import baseUrl from "../url";
+
 const AddToGroup = () => {
 
     // get parameters
@@ -37,7 +39,7 @@ const AddToGroup = () => {
 
         console.log(formData);
 
-        fetch('http://127.0.0.1:8000/add-to-group', {
+        fetch(baseUrl + '/add-to-group', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -3,13 +3,14 @@ import React from "react";
 import { useState, useEffect } from "react";
 
 import ListCard from "./ListCard";
+import baseUrl from "../url";
 
 const Groups = () => {
     //EXTRAER LISTAS DE LA BD
     const [lists, setLists] = useState([])
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/lists')
+        fetch(baseUrl + '/lists')
           .then((res) => {
             return res.json();
           })
@@ -17,7 +18,7 @@ const Groups = () => {
             console.log(data);
             setLists(data);
           });
-    }, [])
+    }, [baseUrl + '/lists'])
 
     return(
         <>

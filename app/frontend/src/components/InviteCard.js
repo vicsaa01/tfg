@@ -2,6 +2,8 @@ import React from "react";
 
 import { useState, useEffect } from "react";
 
+import baseUrl from '../url'
+
 const InviteCard = (props) => {
 
     //EXTRAER LISTA DE LA BD
@@ -16,7 +18,7 @@ const InviteCard = (props) => {
     const [group, setGroup] = useState([])
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/request?id=' + props.id)
+        fetch(baseUrl + '/request?id=' + props.id)
           .then((res) => {
             return res.json();
           })
@@ -35,7 +37,7 @@ const InviteCard = (props) => {
                 time: t
             })
 
-            fetch('http://127.0.0.1:8000/group?id=' + data.group)
+            fetch(baseUrl + '/group?id=' + data.group)
             .then((res) => {
                 return res.json();
             })
@@ -44,13 +46,13 @@ const InviteCard = (props) => {
                 setGroup(data);
             });
           });
-    }, ['http://127.0.0.1:8000/request?id=' + props.id])
+    }, [baseUrl + '/request?id=' + props.id])
 
 
     // aceptar
 
     const handleAccept = () => {
-        fetch('http://127.0.0.1:8000/accept-request?id=' + props.id)
+        fetch(baseUrl + '/accept-request?id=' + props.id)
           .then((res) => {
             return res.json();
           })
@@ -68,7 +70,7 @@ const InviteCard = (props) => {
     // rechazar
 
     const handleReject = () => {
-        fetch('http://127.0.0.1:8000/reject-request?id=' + props.id)
+        fetch(baseUrl + '/reject-request?id=' + props.id)
           .then((res) => {
             return res.json();
           })

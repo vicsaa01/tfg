@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { useCookies } from 'react-cookie';
 import { Navigate, useLocation } from "react-router-dom";
 
+import baseUrl from '../url'
+
 const NavbarUserMenu = (props) => {
 
     const [cookies, setCookie] = useCookies(['session']);
@@ -15,7 +17,7 @@ const NavbarUserMenu = (props) => {
 
     useEffect(() => {
         if (session != undefined) {
-            fetch('http://127.0.0.1:8000/user?id=' + session.user_id)
+            fetch(baseUrl + '/user?id=' + session.user_id)
             .then((res) => {
                 return res.json();
             })
@@ -24,7 +26,7 @@ const NavbarUserMenu = (props) => {
                 setMyUser(data);
             });
         }
-    }, [])
+    }, [baseUrl + '/user?id=' + session.user_id])
 
     //IR AL LOGIN
 

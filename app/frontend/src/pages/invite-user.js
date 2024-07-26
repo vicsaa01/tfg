@@ -3,6 +3,8 @@ import React from "react";
 import { useState } from "react";
 import { useCookies } from 'react-cookie';
 
+import baseUrl from '../url'
+
 const InviteUser = () => {
 
     // get session and parameters
@@ -37,7 +39,7 @@ const InviteUser = () => {
 
         console.log(formData);
 
-        fetch('http://127.0.0.1:8000/invite-user', {
+        fetch(baseUrl + '/invite-user', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 import ListMenu from "../components/ListMenu";
 import ListContent from "../components/ListContent";
 
+import baseUrl from "../url";
+
 const List = () => {
 
     const queryParameters = new URLSearchParams(window.location.search)
@@ -17,7 +19,7 @@ const List = () => {
     const [myUser, setMyUser] = useState([]);
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/list?id=' + id)
+        fetch(baseUrl + '/list?id=' + id)
           .then((res) => {
             return res.json();
           })
@@ -29,7 +31,7 @@ const List = () => {
                 console.log(data);
                 setMyList(data);
     
-                fetch('http://127.0.0.1:8000/user?id=' + data.creator_id)
+                fetch(baseUrl + '/user?id=' + data.creator_id)
                 .then((res) => {
                     return res.json();
                 })
@@ -39,7 +41,7 @@ const List = () => {
                 });
             }
           });
-    }, ['http://127.0.0.1:8000/list?id=' + id])
+    }, [baseUrl + '/list?id=' + id])
 
     // view
 
@@ -47,7 +49,7 @@ const List = () => {
 
     const handleView = () => {
         if (!viewed) {
-            fetch('http://127.0.0.1:8000/view-list?id=' + id)
+            fetch(baseUrl + '/view-list?id=' + id)
             .then((res) => {
                 return res.json();
             })

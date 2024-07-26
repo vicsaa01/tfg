@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useCookies } from 'react-cookie';
 
 import DiscussionComments from "../components/DiscussionComments";
+import baseUrl from '../url'
 
 const Discussion = () => {
     const queryParameters = new URLSearchParams(window.location.search)
@@ -35,7 +36,7 @@ const Discussion = () => {
 
         console.log(formData);
 
-        fetch('http://127.0.0.1:8000/add-discussion-comment', {
+        fetch(baseUrl + '/add-discussion-comment', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -77,7 +78,7 @@ const Discussion = () => {
     });
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/discussion?id=' + id)
+        fetch(baseUrl + '/discussion?id=' + id)
           .then((res) => {
             return res.json();
           })
@@ -100,7 +101,7 @@ const Discussion = () => {
                     time: t
                 });
     
-                fetch('http://127.0.0.1:8000/group?id=' + data.group_id)
+                fetch(baseUrl + '/group?id=' + data.group_id)
                 .then((res) => {
                     return res.json();
                 })
@@ -109,7 +110,7 @@ const Discussion = () => {
                     setMyGroup(data);
                 });
     
-                fetch('http://127.0.0.1:8000/user?id=' + data.creator_id)
+                fetch(baseUrl + '/user?id=' + data.creator_id)
                 .then((res) => {
                     return res.json();
                 })
@@ -119,7 +120,7 @@ const Discussion = () => {
                 });
             }
           });
-    }, ['http://127.0.0.1:8000/discussion?id=' + id])
+    }, [baseUrl + '/discussion?id=' + id])
 
     // likes y dislikes
 
@@ -133,7 +134,7 @@ const Discussion = () => {
     const handleLike = () => {
         if (!interaction.disliked && session!=undefined) {
             if (interaction.liked) {
-                fetch('http://127.0.0.1:8000/not-like-discussion?id=' + id)
+                fetch(baseUrl + '/not-like-discussion?id=' + id)
                 .then((res) => {
                     return res.json();
                 })
@@ -151,7 +152,7 @@ const Discussion = () => {
                     alert(error);
                 });
             } else {
-                fetch('http://127.0.0.1:8000/like-discussion?id=' + id)
+                fetch(baseUrl + '/like-discussion?id=' + id)
                 .then((res) => {
                     return res.json();
                 })
@@ -176,7 +177,7 @@ const Discussion = () => {
     const handleDislike = () => {
         if (!interaction.liked && session!=undefined) {
             if (interaction.disliked) {
-                fetch('http://127.0.0.1:8000/not-dislike-discussion?id=' + id)
+                fetch(baseUrl + '/not-dislike-discussion?id=' + id)
                 .then((res) => {
                     return res.json();
                 })
@@ -194,7 +195,7 @@ const Discussion = () => {
                     alert(error);
                 });
             } else {
-                fetch('http://127.0.0.1:8000/dislike-discussion?id=' + id)
+                fetch(baseUrl + '/dislike-discussion?id=' + id)
                 .then((res) => {
                     return res.json();
                 })

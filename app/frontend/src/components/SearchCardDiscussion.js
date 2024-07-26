@@ -1,12 +1,14 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
+import baseUrl from '../url'
+
 const SearchCardDiscussion = (props) => {
     //EXTRAER DE LA BD
     const [myDiscussion, setMyDiscussion] = useState([])
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/discussion?id='+props.id)
+        fetch(baseUrl + '/discussion?id='+props.id)
           .then((res) => {
             return res.json();
           })
@@ -14,7 +16,7 @@ const SearchCardDiscussion = (props) => {
             console.log(data);
             setMyDiscussion(data);
           });
-    }, [])
+    }, [baseUrl + '/discussion?id='+props.id])
     
     return(
                             <div class="scrollable-card my-card w-100">

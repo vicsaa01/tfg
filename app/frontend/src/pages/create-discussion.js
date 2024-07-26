@@ -3,6 +3,8 @@ import React from "react";
 import { useCookies } from 'react-cookie';
 import { useState } from "react";
 
+import baseUrl from "../url";
+
 const CreateDiscussion = () => {
     const queryParameters = new URLSearchParams(window.location.search)
     const group_id = queryParameters.get("group_id")
@@ -33,7 +35,7 @@ const CreateDiscussion = () => {
 
         console.log(formData);
 
-        fetch('http://127.0.0.1:8000/create-discussion', {
+        fetch(baseUrl + '/create-discussion', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

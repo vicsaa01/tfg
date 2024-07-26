@@ -3,6 +3,8 @@ import React from "react";
 import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 
+import baseUrl from "../url";
+
 const ListMenu = (props) => {
 
     const [cookies, setCookie, removeCookie] = useCookies(['session']);
@@ -17,7 +19,7 @@ const ListMenu = (props) => {
     });
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/list?id=' + props.id)
+        fetch(baseUrl + '/list?id=' + props.id)
           .then((res) => {
             return res.json();
           })
@@ -76,7 +78,7 @@ const ListMenu = (props) => {
                 day: dd
             });
           });
-    }, [])
+    }, [baseUrl + '/list?id=' + props.id])
 
     var type = '';
     if (list != undefined && list.type == 'encuesta') type = 'Encuesta';

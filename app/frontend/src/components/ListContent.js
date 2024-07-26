@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 import PollElement from "../components/PollElement";
 import UnorderedElement from "../components/UnorderedElement";
 
+import baseUrl from "../url";
+
 const ListContent = (props) => {
 
     // EXTRAER ELEMENTOS DE LA BD
@@ -12,7 +14,7 @@ const ListContent = (props) => {
     const [elements, setElements] = useState([]);
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/list-elements?id=' + props.id)
+        fetch(baseUrl + '/list-elements?id=' + props.id)
           .then((res) => {
             return res.json();
           })
@@ -20,7 +22,7 @@ const ListContent = (props) => {
             console.log(data);
             setElements(data);
           });
-    }, ['http://127.0.0.1:8000/list-elements?id=' + props.id])
+    }, [baseUrl + '/list-elements?id=' + props.id])
 
     // ranks
 

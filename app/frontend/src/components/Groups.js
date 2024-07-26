@@ -3,13 +3,14 @@ import React from "react";
 import { useState, useEffect } from "react";
 
 import GroupCard from "../components/GroupCard";
+import baseUrl from "../url";
 
 const Groups = () => {
     //EXTRAER GRUPOS DE LA BD
     const [groups, setGroups] = useState([])
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/groups')
+        fetch(baseUrl + '/groups')
           .then((res) => {
             return res.json();
           })
@@ -17,7 +18,7 @@ const Groups = () => {
             console.log(data);
             setGroups(data);
           });
-    }, [])
+    }, [baseUrl + '/groups'])
 
     return(
         <>

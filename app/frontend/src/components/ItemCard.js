@@ -1,6 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
+import baseUrl from "../url";
+
 const ItemCard = (props) => {
 
     // Crear el objeto myItem que representa el ítem a mostrar
@@ -10,7 +12,7 @@ const ItemCard = (props) => {
     // Consultar en la base de datos el ítem correspondiente, haciendo una petición GET a la API, y guardarlo en myItem
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/item?id=' + props.id)
+        fetch(baseUrl + '/item?id=' + props.id)
           .then((res) => {
             return res.json();
           })
@@ -18,7 +20,7 @@ const ItemCard = (props) => {
             console.log(data);
             setMyItem(data);
           });
-    }, ['http://127.0.0.1:8000/item?id=' + props.id])
+    }, [baseUrl + '/item?id=' + props.id])
 
     // Determinar el color a mostrar según la valoración media del ítem
 

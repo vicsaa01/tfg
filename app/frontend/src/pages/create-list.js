@@ -3,6 +3,8 @@ import React from "react";
 import { useCookies } from 'react-cookie';
 import { useState } from "react";
 
+import baseUrl from "../url";
+
 const CreateList = () => {
 
     // Recuperar la sesión de usuario, accediendo a los cookies del navegador
@@ -40,7 +42,7 @@ const CreateList = () => {
         console.log(formData);
 
         // Envío de los datos por HTTP POST al servidor backend
-        fetch('http://127.0.0.1:8000/create-list', {
+        fetch(baseUrl + '/create-list', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

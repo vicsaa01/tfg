@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 
 import Recommendation from "../components/Recommendation";
 
+import baseUrl from '../url'
+
 const Recommendations = (props) => {
 
     //EXTRAER COMENTARIOS DE LA BD
@@ -11,7 +13,7 @@ const Recommendations = (props) => {
     const [recommendations, setRecommendations] = useState([]);
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/recommendations?item_id=' + props.id)
+        fetch(baseUrl + '/recommendations?item_id=' + props.id)
             .then((res) => {
                 return res.json();
             })
@@ -19,7 +21,7 @@ const Recommendations = (props) => {
                 console.log(data);
                 setRecommendations(data);
             });
-    }, ['http://127.0.0.1:8000/recommendations?item_id=' + props.id])
+    }, [baseUrl + '/recommendations?item_id=' + props.id])
 
     return(
                         <div class="scrollable-card-group my-cards">

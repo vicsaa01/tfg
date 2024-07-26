@@ -3,6 +3,8 @@ import React from "react";
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
 
+import baseUrl from '../url'
+
 const Register = (props) => {
 
     props.setNav(false);
@@ -32,7 +34,7 @@ const Register = (props) => {
         console.log(formData);
 
         if (formData.pass == formData.pass2) {
-            fetch('http://127.0.0.1:8000/register', {
+            fetch(baseUrl + '/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

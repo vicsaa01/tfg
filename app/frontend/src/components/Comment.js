@@ -3,6 +3,8 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useCookies } from 'react-cookie';
 
+import baseUrl from '../url'
+
 const Comment = (props) => {
     const [cookies] = useCookies(['session']);
     const session = cookies['session'];
@@ -21,7 +23,7 @@ const Comment = (props) => {
     });
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/comment?id=' + props.id)
+        fetch(baseUrl + '/comment?id=' + props.id)
             .then((res) => {
                 return res.json();
             })
@@ -41,7 +43,7 @@ const Comment = (props) => {
                 });
 
                 if (data.user != 'anonymous') {
-                    fetch('http://127.0.0.1:8000/user?id=' + data.user)
+                    fetch(baseUrl + '/user?id=' + data.user)
                     .then((res) => {
                         return res.json();
                     })
@@ -54,7 +56,7 @@ const Comment = (props) => {
                     setAnon(true);
                 }
             });
-    }, ['http://127.0.0.1:8000/comment?id=' + props.id])
+    }, [baseUrl + '/comment?id=' + props.id])
 
     // likes y dislikes
 
@@ -68,7 +70,7 @@ const Comment = (props) => {
     const handleLike = () => {
         if (!interaction.disliked && session!=undefined) {
             if (interaction.liked) {
-                fetch('http://127.0.0.1:8000/not-like-comment?id=' + props.id)
+                fetch(baseUrl + '/not-like-comment?id=' + props.id)
                 .then((res) => {
                     return res.json();
                 })
@@ -86,7 +88,7 @@ const Comment = (props) => {
                     alert(error);
                 });
             } else {
-                fetch('http://127.0.0.1:8000/like-comment?id=' + props.id)
+                fetch(baseUrl + '/like-comment?id=' + props.id)
                 .then((res) => {
                     return res.json();
                 })
@@ -111,7 +113,7 @@ const Comment = (props) => {
     const handleDislike = () => {
         if (!interaction.liked && session!=undefined) {
             if (interaction.disliked) {
-                fetch('http://127.0.0.1:8000/not-dislike-comment?id=' + props.id)
+                fetch(baseUrl + '/not-dislike-comment?id=' + props.id)
                 .then((res) => {
                     return res.json();
                 })
@@ -129,7 +131,7 @@ const Comment = (props) => {
                     alert(error);
                 });
             } else {
-                fetch('http://127.0.0.1:8000/dislike-comment?id=' + props.id)
+                fetch(baseUrl + '/dislike-comment?id=' + props.id)
                 .then((res) => {
                     return res.json();
                 })

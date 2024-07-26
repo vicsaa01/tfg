@@ -3,6 +3,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 
 import DiscussionCard from "./DiscussionCard";
+import baseUrl from '../url'
 
 const DiscussionCards = (props) => {
 
@@ -13,7 +14,7 @@ const DiscussionCards = (props) => {
     const [discussions, setDiscussions] = useState([]);
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/' + props.sortby + '-discussions?group_id=' + props.id)
+        fetch(baseUrl + '/' + props.sortby + '-discussions?group_id=' + props.id)
           .then((res) => {
             return res.json();
           })
@@ -21,7 +22,7 @@ const DiscussionCards = (props) => {
             console.log(data);
             setDiscussions(data);
           });
-    }, ['http://127.0.0.1:8000/' + props.sortby + '-discussions?group_id=' + props.id])
+    }, [baseUrl + '/' + props.sortby + '-discussions?group_id=' + props.id])
 
     return(
                                 <div class="scrollable-card-group my-cards">

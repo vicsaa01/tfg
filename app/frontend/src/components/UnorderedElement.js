@@ -3,6 +3,8 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useCookies } from 'react-cookie';
 
+import baseUrl from "../url";
+
 const UnorderedElement = (props) => {
 
     const [cookies, setCookie, removeCookie] = useCookies(['session']);
@@ -14,7 +16,7 @@ const UnorderedElement = (props) => {
     const [item, setItem] = useState();
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/list-element?id=' + props.id)
+        fetch(baseUrl + '/list-element?id=' + props.id)
           .then((res) => {
             return res.json();
           })
@@ -22,7 +24,7 @@ const UnorderedElement = (props) => {
             console.log(data);
             setElement(data);
 
-            fetch('http://127.0.0.1:8000/item?id=' + data.item)
+            fetch(baseUrl + '/item?id=' + data.item)
                 .then((res) => {
                     return res.json();
                 })
@@ -31,12 +33,12 @@ const UnorderedElement = (props) => {
                     setItem(data);
                 });
           });
-    }, ['http://127.0.0.1:8000/list-element?id=' + props.id])
+    }, [baseUrl + '/list-element?id=' + props.id])
 
     // borrar elemento
 
     const handleDelete = () => {
-        fetch('http://127.0.0.1:8000/delete-list-element?id=' + props.id)
+        fetch(baseUrl + '/delete-list-element?id=' + props.id)
           .then((res) => {
             return res.json();
           })

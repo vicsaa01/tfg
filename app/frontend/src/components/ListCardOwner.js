@@ -2,12 +2,14 @@ import React from "react";
 
 import { useState, useEffect } from "react";
 
+import baseUrl from "../url";
+
 const ListCardOwner = (props) => {
     //EXTRAER USUARIO PROPIETARIO DE LA BD
     const [owner, setOwner] = useState([])
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/user?id=' + props.id)
+        fetch(baseUrl + '/user?id=' + props.id)
           .then((res) => {
             return res.json();
           })
@@ -15,7 +17,7 @@ const ListCardOwner = (props) => {
             console.log(data);
             setOwner(data);
           });
-    }, [])
+    }, [baseUrl + '/user?id=' + props.id])
 
     return(
         <p class="card-text">{owner.name}</p>

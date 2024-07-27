@@ -43,7 +43,7 @@ const ItemCard = (props) => {
                                 <div class="card">
                                         <a class="btn m-0 p-0 text-start" href={"/item?id=" + props.id}>
                                             <img src={"../img/" + myItem.icon} class="card-img-top" alt="Item icon" height="300" width="200"/>
-                                            <div class="card-body">
+                                            <div class="card-body item-card-body">
                                                 <h5 class="card-title">{myItem.name}</h5>
                                                 <p class="card-text scrollable-p">
                                                     Tipo: {myItem.type}<br/>

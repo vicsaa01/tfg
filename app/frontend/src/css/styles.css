@@ -46,6 +46,11 @@
     white-space: nowrap;
 }
 
+.item-card-body {
+    white-space: wrap;
+    min-height: 170px;
+}
+
 .item-in-home {
     display: inline-block;
     width: 300px;

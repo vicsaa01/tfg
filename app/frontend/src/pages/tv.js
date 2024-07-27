@@ -13,7 +13,7 @@ const TV = () => {
 
                 <ItemCardList title="Últimos lanzamientos" type="tv" criteria="newest" genre="all"/>
                 <ItemCardList title="Más populares en acción" type="tv" criteria="popular" genre="acción"/>
-                <ItemCardList title="Más populares en aventura" type="tv" criteria="popular" genre="aventura"/>
+                <ItemCardList title="Más populares en crimen" type="tv" criteria="popular" genre="crimen"/>
                 <ItemCardList title="Más populares en comedia" type="tv" criteria="popular" genre="comedia"/>
             </main>
     );

@@ -2,3 +2,6 @@ app/backend/.env
 app/backend/node_modules/
 app/frontend/node_modules/
 app/frontend/build/
+
+app/backend/server.js
+app/frontend/src/url.js

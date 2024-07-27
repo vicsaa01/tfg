@@ -16,8 +16,7 @@ const Register = (props) => {
         name: '',
         email: '',
         pass: '',
-        pass2: '',
-        info: ''
+        pass2: ''
     });
 
     const handleInputChange = (e) => {
@@ -90,19 +89,16 @@ const Register = (props) => {
 
                         <form onSubmit={handleSubmit}>
                             <label for="name" class="mt-3">Nombre de usuario:</label>
-                            <input type="text" class="form-control" name="name" value={formData.name} onChange={handleInputChange} required/>
+                            <input type="text" class="form-control" name="name" value={formData.name} onChange={handleInputChange} autoComplete="off" required/>
                             
                             <label for="email" class="mt-3">Correo electrónico:</label>
-                            <input type="email" class="form-control" name="email" value={formData.email} onChange={handleInputChange} required/>
+                            <input type="email" class="form-control" name="email" value={formData.email} onChange={handleInputChange} autoComplete="off" required/>
 
                             <label for="pass" class="mt-5">Contraseña:</label>
-                            <input type="password" class="form-control" name="pass" value={formData.pass} onChange={handleInputChange} required/>
+                            <input type="password" class="form-control" name="pass" value={formData.pass} onChange={handleInputChange} autoComplete="off" required/>
 
                             <label for="pass2" class="mt-3">Repetir contraseña:</label>
-                            <input type="password" class="form-control" name="pass2" value={formData.pass2} onChange={handleInputChange} required/>
-
-                            <label for="info" class="mt-5 mb-3">Añade una descripción personal (opcional):</label>
-                            <textarea class="form-control" name="info" value={formData.info} onChange={handleInputChange}/>
+                            <input type="password" class="form-control" name="pass2" value={formData.pass2} onChange={handleInputChange} autoComplete="off" required/>
                             
                             <div class="row mt-5 mb-3">
                                 <div class="col-6 text-start">

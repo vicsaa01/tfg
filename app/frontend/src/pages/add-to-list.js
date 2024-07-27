@@ -74,7 +74,7 @@ const AddToList = () => {
                         <form onSubmit={handleAdd}>
                             <div class="row mb-5 p-0 text-start">
                                 <label for="list" class="mb-2 p-1">Nombre de la lista:</label>
-                                <input name="list" type="text" class="form-control" value={formData.list} onChange={handleInputChange} required/>
+                                <input name="list" type="text" class="form-control" value={formData.list} onChange={handleInputChange} autoComplete="off" required/>
                             </div>
 
                             <div class="row m-5"></div>

@@ -71,7 +71,7 @@ const CreateDiscussion = () => {
                             <form onSubmit={handleSubmit}>
                                 <div class="row mb-5 p-0 text-start">
                                     <label for="title" class="mb-2 p-1">Título:</label>
-                                    <input name="title" type="text" class="form-control" value={formData.title} onChange={handleInputChange} required/>
+                                    <input name="title" type="text" class="form-control" value={formData.title} onChange={handleInputChange} autoComplete="off" required/>
                                 </div>
 
                                 <div class="row mb-5 p-0 text-start">
@@ -81,7 +81,7 @@ const CreateDiscussion = () => {
 
                                 <div class="row mb-5 p-0 text-start">
                                     <label for="tags" class="mb-2 p-1">Ítem sobre el que trata la discusión (opcional):</label>
-                                    <input name="tags" type="text" class="form-control" value={formData.tags} onChange={handleInputChange} required/>
+                                    <input name="tags" type="text" class="form-control" value={formData.tags} onChange={handleInputChange} autoComplete="off" required/>
                                 </div>
 
                                 <div class="row m-5"></div>

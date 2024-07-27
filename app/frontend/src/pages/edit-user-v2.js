@@ -81,7 +81,6 @@ const UserEdit = () => {
                             {(image.preview != '') && (
                                 <div class="col">
                                     <img src={image.preview} class="rounded float-end" width="200" height="200"/>
-                                    
                                 </div>
                             )}
                             

@@ -60,7 +60,7 @@ const AddItem = () => {
                         <form onSubmit={handleSubmit}>
                             <div class="row mb-5 p-0 text-start">
                                 <label for="name" class="mb-2 p-1">Nombre:</label>
-                                <input name="name" type="text" class="form-control" value={formData.name} onChange={handleInputChange} required/>
+                                <input name="name" type="text" class="form-control" value={formData.name} onChange={handleInputChange} autoComplete="off" required/>
                             </div>
 
                             <div class="row mb-5 p-0 text-start">
@@ -99,17 +99,17 @@ const AddItem = () => {
 
                             <div class="row mb-5 p-0 text-start">
                                 <label for="genres" class="mb-2 p-1">Géneros:</label>
-                                <input name="genres" type="text" class="form-control" value={formData.genres} onChange={handleInputChange} required/>
+                                <input name="genres" type="text" class="form-control" value={formData.genres} onChange={handleInputChange} autoComplete="off" required/>
                             </div>
 
                             <div class="row mb-5 p-0 text-start">
                                 <label for="creators" class="mb-2 p-1">Creadores (artistas musicales/directores de cine/directores de TV/autores):</label>
-                                <input name="creators" type="text" class="form-control" value={formData.creators} onChange={handleInputChange}/>
+                                <input name="creators" type="text" class="form-control" value={formData.creators} onChange={handleInputChange} autoComplete="off"/>
                             </div>
 
                             <div class="row mb-5 p-0 text-start">
                                 <label for="producers" class="mb-2 p-1">Productores (desarrolladoras de videojuegos/productores de cine/productores de TV):</label>
-                                <input name="producers" type="text" class="form-control" value={formData.producers} onChange={handleInputChange}/>
+                                <input name="producers" type="text" class="form-control" value={formData.producers} onChange={handleInputChange} autoComplete="off"/>
                             </div>
 
                             <div class="row mb-5 p-0 text-start">
@@ -119,17 +119,17 @@ const AddItem = () => {
 
                             <div class="row mb-5 p-0 text-start">
                                 <label for="country" class="mb-2 p-1">País de origen:</label>
-                                <input name="country" type="text" class="form-control" value={formData.country} onChange={handleInputChange} required/>
+                                <input name="country" type="text" class="form-control" value={formData.country} onChange={handleInputChange} autoComplete="off" required/>
                             </div>
 
                             <div class="row mb-5 p-0 text-start">
                                 <label for="length" class="mb-2 p-1">Duración (en horas/en minutos/nº de temporadas/nº de páginas):</label>
-                                <input name="length" type="text" class="form-control" value={formData.length} onChange={handleInputChange}/>
+                                <input name="length" type="text" class="form-control" value={formData.length} onChange={handleInputChange} autoComplete="off"/>
                             </div>
 
                             <div class="row mb-5 p-0 text-start">
                                 <label for="platforms" class="mb-2 p-1">Plataformas (si es videojuego, ej. PC):</label>
-                                <input name="platforms" type="text" class="form-control" value={formData.platforms} onChange={handleInputChange}/>
+                                <input name="platforms" type="text" class="form-control" value={formData.platforms} onChange={handleInputChange} autoComplete="off"/>
                             </div>
 
                             <div class="row m-5"></div>

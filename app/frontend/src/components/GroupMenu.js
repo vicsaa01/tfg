@@ -14,51 +14,55 @@ const GroupMenu = (props) => {
     // unirse a grupo
 
     const handleJoin = () => {
-        if (props.group_type == 'closed') {
-            const data = {
-                user: session.user_id,
-                group: props.id
+        if (session != undefined) {
+            if (props.group_type == 'closed') {
+                const data = {
+                    user: session.user_id,
+                    group: props.id
+                }
+
+                console.log(data);
+
+                fetch(baseUrl + '/send-request', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    alert(data.message);
+                })
+                .catch((error) => {
+                    alert(error);
+                });
+            } else if (props.group_type == 'open') {
+                const data = {
+                    user: session.user_id,
+                    group: props.id
+                }
+
+                console.log(data);
+
+                fetch(baseUrl + '/join-group', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    alert(data.message);
+                    window.location.href = "/group?id=" + props.id;
+                })
+                .catch((error) => {
+                    alert(error);
+                });
             }
-
-            console.log(data);
-
-            fetch(baseUrl + '/send-request', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-            .then((response) => response.json())
-            .then((data) => {
-                alert(data.message);
-            })
-            .catch((error) => {
-                alert(error);
-            });
-        } else if (props.group_type == 'open') {
-            const data = {
-                user: session.user_id,
-                group: props.id
-            }
-
-            console.log(data);
-
-            fetch(baseUrl + '/join-group', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-            .then((response) => response.json())
-            .then((data) => {
-                alert(data.message);
-                window.location.href = "/group?id=" + props.id;
-            })
-            .catch((error) => {
-                alert(error);
-            });
+        } else {
+            alert('Es necesario iniciar sesión para unirse a grupos')
         }
     }
 

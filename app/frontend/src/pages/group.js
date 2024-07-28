@@ -163,8 +163,7 @@ const Group = () => {
                         <div class="row m-0 p-0">
                             <div class="col m-0 p-0">
                                 <div class="row align-items-center">
-                                    <div class="col-6"><h5 class="mb-1">Miembros ({myGroup.members})</h5></div>
-                                    <div class="col-6 text-end"><a class="btn border border-dark border-1 boton-volver p-1" href="">Ver todos</a></div>
+                                    <div class="col"><h5 class="mb-1">Miembros ({myGroup.members})</h5></div>
                                 </div>
 
                                 <br/>
@@ -175,7 +174,6 @@ const Group = () => {
 
                                 <div class="row align-items-center">
                                     <div class="col-6"><h5 class="mb-1">Ítems ({myGroup.items})</h5></div>
-                                    <div class="col-6 text-end"><a class="btn border border-dark border-1 boton-volver p-1" href="">Ver todos</a></div>
                                 </div>
 
                                 <br/>

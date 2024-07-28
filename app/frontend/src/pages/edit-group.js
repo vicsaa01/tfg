@@ -62,7 +62,7 @@ const EditGroup = () => {
                         <form onSubmit={handleSubmit}>
                             <div class="row mb-5 p-0 text-start">
                                 <label for="name" class="mb-2 p-1">Nombre:</label>
-                                <input name="name" type="text" class="form-control" value={formData.name} onChange={handleInputChange} autoComplete="off" required/>
+                                <input name="name" type="text" class="form-control" value={formData.name} onChange={handleInputChange} autoComplete="off" minlength="1" maxlength="80" required/>
                             </div>
 
                             <div class="row text-start">

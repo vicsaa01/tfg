@@ -32,29 +32,29 @@ const Register = (props) => {
 
         console.log(formData);
 
-        if (formData.pass == formData.pass2) {
-            fetch(baseUrl + '/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.hasOwnProperty('message')) {
-                    alert(data.message);
-                } else {
-                    alert('Se ha registrado el usuario');
-                    window.location.href = '/login';
-                }
-            })
-            .catch((error) => {
-                alert(error);
-            });
-        } else {
-            alert('Se debe repetir la misma contraseña');
-        }
+            if (formData.pass == formData.pass2) {
+                fetch(baseUrl + '/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.hasOwnProperty('message')) {
+                        alert(data.message);
+                    } else {
+                        alert('Se ha registrado el usuario');
+                        setToLogin(true);
+                    }
+                })
+                .catch((error) => {
+                    alert(error);
+                });
+            } else {
+                alert('Se debe repetir la misma contraseña');
+            }
     }
 
 
@@ -89,31 +89,30 @@ const Register = (props) => {
 
                         <form onSubmit={handleSubmit}>
                             <label for="name" class="mt-3">Nombre de usuario:</label>
-                            <input type="text" class="form-control" name="name" value={formData.name} onChange={handleInputChange} autoComplete="off" required/>
+                            <input type="text" class="form-control" name="name" value={formData.name} onChange={handleInputChange} autoComplete="off" minlength="1" maxlength="30" required/>
                             
                             <label for="email" class="mt-3">Correo electrónico:</label>
-                            <input type="email" class="form-control" name="email" value={formData.email} onChange={handleInputChange} autoComplete="off" required/>
+                            <input type="email" class="form-control" name="email" value={formData.email} onChange={handleInputChange} autoComplete="off" minlength="1" maxlength="30" required/>
 
                             <label for="pass" class="mt-5">Contraseña:</label>
-                            <input type="password" class="form-control" name="pass" value={formData.pass} onChange={handleInputChange} autoComplete="off" required/>
+                            <input type="password" class="form-control" name="pass" value={formData.pass} onChange={handleInputChange} autoComplete="off" minlength="8" maxlength="50" required/>
 
                             <label for="pass2" class="mt-3">Repetir contraseña:</label>
-                            <input type="password" class="form-control" name="pass2" value={formData.pass2} onChange={handleInputChange} autoComplete="off" required/>
+                            <input type="password" class="form-control" name="pass2" value={formData.pass2} onChange={handleInputChange} autoComplete="off" minlength="8" maxlength="50" required/>
                             
                             <div class="row mt-5 mb-3">
                                 <div class="col-6 text-start">
-                                    <a class="btn w-100 border border-1 border-dark rounded boton-volver text-dark" href="/login" onClick={handleLogin}>Volver</a>
+                                    <a class="btn w-100 border border-1 border-dark rounded boton-volver text-dark" href="" onClick={handleLogin}>Volver</a>
                                     <ToLogin/>
                                 </div>
                                 <div class="col text-end">
-                                    <button type="submit" class="btn w-100 bg-dark text-white" onClick={handleLogin}>Registrarse</button>
-                                    <ToLogin/>
+                                    <button type="submit" class="btn w-100 bg-dark text-white">Registrarse</button>
                                 </div>                                
                             </div>
 
                             <div class="row mt-5 text-center">
                                 <div class="col">
-                                    <a href="/login" onClick={handleLogin}>Ya tengo una cuenta</a>
+                                    <a href="" onClick={handleLogin}>Ya tengo una cuenta</a>
                                     <ToLogin/>
                                 </div>
                             </div>

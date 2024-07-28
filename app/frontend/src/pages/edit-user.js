@@ -67,7 +67,7 @@ const UserEdit = () => {
                     <div class="col-lg-6 col-md-8">
                         <form onSubmit={handleSubmit}>
                             <label for="name" class="mt-5">Nombre de usuario</label>
-                            <input type="text" class="form-control" name="name" value={formData.name} onChange={handleInputChange} autoComplete="off"/>
+                            <input type="text" class="form-control" name="name" value={formData.name} onChange={handleInputChange} autoComplete="off" minlength="1" maxlength="80"/>
 
                             <label for="info" class="mt-3">Descripción</label>
                             <textarea name="info" class="form-control w-100" placeholder="Añade una descripción..." value={formData.info} onChange={handleInputChange}></textarea>

@@ -71,7 +71,7 @@ const CreateDiscussion = () => {
                             <form onSubmit={handleSubmit}>
                                 <div class="row mb-5 p-0 text-start">
                                     <label for="title" class="mb-2 p-1">Título:</label>
-                                    <input name="title" type="text" class="form-control" value={formData.title} onChange={handleInputChange} autoComplete="off" required/>
+                                    <input name="title" type="text" class="form-control" value={formData.title} onChange={handleInputChange} autoComplete="off" minlength="1" maxlength="80" required/>
                                 </div>
 
                                 <div class="row mb-5 p-0 text-start">

@@ -12,8 +12,6 @@ const ItemMenu = (props) => {
     if (session == undefined) {
         return(
             <>
-                    <a class="btn rounded w-100 bg-dark text-white float-right">+ Añadir a lista</a>
-                    <a class="btn rounded w-100 bg-dark text-white float-right mt-3">+ Añadir a grupo</a>
             </>
         );
     } else {

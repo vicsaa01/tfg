@@ -2,14 +2,17 @@ import React from "react";
 
 import { useState } from "react";
 
+import baseUrl from "../url";
+
 const UserEdit = () => {
     const queryParameters = new URLSearchParams(window.location.search)
     const id = queryParameters.get("id")
+    const name = queryParameters.get("name")
+    const info = queryParameters.get("info")
 
     const [formData, setFormData] = useState({
-        name: '',
-        info: '',
-        avatar: ''
+        name: name,
+        info: info
     });
 
     const handleInputChange = (e) => {
@@ -37,15 +40,18 @@ const UserEdit = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        formData.avatar = image.raw;
+        // formData.avatar = iamge.raw
         console.log(formData);
 
+        alert('La opción de cambiar avatar estará disponible en una versión futura (esta imagen no se procesará)')
+
+        // para subir imagen, cambiar content-type a multipart/form y enviar el formdata tal cual
         fetch('http://127.0.0.1:8000/edit-user?id=' + id, {
             method: 'POST',
             headers: {
-                'Content-Type': 'multipart/form-data'
+                'Content-Type': 'application/json'
             },
-            body: formData
+            body: JSON.stringify(formData)
         })
         .then((response) => response.json())
         .then((data) => {

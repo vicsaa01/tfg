@@ -64,6 +64,18 @@ const List = () => {
         }
     }
 
+    // order
+    
+    const handleOrder = () => {
+        alert('La opción de ordenar lista estará disponible en una versión futura')
+    }
+
+    // share
+    
+    const handleShare = () => {
+        alert('La opción de compartir estará disponible en una versión futura')
+    }
+
     return(
             <main class="m-5" onLoad={handleView}>
                 <div class="row mt-3 mb-4 text-left text-dark">
@@ -78,19 +90,24 @@ const List = () => {
 
                 {(myList.type == 'lista') && (
                     <div class="row mb-4">
-                    <div class="col-2">
-                        <p class="m-3">Ordenar por:</p>
-                    </div>
-                    <div class="col-10">
-                        <select class="form-select w-auto mt-2 p-1 border border-1 border-dark" name="sortby">
-                            <option value="a-z">Nombre (A-Z)</option>
-                            <option value="z-a">Nombre (Z-A)</option>
-                            <option value="new">Más recientes</option>
-                            <option value="old">Más antiguos</option>
-                            <option value="popular">Mayor popularidad</option>
-                            <option value="unpopular">Menor popularidad</option>
-                        </select>
-                    </div>
+                        <div class="col-2">
+                            <p class="m-3">Ordenar por:</p>
+                        </div>
+                        <div class="col-9">
+                            <select class="form-select w-auto mt-3 p-1 border border-1 border-dark" name="sortby" onChange={handleOrder}>
+                                <option value="a-z">Nombre (A-Z)</option>
+                                <option value="z-a">Nombre (Z-A)</option>
+                                <option value="new">Más recientes</option>
+                                <option value="old">Más antiguos</option>
+                                <option value="popular">Mayor popularidad</option>
+                                <option value="unpopular">Menor popularidad</option>
+                            </select>
+                        </div>
+                        <div class="col-1">
+                            <a class="btn rounded w-100 bg-white text-dark boton-volver border border-dark border-1 float-right" onClick={handleShare}>
+                                <img src='/img/share.png' width='25' height='30' alt="share"></img>
+                            </a>
+                        </div>
                     </div>
                 )}
 

@@ -134,7 +134,7 @@ const Item = () => {
     // share
     
     const handleShare = () => {
-        alert('compartido')
+        alert('La opción de compartir estará disponible en una versión futura')
     }
 
     return(

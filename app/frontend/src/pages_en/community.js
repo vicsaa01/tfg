@@ -3,16 +3,18 @@ import React from "react";
 import Groups from "../components/Groups";
 import Lists from "../components/Lists";
 
-const Community = () => {
+const EnCommunity = (props) => {
+    props.setLang('en')
+
     return(
         <main class="m-5">
-                <Groups/>
+                <Groups lang={'en'}/>
 
                 <div class="row m-5"></div>
 
-                <Lists/>
+                <Lists lang={'en'}/>
             </main>
     );
 };
 
-export default Community;
+export default EnCommunity;

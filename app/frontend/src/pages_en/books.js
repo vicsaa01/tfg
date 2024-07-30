@@ -9,7 +9,7 @@ const Books = (props) => {
         <main class="m-5">
                 <div class="row mt-3 mb-4 text-center text-dark">
                     <div class="col-12">
-                        <h1>Libros</h1>
+                        <h1>Books</h1>
                     </div>
                 </div>
 

@@ -9,7 +9,7 @@ const Music = (props) => {
         <main class="m-5">
                 <div class="row mt-3 mb-4 text-center text-dark">
                     <div class="col-12">
-                        <h1>Música</h1>
+                        <h1>Music</h1>
                     </div>
                 </div>
 

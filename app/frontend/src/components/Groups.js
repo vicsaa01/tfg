@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import GroupCard from "../components/GroupCard";
 import baseUrl from "../url";
 
-const Groups = () => {
+const Groups = (props) => {
     //EXTRAER GRUPOS DE LA BD
     const [groups, setGroups] = useState([])
 
@@ -20,6 +20,7 @@ const Groups = () => {
           });
     }, [baseUrl + '/groups'])
 
+    if (props.lang != 'en') {
     return(
         <>
             <div class="row mt-3 mb-4 text-left">
@@ -44,7 +45,34 @@ const Groups = () => {
                     </div>
             </div>
         </>
-    )
+    )}
+    else {
+        return(
+            <>
+                <div class="row mt-3 mb-4 text-left">
+                    <div class="col-8"><h3>Explore groups</h3></div>
+    
+                    <div class="col-4">
+                        <div class="d-flex flex-row justify-content-end">
+                            <a class="btn m-0 r-0 bg-dark text-white" href="/en/create-group">
+                                + Create new group
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mb-5">
+                        <div class="col-12">
+                            <div class="scrollable-card-group groups">
+                                {groups.map((group) => (
+                                    <GroupCard id={group._id} lang={props.lang} />
+                                ))}
+                            </div>
+                        </div>
+                </div>
+            </>
+        )
+    }
 }
 
 export default Groups;

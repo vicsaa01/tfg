@@ -19,6 +19,7 @@ const GroupCard = (props) => {
           });
     }, [baseUrl + '/group?id=' + props.id])
 
+    if (props.lang != 'en'){
     return(
                             <div class="scrollable-card group">
                                 <div class="card">
@@ -33,7 +34,24 @@ const GroupCard = (props) => {
                                     </a>
                                 </div>
                             </div>
-    );
+    );}
+    else {
+        return(
+            <div class="scrollable-card group">
+                <div class="card">
+                    <a class="btn m-0 p-0" href={"/en/group?id=" + props.id}>
+                        <img src={"../img/" + myGroup.logo} class="card-img-top" alt="Group logo" height="200" width="200"/>
+                        <div class="card-body">
+                            <h5 class="card-title">{myGroup.name}</h5>
+                        </div>
+                        <div class="card-footer">
+                            <p>{myGroup.members} members</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        );
+    }
 };
 
 export default GroupCard;

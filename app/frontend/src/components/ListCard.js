@@ -30,6 +30,11 @@ const ListCard = (props) => {
           });
     }, [baseUrl + '/list?id=' + props.id])
 
+    var type_en = ''
+    if (myList.type == 'lista') type_en = 'list'
+    else if (myList.type == 'encuesta') type_en = 'poll'
+
+    if (props.lang != 'en'){
     return(
                             <div class="scrollable-card my-card w-100">
                                 <div class="card">
@@ -43,7 +48,23 @@ const ListCard = (props) => {
                                     </a>
                                 </div>
                             </div>
-    );
+    );}
+    else {
+        return(
+            <div class="scrollable-card my-card w-100">
+                <div class="card">
+                    <a class="btn m-0 p-0" href={"/en/list?id=" + props.id}>
+                        <div class="card-body d-flex flex-row text-start">
+                            <div class="col-lg-6 col-md-4"><h5 class="card-title">{myList.name}</h5></div>
+                            <div class="col-lg-2 col-md-3 d-none d-md-block"><p class="card-text">{type_en}</p></div>
+                            <div class="col-lg-2 col-md-3 d-none d-md-block"><p class="card-text">{myUser.name}</p></div>
+                            <div class="col-lg-2 col-md-2 d-none d-md-block"><p class="card-text">{myList.views}</p></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        );
+    }
 };
 
 export default ListCard;

@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import ListCard from "./ListCard";
 import baseUrl from "../url";
 
-const Groups = () => {
+const Lists = (props) => {
     //EXTRAER LISTAS DE LA BD
     const [lists, setLists] = useState([])
 
@@ -20,6 +20,7 @@ const Groups = () => {
           });
     }, [baseUrl + '/lists'])
 
+    if (props.lang != 'en'){
     return(
         <>
                 <div class="row mb-4 text-left">
@@ -53,7 +54,43 @@ const Groups = () => {
                     </div>
                 </div>
         </>
-    )
+    )}
+    else {
+        return(
+            <>
+                    <div class="row mb-4 text-left">
+                        <div class="col-8"><h3>Explore lists and polls</h3></div>
+    
+                        <div class="col-4">
+                            <div class="d-flex flex-row justify-content-end">
+                                <a class="btn m-0 r-0 bg-dark text-white" href="/en/create-list">
+                                    + Create new list
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="row mb-5">
+                        <div class="col-12">
+                            <div class="d-flex flex-row w-100 p-3">
+                                <div class="col-lg-6 col-md-4"><h5 class="card-title">Name</h5></div>
+                                <div class="col-lg-2 col-md-3 d-none d-md-block"><p class="card-text">Type</p></div>
+                                <div class="col-lg-2 col-md-3 d-none d-md-block"><p class="card-text">Created by</p></div>
+                                <div class="col-lg-2 col-md-2 d-none d-md-block"><p class="card-text">Views</p></div>
+                            </div>
+                        </div>
+    
+                        <div class="col-12">
+                            <div class="scrollable-card-group my-cards">
+                                {lists.map((list) => (
+                                    <ListCard id={list._id} lang={props.lang} />
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+            </>
+        )
+    }
 }
 
-export default Groups;
+export default Lists;

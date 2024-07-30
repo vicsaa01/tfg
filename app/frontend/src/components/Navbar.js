@@ -120,7 +120,7 @@ const Navbar = (props) => {
                                         <a href="/"><img src="/img/es.png" class="" width="20" height="12"></img> En español</a>
                                       </div>
                                       <div class="col-6 p-0 m-0">
-                                        <input type="text" class="form-control me-1" placeholder="Buscar..." name="search"/>
+                                        <input type="text" class="form-control me-1" placeholder="Search..." name="search"/>
                                       </div>
                                       <div class="col-3 p-0 m-0">
                                         <button type="submit" class="btn rounded bg-white">

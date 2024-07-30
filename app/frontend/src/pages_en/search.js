@@ -9,6 +9,8 @@ import SearchCardDiscussionList from "../components/SearchCardDiscussionList";
 import baseUrl from '../url'
 
 const Search = (props) => {
+    props.setLang('en')
+
     const queryParameters = new URLSearchParams(window.location.search)
     const search = queryParameters.get("search")
     const order = queryParameters.get("order")
@@ -29,49 +31,89 @@ const Search = (props) => {
                 <main class="m-5">
                     <div class="row mt-3 mb-4 text-left text-dark">
                         <div class="col-12">
-                            <h3>Resultados de búsqueda para "{search}"</h3>
+                            {(props.lang != 'en') && (<h3>Resultados de búsqueda para "{search}"</h3>)}
+                            {(props.lang == 'en') && (<h3>Search results for "{search}"</h3>)}
                         </div>
                     </div>
                     
                     <div class="row mb-5">
                         <div class="col">
                             <form id="searchForm">
-                                <div class="row">
+                                {(props.lang != 'en') && (<div class="row">
                                     <div class="col-lg-2 col-md-3 col-sm-4"><p class="mt-3 ms-1">Ordenar por:</p></div>
 
                                     <div class="col-1"></div>
 
                                     <div class="col-lg-2 col-md-3 col-sm-4"><p class="mt-3 ms-1">Filtrar por:</p></div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-2 col-md-3">
-                                                <select class="form-select p-1 border border-1 border-dark" name="order_select" onChange={handleOrderSelect}>
-                                                    <option value="popular">Más populares</option>
-                                                    <option value="newest">Más nuevos</option>
-                                                </select>
-                                    </div>
+                                </div>)}
+                                {(props.lang == 'en') && (<div class="row">
+                                    <div class="col-lg-2 col-md-3 col-sm-4"><p class="mt-3 ms-1">Order by:</p></div>
 
                                     <div class="col-1"></div>
 
-                                    <div class="col-lg-2 col-md-3 text-end">
-                                                <select class="form-select p-1 border border-1 border-dark" name="filter_select" onChange={handleFilterSelect}>
-                                                    <option value="all">Ítems (todos los tipos)</option>
-                                                    <option value="music">Música</option>
-                                                    <option value="games">Juegos</option>
-                                                    <option value="movies">Películas</option>
-                                                    <option value="tv">Series TV</option>
-                                                    <option value="books">Libros</option>
-                                                    <option value="groups">Grupos</option>
-                                                    <option value="lists">Listas</option>
-                                                    <option value="discussions">Discusiones</option>
-                                                </select>
-                                    </div>
+                                    <div class="col-lg-2 col-md-3 col-sm-4"><p class="mt-3 ms-1">Filter by:</p></div>
+                                </div>)}
 
-                                    <div class="col-lg-2 col-md-3 text-end">
-                                        <a class="btn rounded bg-dark text-white mt-0 mb-3" href={'/search?search=' + search + '&order=' + filters[0] + '&filter=' + filters[1]}>Buscar</a>
+                                {(props.lang != 'en') && (
+                                    <div class="row">
+                                        <div class="col-lg-2 col-md-3">
+                                                    <select class="form-select p-1 border border-1 border-dark" name="order_select" onChange={handleOrderSelect}>
+                                                        <option value="popular">Más populares</option>
+                                                        <option value="newest">Más nuevos</option>
+                                                    </select>
+                                        </div>
+
+                                        <div class="col-1"></div>
+
+                                        <div class="col-lg-2 col-md-3 text-end">
+                                                    <select class="form-select p-1 border border-1 border-dark" name="filter_select" onChange={handleFilterSelect}>
+                                                        <option value="all">Ítems (todos los tipos)</option>
+                                                        <option value="music">Música</option>
+                                                        <option value="games">Juegos</option>
+                                                        <option value="movies">Películas</option>
+                                                        <option value="tv">Series TV</option>
+                                                        <option value="books">Libros</option>
+                                                        <option value="groups">Grupos</option>
+                                                        <option value="lists">Listas</option>
+                                                        <option value="discussions">Discusiones</option>
+                                                    </select>
+                                        </div>
+
+                                        <div class="col-lg-2 col-md-3 text-end">
+                                            <a class="btn rounded bg-dark text-white mt-0 mb-3" href={'/search?search=' + search + '&order=' + filters[0] + '&filter=' + filters[1]}>Buscar</a>
+                                        </div>
                                     </div>
-                                </div>
+                                )}
+                                {(props.lang == 'en') && (
+                                    <div class="row">
+                                        <div class="col-lg-2 col-md-3">
+                                                    <select class="form-select p-1 border border-1 border-dark" name="order_select" onChange={handleOrderSelect}>
+                                                        <option value="popular">Most popular</option>
+                                                        <option value="newest">Newest</option>
+                                                    </select>
+                                        </div>
+
+                                        <div class="col-1"></div>
+
+                                        <div class="col-lg-2 col-md-3 text-end">
+                                                    <select class="form-select p-1 border border-1 border-dark" name="filter_select" onChange={handleFilterSelect}>
+                                                        <option value="all">Items (all types)</option>
+                                                        <option value="music">Music</option>
+                                                        <option value="games">Games</option>
+                                                        <option value="movies">Movies</option>
+                                                        <option value="tv">TV series</option>
+                                                        <option value="books">Books</option>
+                                                        <option value="groups">Groups</option>
+                                                        <option value="lists">Lists</option>
+                                                        <option value="discussions">Discussions</option>
+                                                    </select>
+                                        </div>
+
+                                        <div class="col-lg-2 col-md-3 text-end">
+                                            <a class="btn rounded bg-dark text-white mt-0 mb-3" href={'/en/search?search=' + search + '&order=' + filters[0] + '&filter=' + filters[1]}>Search</a>
+                                        </div>
+                                    </div>
+                                )}
                             </form>
                         </div>
                     </div>
@@ -90,20 +132,28 @@ const Search = (props) => {
                 <main class="m-5">
                     <div class="row mt-3 mb-4 text-left text-dark">
                         <div class="col-12">
-                            <h3>Resultados de búsqueda para "{search}"</h3>
+                            {(props.lang != 'en') && (<h3>Resultados de búsqueda para "{search}"</h3>)}
+                            {(props.lang == 'en') && (<h3>Search results for "{search}"</h3>)}
                         </div>
                     </div>
                     
                     <div class="row mb-5">
                         <div class="col">
                             <form id="searchForm">
-                                <div class="row">
+                                {(props.lang != 'en') && (<div class="row">
                                     <div class="col-lg-2 col-md-3 col-sm-4"><p class="mt-3 ms-1">Ordenar por:</p></div>
 
                                     <div class="col-1"></div>
 
                                     <div class="col-lg-2 col-md-3 col-sm-4"><p class="mt-3 ms-1">Filtrar por:</p></div>
-                                </div>
+                                </div>)}
+                                {(props.lang == 'en') && (<div class="row">
+                                    <div class="col-lg-2 col-md-3 col-sm-4"><p class="mt-3 ms-1">Order by:</p></div>
+
+                                    <div class="col-1"></div>
+
+                                    <div class="col-lg-2 col-md-3 col-sm-4"><p class="mt-3 ms-1">Filter by:</p></div>
+                                </div>)}
 
                                 <div class="row">
                                     <div class="col-lg-2 col-md-3">
@@ -151,20 +201,28 @@ const Search = (props) => {
                 <main class="m-5">
                     <div class="row mt-3 mb-4 text-left text-dark">
                         <div class="col-12">
-                            <h3>Resultados de búsqueda para "{search}"</h3>
+                            {(props.lang != 'en') && (<h3>Resultados de búsqueda para "{search}"</h3>)}
+                            {(props.lang == 'en') && (<h3>Search results for "{search}"</h3>)}
                         </div>
                     </div>
                     
                     <div class="row mb-5">
                         <div class="col">
                             <form id="searchForm">
-                                <div class="row">
+                                {(props.lang != 'en') && (<div class="row">
                                     <div class="col-lg-2 col-md-3 col-sm-4"><p class="mt-3 ms-1">Ordenar por:</p></div>
 
                                     <div class="col-1"></div>
 
                                     <div class="col-lg-2 col-md-3 col-sm-4"><p class="mt-3 ms-1">Filtrar por:</p></div>
-                                </div>
+                                </div>)}
+                                {(props.lang == 'en') && (<div class="row">
+                                    <div class="col-lg-2 col-md-3 col-sm-4"><p class="mt-3 ms-1">Order by:</p></div>
+
+                                    <div class="col-1"></div>
+
+                                    <div class="col-lg-2 col-md-3 col-sm-4"><p class="mt-3 ms-1">Filter by:</p></div>
+                                </div>)}
 
                                 <div class="row">
                                     <div class="col-lg-2 col-md-3">
@@ -212,7 +270,8 @@ const Search = (props) => {
                 <main class="m-5">
                     <div class="row mt-3 mb-4 text-left text-dark">
                         <div class="col-12">
-                            <h3>Resultados de búsqueda para "{search}"</h3>
+                            {(props.lang != 'en') && (<h3>Resultados de búsqueda para "{search}"</h3>)}
+                            {(props.lang == 'en') && (<h3>Search results for "{search}"</h3>)}
                         </div>
                     </div>
                     
@@ -229,6 +288,7 @@ const Search = (props) => {
                                                 </select>
                                     </div>
                                 </div>
+                                
                                 <div class="row mb-3">
 
                                     <div class="col-lg-2 col-md-4"><p class="mt-3 ms-1">Filtrar por:</p></div>

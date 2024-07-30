@@ -131,6 +131,12 @@ const Item = () => {
           });
     }, [baseUrl + '/item?id=' + id])
 
+    // share
+    
+    const handleShare = () => {
+        alert('compartido')
+    }
+
     return(
         <main class="m-5">
                 <div class="row mt-3 mb-4 text-center text-dark">
@@ -167,8 +173,13 @@ const Item = () => {
                                     </div>
                                 </div>
 
-                                <div class="row mt-5">
-                                    
+                                <div class="row mt-3">
+
+                                    <div class="col">
+                                        <a class="btn rounded w-100 bg-white text-dark boton-volver border border-dark border-1 float-right" onClick={handleShare}>
+                                            <img src='/img/share.png' width='25' height='30' alt="share"></img>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

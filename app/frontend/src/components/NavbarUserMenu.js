@@ -48,11 +48,11 @@ const NavbarUserMenu = (props) => {
             setToLogin(false);
             if (id == null)
                 if (search == null)
-                    return <Navigate to="/login" state={{prevUrl: url, has_id: false, id: id, has_search: false, search: search}} />;
+                    return <Navigate to={"/" + props.lang + "/login"} state={{prevUrl: url, has_id: false, id: id, has_search: false, search: search}} />;
                 else
-                    return <Navigate to="/login" state={{prevUrl: url, has_id: false, id: id, has_search: true, search: search}} />;
+                    return <Navigate to={"/" + props.lang + "/login"} state={{prevUrl: url, has_id: false, id: id, has_search: true, search: search}} />;
             else
-                return <Navigate to="/login" state={{prevUrl: url, has_id: true, id: id, has_search: false, search: search}} />;
+                return <Navigate to={"/" + props.lang + "/login"} state={{prevUrl: url, has_id: true, id: id, has_search: false, search: search}} />;
         }
     }
 
@@ -61,17 +61,23 @@ const NavbarUserMenu = (props) => {
     if (session != undefined) {
         return(
             <>
-                <a class="me-4" href={"/user?id=" + myUser._id}>
+                {(props.lang != 'en') && (<a class="me-4" href={"/user?id=" + myUser._id}>
                     <img src={'/img/' + myUser.avatar} class="rounded-circle" width="40" height="40" />
-                </a>
+                </a>)}
+                {(props.lang == 'en') && (<a class="me-4" href={"/en/user?id=" + myUser._id}>
+                    <img src={'/img/' + myUser.avatar} class="rounded-circle" width="40" height="40" />
+                </a>)}
             </>
         )
     } else {
         return(
             <>
-                <a class="btn bg-white text-dark me-4" href="/login" onClick={handleLogin}>
+                {(props.lang != 'en') && (<a class="btn bg-white text-dark me-4" href="/login" onClick={handleLogin}>
                     Iniciar sesión
-                </a>
+                </a>)}
+                {(props.lang == 'en') && (<a class="btn bg-white text-dark me-4" href="/en/login" onClick={handleLogin}>
+                    Log in
+                </a>)}
                 <ToLogin/>
             </>
         )

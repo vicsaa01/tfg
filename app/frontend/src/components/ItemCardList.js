@@ -38,7 +38,7 @@ const ItemCardList = (props) => {
                         <div class="scrollable-card-group items-in-home">
 
                             {items.map((item) => (
-                                <ItemCard id={item._id}/>
+                                <ItemCard id={item._id} lang={props.lang}/>
                             ))}
 
                         </div>

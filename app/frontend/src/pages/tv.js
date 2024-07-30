@@ -2,7 +2,9 @@ import React from "react";
 
 import ItemCardList from "../components/ItemCardList"
 
-const TV = () => {
+const TV = (props) => {
+    props.setLang('es')
+
     return(
         <main class="m-5">
                 <div class="row mt-3 mb-4 text-center text-dark">

@@ -91,7 +91,7 @@ const List = () => {
                 {(myList.type == 'lista') && (
                     <div class="row mb-4">
                         <div class="col-2">
-                            <p class="m-3">Ordenar por:</p>
+                            <p class="mt-3 mb-3">Ordenar por:</p>
                         </div>
                         <div class="col-9">
                             <select class="form-select w-auto mt-3 p-1 border border-1 border-dark" name="sortby" onChange={handleOrder}>

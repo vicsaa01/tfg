@@ -25,14 +25,22 @@ const ItemComments = (props) => {
             });
     }, [baseUrl + '/' + props.sortby + '-item-comments?item_id=' + props.id])
 
-    return(
-                        <div class="scrollable-card-group my-cards">
-                            {comments.map((comment) => (
-                                <Comment id={comment._id}
-                                />
-                            ))}
-                        </div>
-    )
+    if (comments.length == 0) {
+        return(
+            <div class="col">
+                <p>Este ítem aún no tiene reseñas. Publica la tuya para ser el primero en opinar.</p>
+            </div>
+        )
+    } else {
+        return(
+                            <div class="scrollable-card-group my-cards">
+                                {comments.map((comment) => (
+                                    <Comment id={comment._id}
+                                    />
+                                ))}
+                            </div>
+        )
+    }
 }
 
 export default ItemComments;

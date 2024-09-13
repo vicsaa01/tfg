@@ -246,7 +246,7 @@ const Item = () => {
                                     </div>
 
                                     <div class="col-lg-10 col-md-8 col-sm-6">
-                                        <select class="form-select w-auto p-1 ml-3 border border-1 border-dark" name="sortby" onChange={handleInputChange}>
+                                        <select class="form-select w-auto p-1 mt-3 ml-3 border border-1 border-dark" name="sortby" onChange={handleInputChange}>
                                             <option value="popular">Más populares</option>
                                             <option value="old">Más antiguos</option>
                                             <option value="new">Más recientes</option>

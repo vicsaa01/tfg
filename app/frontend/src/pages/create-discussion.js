@@ -81,7 +81,7 @@ const CreateDiscussion = () => {
 
                                 <div class="row mb-5 p-0 text-start">
                                     <label for="tags" class="mb-2 p-1">Ítem sobre el que trata la discusión (opcional):</label>
-                                    <input name="tags" type="text" class="form-control" value={formData.tags} onChange={handleInputChange} autoComplete="off" required/>
+                                    <input name="tags" type="text" class="form-control" value={formData.tags} onChange={handleInputChange} autoComplete="off"/>
                                 </div>
 
                                 <div class="row m-5"></div>

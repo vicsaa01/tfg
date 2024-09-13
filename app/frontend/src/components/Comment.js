@@ -6,10 +6,9 @@ import { useCookies } from 'react-cookie';
 import baseUrl from '../url'
 
 const Comment = (props) => {
+
     const [cookies] = useCookies(['session']);
     const session = cookies['session'];
-
-    //EXTRAER COMENTARIO DE LA BD
 
     const [comment, setComment] = useState([]);
     const [myUser, setMyUser] = useState([]);

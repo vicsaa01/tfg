@@ -27,11 +27,13 @@ const Item = () => {
     const ratings = ratingsCookie['ratings']
 
     var showStars = true;
-    ratings.forEach(r => {
-        if (r.hasOwnProperty('item_id') && r.item_id == id) {
-            showStars = false;
-        }
-    });
+    if (ratings != undefined) {
+        ratings.forEach(r => {
+            if (r.hasOwnProperty('item_id') && r.item_id == id) {
+                showStars = false;
+            }
+        });
+    }
 
     // ratings
 

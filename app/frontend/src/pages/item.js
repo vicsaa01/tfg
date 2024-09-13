@@ -21,6 +21,18 @@ const Item = () => {
     const [cookies, setCookie, removeCookie] = useCookies(['session']);
     const session = cookies['session'];
 
+    // get ratings cookie
+
+    const [ratingsCookie, setRatingsCookie, removeRatingsCookie] = useCookies(['ratings']);
+    const ratings = ratingsCookie['ratings']
+
+    var showStars = true;
+    ratings.forEach(r => {
+        if (r.hasOwnProperty('item_id') && r.item_id == id) {
+            showStars = false;
+        }
+    });
+
     // ratings
 
     const [rating, setRating] = useState({
@@ -49,6 +61,13 @@ const Item = () => {
         .then((response) => response.json())
         .then((data) => {
             setMyItem(data);
+            let newRating = {
+                item_id: id,
+                points: rating.points
+            };
+            let ratings = ratingsCookie['ratings'];
+            ratings.push(newRating)
+            setRatingsCookie('ratings', ratings, {path: '/'});
             window.location.href = '/item?id=' + id;
         })
         .catch((error) => {
@@ -190,32 +209,36 @@ const Item = () => {
                                 <ItemRating points={myItem.points} ratings={myItem.ratings}/>
                             </div>
 
-                            <div class="border border-dark mt-5"></div>
+                            
 
-                            <div class="col-lg-7 col-md-6 mt-5">
-                                <h4>Valora este ítem: </h4>
+                            {showStars && (<>
+                                <div class="border border-dark mt-5"></div>
 
-                                <div class="row">
-                                    <form onSubmit={handleSubmitRating}>
-                                        <div class="col rate me-5">
-                                            <input type="radio" id="star5" name="rate" value="5" onClick={handleSetRating}/>
-                                            <label for="star5" title="text">5 stars</label>
-                                            <input type="radio" id="star4" name="rate" value="4" onClick={handleSetRating}/>
-                                            <label for="star4" title="text">4 stars</label>
-                                            <input type="radio" id="star3" name="rate" value="3" onClick={handleSetRating}/>
-                                            <label for="star3" title="text">3 stars</label>
-                                            <input type="radio" id="star2" name="rate" value="2" onClick={handleSetRating}/>
-                                            <label for="star2" title="text">2 stars</label>
-                                            <input type="radio" id="star1" name="rate" value="1" onClick={handleSetRating}/>
-                                            <label for="star1" title="text">1 star</label>
-                                        </div>
+                                <div class="col-lg-7 col-md-6 mt-5">
+                                    <h4>Valora este ítem: </h4>
 
-                                        <div class="col">
-                                            <button type="submit" class="btn border border-1 border-dark rounded boton-volver text-dark mt-1">Valorar</button>
-                                        </div>
-                                    </form>
+                                    <div class="row">
+                                        <form onSubmit={handleSubmitRating}>
+                                            <div class="col rate me-5">
+                                                <input type="radio" id="star5" name="rate" value="5" onClick={handleSetRating}/>
+                                                <label for="star5" title="text">5 stars</label>
+                                                <input type="radio" id="star4" name="rate" value="4" onClick={handleSetRating}/>
+                                                <label for="star4" title="text">4 stars</label>
+                                                <input type="radio" id="star3" name="rate" value="3" onClick={handleSetRating}/>
+                                                <label for="star3" title="text">3 stars</label>
+                                                <input type="radio" id="star2" name="rate" value="2" onClick={handleSetRating}/>
+                                                <label for="star2" title="text">2 stars</label>
+                                                <input type="radio" id="star1" name="rate" value="1" onClick={handleSetRating}/>
+                                                <label for="star1" title="text">1 star</label>
+                                            </div>
+
+                                            <div class="col">
+                                                <button type="submit" class="btn border border-1 border-dark rounded boton-volver text-dark mt-1">Valorar</button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
-                            </div>
+                            </>)}
                         </div>
                     </div>
                 </div>

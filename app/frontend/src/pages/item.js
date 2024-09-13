@@ -68,7 +68,8 @@ const Item = () => {
                 points: rating.points
             };
             let ratings = ratingsCookie['ratings'];
-            ratings.push(newRating)
+            if (ratings != undefined) ratings.push(newRating)
+            else ratings = [newRating]
             setRatingsCookie('ratings', ratings, {path: '/'});
             window.location.href = '/item?id=' + id;
         })

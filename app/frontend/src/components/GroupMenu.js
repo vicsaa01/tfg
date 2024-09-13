@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import { useCookies } from 'react-cookie';
 
@@ -6,10 +6,36 @@ import baseUrl from '../url'
 
 const GroupMenu = (props) => {
 
+    // get group id
+
+    const queryParameters = new URLSearchParams(window.location.search)
+    const id = queryParameters.get("id")
+
     // get session
 
     const [cookies, setCookie, removeCookie] = useCookies(['session']);
     const session = cookies['session'];
+
+    // es miembro
+
+    const [isMember, setIsMember] = useState(false)
+
+    // comprobar si es miembro o no
+
+    useEffect(() => {
+        if (session != undefined) {
+            console.log(id)
+            console.log(session.user_id)
+            fetch(baseUrl + '/is-member?group=' + id + '&user=' + session.user_id)
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                console.log(data);
+                setIsMember(data.member)
+            });
+        }
+    }, [])
 
     // unirse a grupo
 
@@ -97,16 +123,26 @@ const GroupMenu = (props) => {
             );
         }
     } else {
-        return(
-            <>
-                    <div class="col-6 text-start">
-                        <p class="mt-3 mb-3 text-dark">Grupo creado por <a href={"/user?id=" + props.creator_id}>{props.username}</a> el {props.date.day} de {props.date.month} de {props.date.year}</p>
-                    </div>
-                    <div class="col-6 text-end">
-                        <a class="btn bg-dark text-white" onClick={handleJoin}>Unirse a este grupo</a>
-                    </div>
-            </>
-        );
+        if (isMember) {
+            return(
+                <>
+                        <div class="col-12 text-start">
+                            <p class="mt-3 mb-3 text-dark">Grupo creado por <a href={"/user?id=" + props.creator_id}>{props.username}</a> el {props.date.day} de {props.date.month} de {props.date.year}</p>
+                        </div>
+                </>
+            );
+        } else {
+            return(
+                <>
+                        <div class="col-6 text-start">
+                            <p class="mt-3 mb-3 text-dark">Grupo creado por <a href={"/user?id=" + props.creator_id}>{props.username}</a> el {props.date.day} de {props.date.month} de {props.date.year}</p>
+                        </div>
+                        <div class="col-6 text-end">
+                            <a class="btn bg-dark text-white" onClick={handleJoin}>Unirse a este grupo</a>
+                        </div>
+                </>
+            );
+        }
     }
 }
 

@@ -46,6 +46,9 @@ const NavbarUserMenu = (props) => {
     const ToLogin = () => {
         if (toLogin == true) {
             setToLogin(false);
+
+            if (url == null || url == "") url = "/" // default url <- error que vio David (Linux no deja guardar URL?)
+
             if (id == null)
                 if (search == null)
                     return <Navigate to="/login" state={{prevUrl: url, has_id: false, id: id, has_search: false, search: search}} />;

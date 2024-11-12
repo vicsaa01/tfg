@@ -75,6 +75,7 @@ const Login = (props) => {
 
     // Acceder a la ubicación y su estado para extraer la URL previa
     const location = useLocation();
+    // console.log(location)
     const prevUrl = location.state.prevUrl;
 
     // Recuperar los parámetros de la URL previa, en caso de que los haya
